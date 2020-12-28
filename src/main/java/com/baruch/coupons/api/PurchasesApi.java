@@ -24,12 +24,12 @@ public class PurchasesApi {
 	private PurchasesController con;
 	
 	@PostMapping
-	public long addPurchase(@RequestBody PurchaseDto purchaseDto, UserLoginData userDetails) throws ApplicationException{
+	public long addPurchase(@RequestBody PurchaseDto purchaseDto, @RequestAttribute("UserLoginData") UserLoginData userDetails) throws ApplicationException{
 		return con.addPurchase(purchaseDto, userDetails);
 	}
 	
 	@GetMapping
-	public List<PurchaseDto> getAllPurchases(UserLoginData userDetails) throws ApplicationException{
+	public List<PurchaseDto> getAllPurchases(@RequestAttribute("UserLoginData") UserLoginData userDetails) throws ApplicationException{
 		return con.getAllPurchases(userDetails);
 	}
 	
