@@ -47,12 +47,12 @@ public class CouponsApi {
 	}
 	
 	@GetMapping("/byCompany")
-	public List<CouponDto> getCouponsByCompany(long companyID) throws ApplicationException{
+	public List<CouponDto> getCouponsByCompany(@ReqestParam("companyID") long companyID) throws ApplicationException{
 		return con.getCouponsByCompany(companyID);
 	}
 	
 	@GetMapping("/byCategory")
-	public List<CouponDto> getCouponsByCategory(Category category) throws ApplicationException{
+	public List<CouponDto> getCouponsByCategory(@RequestParam("category") Category category) throws ApplicationException{
 		return con.getCouponsByCategory(category);
 	}
 	
@@ -61,8 +61,8 @@ public class CouponsApi {
 		return con.getCouponsByMaxPrice(maxPrice, userDetails);
 	}
 	
-	@DeleteMapping
-	public void deleteCoupon(long id) throws ApplicationException{
+	@DeleteMapping("/{couponID}")
+	public void deleteCoupon(@PathVariable("couponID") long id) throws ApplicationException{
 		con.deleteCoupon(id);
 	}
 }
