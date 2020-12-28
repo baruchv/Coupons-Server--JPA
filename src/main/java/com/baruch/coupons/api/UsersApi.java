@@ -46,7 +46,7 @@ public class UsersApi {
 	}
 	
 	@PutMapping
-	public void updateUser(@RequestBody UserDto userDto, UserLoginData userDetails) throws ApplicationException{
+	public void updateUser(@RequestBody UserDto userDto, @RequestAttribute("UserLoginData") UserLoginData userDetails) throws ApplicationException{
 		con.updateUser(userDto, userDetails);
 	}
 	
@@ -71,7 +71,7 @@ public class UsersApi {
 	}
 	
 	@DeleteMapping
-	public void deleteUser(UserLoginData userDetails) throws ApplicationException{
+	public void deleteUser(@RequestAttribute("UserLoginData") UserLoginData userDetails) throws ApplicationException{
 		con.deleteUser(userDetails);
 	}
 	
