@@ -24,7 +24,7 @@ public class PurchasesApi {
 	private PurchasesController con;
 	
 	@PostMapping
-	public long addPurchase(PurchaseDto purchaseDto, UserLoginData userDetails) throws ApplicationException{
+	public long addPurchase(@RequestBody PurchaseDto purchaseDto, UserLoginData userDetails) throws ApplicationException{
 		return con.addPurchase(purchaseDto, userDetails);
 	}
 	
@@ -48,8 +48,8 @@ public class PurchasesApi {
 		return con.getPurchasesByUserID(userID);
 	}
 	
-	@DeleteMapping
-	public void deletePurchase(long id) throws ApplicationException{
+	@DeleteMapping("/{purchaseID}")
+	public void deletePurchase(@PathVariable("purchaseID") long id) throws ApplicationException{
 		con.deletePurchase(id);
 	}
 }
