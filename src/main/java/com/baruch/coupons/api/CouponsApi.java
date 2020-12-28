@@ -27,12 +27,12 @@ public class CouponsApi {
 	private CouponsController con;
 	
 	@PostMapping
-	public long createCoupon(@RequestBody CouponDto couponDto, UserLoginData userDetails) throws ApplicationException{
+	public long createCoupon(@RequestBody CouponDto couponDto, @RequestAttribute("UserLoginData") UserLoginData userDetails) throws ApplicationException{
 		return con.createCoupon(couponDto, userDetails);
 	}
 	
 	@PutMapping
-	public void updateCoupon(@RequestBody CouponDto couponDto, UserLoginData userDetails) throws ApplicationException{
+	public void updateCoupon(@RequestBody CouponDto couponDto, @RequestAttribute("UserLoginData") UserLoginData userDetails) throws ApplicationException{
 		con.updateCoupon(couponDto, userDetails);;
 	}
 	
@@ -57,7 +57,7 @@ public class CouponsApi {
 	}
 	
 	@GetMapping("/byMAxPrice")
-	public List<CouponDto> getCouponsByMaxPrice(@RequestParam("maxPrice") float maxPrice, UserLoginData userDetails) throws ApplicationException{
+	public List<CouponDto> getCouponsByMaxPrice(@RequestParam("maxPrice") float maxPrice, @RequestAttribute("UserLoginData") UserLoginData userDetails) throws ApplicationException{
 		return con.getCouponsByMaxPrice(maxPrice, userDetails);
 	}
 	
