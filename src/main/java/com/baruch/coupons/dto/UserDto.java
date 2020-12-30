@@ -14,7 +14,7 @@ public class UserDto {
 	
 	private Long  companyID;
 	
-	private String  userName, password, copmanyName;;
+	private String  userName, password;
 	
 	private UserType  type;
 
@@ -24,25 +24,6 @@ public class UserDto {
 	
 	public UserDto() {
 		super();
-	}
-
-	/*
-	 * Due to laze fetch type the method getCompany is a DB query, therefore it
-	 * might invoke an exception.
-	 */	
-	public UserDto(User user) throws ApplicationException{
-		try{
-			this.id = user.getId();
-			this.userName = user.getUserName();
-			this.type = user.getType();
-			Company company = user.getCompany();
-			if (company != null){
-			this.copmanyName = company.getName();
-			}
-		}
-		catch(Exception e){
-			throw new ApplicationException("new UserDto(User) failed for " + user, ErrorTypes.GENERAL_ERROR,e);
-		}
 	}
 	
 	//METHODS
@@ -87,20 +68,6 @@ public class UserDto {
 		this.companyID = companyID;
 	}
 
-	public String getCopmanyName() {
-		return copmanyName;
-	}
-
-	public void setCopmanyName(String copmanyName) {
-		this.copmanyName = copmanyName;
-	}
-
-	@Override
-	public String toString() {
-		return "User [userName=" + userName + ", password=" + password + ", id=" + id + ", type=" + type
-				+ ", companyID=" + companyID + ", companyName=" + copmanyName + "]";
-	}
-	
 	
 	
 }

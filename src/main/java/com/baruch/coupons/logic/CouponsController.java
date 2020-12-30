@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.baruch.coupons.entities.Company;
 import com.baruch.coupons.entities.Coupon;
+import com.baruch.coupons.dataInterfaces.ICouponDataObject;
 import com.baruch.coupons.dto.CouponDto;
 import com.baruch.coupons.dto.UserLoginData;
 import com.baruch.coupons.enums.Category;
@@ -56,59 +57,60 @@ public class CouponsController {
 		}
 	}
 	
-	public CouponDto getCoupon(long id) throws ApplicationException{
+	public ICouponDataObject getCoupon(long id) throws ApplicationException{
 		try {
-			CouponDto coupon = repository.getCoupon(id);
-			prepareForPresentation(coupon);
-			return coupon;
+			return repository.getCoupon(id);
 		}
 		catch(Exception e) {
 			throw new ApplicationException("repository.getCoupon() failed for id = "+id, ErrorTypes.GENERAL_ERROR, e);
 		}
 	}
 	
-	public List<CouponDto> getAllCoupons() throws ApplicationException{
+	public List<ICouponDataObject> getAllCoupons() throws ApplicationException{
 		try {
-			List<CouponDto> coupons = repository.getAllCoupons();
-			prepareForPresentation(coupons);
-			return coupons;
+			return repository.getAllCoupons();
 		}
 		catch(Exception e) {
 			throw new ApplicationException("repository.getAllCoupons() failed", ErrorTypes.GENERAL_ERROR, e);
 		}
 	}
 	
-	public List<CouponDto> getCouponsByCategory(Category category) throws ApplicationException{
+	public List<ICouponDataObject> getCouponsByCategory(Category category) throws ApplicationException{
 		try {
-			List<CouponDto> coupons = repository.getCouponsByCategory(category);
-			prepareForPresentation(coupons);
-			return coupons;
+			return repository.getCouponsByCategory(category);
 		}
 		catch(Exception e) {
 			throw new ApplicationException("repository.getCouponsByCategory() failed fot category = "+ category, ErrorTypes.GENERAL_ERROR, e);
 		}
 	}
 	
-	public List<CouponDto> getCouponsByCompany(long companyID) throws ApplicationException{
+	public List<ICouponDataObject> getCouponsByCompany(long companyID) throws ApplicationException{
 		try {
-			List<CouponDto> coupons = repository.getCouponsByCompany(companyID);
-			prepareForPresentation(coupons);
-			return coupons;
+			return repository.getCouponsByCompany(companyID);
 		}
 		catch(Exception e) {
 			throw new ApplicationException("repository.getCouponsByCompany() failed fot companyID = " +companyID, ErrorTypes.GENERAL_ERROR, e);
 		}
 	}
 	
-	public List<CouponDto> getCouponsByMaxPrice(float price, UserLoginData userDetails) throws ApplicationException{
+	public List<ICouponDataObject> getCouponsByMaxPrice(float price, UserLoginData userDetails) throws ApplicationException{
 		long userID = userDetails.getId();
 		try {
-			List<CouponDto> coupons = repository.getPurchasedCouponsByMaxPrice(userID, price);
-			prepareForPresentation(coupons);
-			return coupons;
+			return repository.getPurchasedCouponsByMaxPrice(userID, price);
 		}
 		catch(Exception e) {
 			throw new ApplicationException("repository.getCouponsByMaxPrice() failed for userID = " +userID +", maxPrice = " + price, ErrorTypes.GENERAL_ERROR, e);
+		}
+	}
+	
+	
+	//PRIVATE-METHODS
+	
+	protected int getCouponsAmount(long id) throws ApplicationException{
+		try {
+			return repository.getCouponsAmount(id);
+		} catch (Exception e) {
+			throw new ApplicationException("getBasicCoupon() failed for couponID = " +id, ErrorTypes.GENERAL_ERROR, e);
 		}
 	}
 	
@@ -120,8 +122,6 @@ public class CouponsController {
 			throw new ApplicationException("repository.findById() failed for couponID = "+ couponID, ErrorTypes.GENERAL_ERROR, e);
 		}
 	}
-	
-	//PRIVATE-METHODS
 	
 	protected void validateCouponID(long id) throws ApplicationException{
 		if( ! repository.existsById(id)) {
@@ -216,14 +216,4 @@ public class CouponsController {
 		return coupon;
 	}
 
-	private void prepareForPresentation(CouponDto couponDto){
-		couponDto.setCompanyID(0);
-	}
-
-	private void prepareForPresentation(List<CouponDto> coupons){
-		for(CouponDto couponDto : coupons){
-			prepareForPresentation(couponDto);
-		}
-	}
-	
 }

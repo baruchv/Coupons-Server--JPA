@@ -161,8 +161,9 @@ public class Coupon {
 	public String toString() {
 		return "Coupon [id=" + id + ", title=" + title + ", description=" + description + ", image=" + image
 				+ ", amount=" + amount + ", price=" + price + ", category=" + category + ", startDate=" + startDate
-				+ ", endDate=" + endDate + ", company=" + company + "]";
+				+ ", endDate=" + endDate + ", company=" + company + ", purchases=" + purchases + "]";
 	}
+
 	
 	
 	

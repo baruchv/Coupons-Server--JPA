@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.baruch.coupons.dataObjectsForPresentation.UserData;
 import com.baruch.coupons.dto.SuccessfulLoginData;
 import com.baruch.coupons.dto.UserDto;
 import com.baruch.coupons.dto.UserLoginData;
@@ -73,7 +74,7 @@ public class UsersController {
 		}
 	}
 
-	public UserDto getUser(long id) throws ApplicationException{
+	public UserData getUser(long id) throws ApplicationException{
 		validateUserId(id);
 		try {
 			return repository.getUser(id);
@@ -83,7 +84,7 @@ public class UsersController {
 		}
 	}
 	
-	public List<UserDto> getAllUsers() throws ApplicationException{
+	public List<UserData> getAllUsers() throws ApplicationException{
 		try {
 			return repository.getAllUsers();
 		}
@@ -92,7 +93,7 @@ public class UsersController {
 		}
 	}
 
-	public List<UserDto> getUsersByCompany(long companyID) throws ApplicationException{
+	public List<UserData> getUsersByCompany(long companyID) throws ApplicationException{
 		validateCompanyID(companyID);
 		try {
 			return repository.getUsersByCompany(companyID);
@@ -102,7 +103,7 @@ public class UsersController {
 		}
 	}
 
-	public List<UserDto> getUsersByType(UserType type) throws ApplicationException{
+	public List<UserData> getUsersByType(UserType type) throws ApplicationException{
 		try {
 			return repository.getUsersByType(type);
 		}

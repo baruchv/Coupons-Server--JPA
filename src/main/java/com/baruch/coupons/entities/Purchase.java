@@ -89,6 +89,7 @@ public class Purchase {
 		return "Purchase [id=" + id + ", amount=" + amount + ", timeStamp=" + timeStamp + ", user=" + user + ", coupon="
 				+ coupon + "]";
 	}
+
 	
 	
 	

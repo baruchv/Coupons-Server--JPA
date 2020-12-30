@@ -18,8 +18,10 @@ public class UserLoginData {
 	public UserLoginData(User user) throws ApplicationException{
 		try {
 			this.id = user.getId();
-			this.companyID = user.getCompany().getId();
 			this.type = user.getType();
+			if(type.equals(UserType.COMPANY)) {
+				this.companyID = user.getCompany().getId();
+			}
 		} catch (Exception e) {
 			throw new ApplicationException("new UserLoginData(User) failed for " + user, ErrorTypes.GENERAL_ERROR,e);
 		}

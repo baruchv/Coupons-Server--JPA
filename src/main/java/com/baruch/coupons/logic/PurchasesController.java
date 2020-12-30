@@ -5,6 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import com.baruch.coupons.dataInterfaces.IPurchaseDataObject;
+import com.baruch.coupons.dataObjectsForPresentation.CouponDataBasic;
+import com.baruch.coupons.dataObjectsForPresentation.PurchaseDataForAdmin;
 import com.baruch.coupons.dto.CouponDto;
 import com.baruch.coupons.dto.PurchaseDto;
 import com.baruch.coupons.dto.UserLoginData;
@@ -66,21 +69,20 @@ public class PurchasesController {
 	
 	
 	/*
-	 * This method serves all user-types and will return each user-type a customed data-set.
+	 * This method serves all user-types and will return each user-type a List of customed data objects.
 	 */
-	public List<PurchaseDto> getAllPurchases(UserLoginData userDetails) throws ApplicationException{
+	public List<IPurchaseDataObject> getAllPurchases(UserLoginData userDetails) throws ApplicationException{
 		try {
-			List<PurchaseDto> purchases;
-			switch(userDetails.getType()) {
+			switch (userDetails.getType()) {
 			case CUSTOMER:
-				purchases = repository.getAllPurchasesByCustomer(userDetails.getId());
+				long userID = userDetails.getId();
+				return repository.getAllPurchasesForCustomer(userID);
 			case COMPANY:
-				purchases = repository.getAllPurchasesByCompany(userDetails.getCompanyID());
+				long companyID = userDetails.getCompanyID();
+				return repository.getAllPurchasesForCompany(companyID);
 			default:
-				purchases = repository.getAllPurchases();
+				return repository.getAllPurchases();
 			}
-			prepareForPresentation(purchases, userDetails.getType());
-			return purchases;
 		}
 		catch(Exception e) {
 			throw new ApplicationException("repository.getAllPurchases() failed ", ErrorTypes.GENERAL_ERROR,e);
@@ -90,7 +92,7 @@ public class PurchasesController {
 	/*
 	 * This method serves Admin users
 	 */
-	public PurchaseDto getPurchase(long id) throws ApplicationException {
+	public IPurchaseDataObject getPurchase(long id) throws ApplicationException {
 		try {
 			return repository.getPurchase(id);
 		} catch (Exception e) {
@@ -102,7 +104,7 @@ public class PurchasesController {
 	/*
 	 * This method serves Admin users only
 	 */
-	public List<PurchaseDto> getPurchasesByUserID(long userID) throws ApplicationException{
+	public List<IPurchaseDataObject> getPurchasesByUserID(long userID) throws ApplicationException{
 		try {
 			return repository.getPurchasesByUserID(userID);
 		}
@@ -114,9 +116,9 @@ public class PurchasesController {
 	/*
 	 * This method serves Admin users only
 	 */
-	public List<PurchaseDto> getPurchasesByCompanyID(long companyID) throws ApplicationException{
+	public List<IPurchaseDataObject> getPurchasesByCompanyID(long companyID) throws ApplicationException{
 		try {
-			return repository.getAllPurchasesByCompany(companyID);
+			return repository.getPurchasesByCopmany(companyID);
 		}
 		catch(Exception e) {
 			throw new ApplicationException("repository.getPurchasesByCompanyID() failed for companyID = " + companyID, ErrorTypes.GENERAL_ERROR,e);
@@ -134,8 +136,8 @@ public class PurchasesController {
 		if(amount < 1) {
 			throw new ApplicationException(ErrorTypes.INVALID_AMOUNT_ERROR);
 		}
-		CouponDto couponDto = couponsController.getCoupon(couponID);
-		if(couponDto.getAmount() < amount) {
+		int couponAmount =  couponsController.getCouponsAmount(couponID);
+		if(couponAmount < amount) {
 			throw new ApplicationException(ErrorTypes.OUT_OF_STOCK_ERROR);
 		}
 	}
@@ -146,28 +148,6 @@ public class PurchasesController {
 		return new Purchase(purchaseDto,coupon,user);
 	}
 
-	private void prepareForPresentation(List<PurchaseDto> purchases, UserType type){
-		for(PurchaseDto purchaseDto : purchases){
-			prepareForPresentation(purchaseDto, type);
-		}
-	}
-
-	private void prepareForPresentation(PurchaseDto purchaseDto, UserType type){
-		switch(type){
-			case CUSTOMER:
-				purchaseDto.setId(0);
-				purchaseDto.setCouponID(0);
-				purchaseDto.setUserID(0);
-				break;
-			case COMPANY:
-				purchaseDto.setId(0);
-				purchaseDto.setCouponID(0);
-				purchaseDto.setUserID(0);
-				purchaseDto.setCompanyName(null);
-			default:
-				break;
-		}
-	}
 	
 
 }
