@@ -27,12 +27,20 @@ public class PurchasesApi {
 	private PurchasesController con;
 	
 	@PostMapping
+<<<<<<< HEAD
 	public long addPurchase(PurchaseDto purchaseDto, @RequestAttribute("UserLoginData") UserLoginData userDetails) throws ApplicationException{
+=======
+	public long addPurchase(@RequestBody PurchaseDto purchaseDto, @RequestAttribute("UserLoginData") UserLoginData userDetails) throws ApplicationException{
+>>>>>>> 4ae497bc8b8df3f5c905e9e53d08c8227b914fa8
 		return con.addPurchase(purchaseDto, userDetails);
 	}
 	
 	@GetMapping
+<<<<<<< HEAD
 	public List<IPurchaseDataObject> getAllPurchases(@RequestAttribute("UserLoginData") UserLoginData userDetails) throws ApplicationException{
+=======
+	public List<PurchaseDto> getAllPurchases(@RequestAttribute("UserLoginData") UserLoginData userDetails) throws ApplicationException{
+>>>>>>> 4ae497bc8b8df3f5c905e9e53d08c8227b914fa8
 		return con.getAllPurchases(userDetails);
 	}
 	

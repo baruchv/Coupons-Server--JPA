@@ -49,17 +49,29 @@ public class CouponsApi {
 	}
 	
 	@GetMapping("/byCompany")
+<<<<<<< HEAD
 	public List<ICouponDataObject> getCouponsByCompany(long companyID) throws ApplicationException{
+=======
+	public List<CouponDto> getCouponsByCompany(@ReqestParam("companyID") long companyID) throws ApplicationException{
+>>>>>>> 4ae497bc8b8df3f5c905e9e53d08c8227b914fa8
 		return con.getCouponsByCompany(companyID);
 	}
 	
 	@GetMapping("/byCategory")
+<<<<<<< HEAD
 	public List<ICouponDataObject> getCouponsByCategory(Category category) throws ApplicationException{
+=======
+	public List<CouponDto> getCouponsByCategory(@RequestParam("category") Category category) throws ApplicationException{
+>>>>>>> 4ae497bc8b8df3f5c905e9e53d08c8227b914fa8
 		return con.getCouponsByCategory(category);
 	}
 	
 	@GetMapping("/byMAxPrice")
+<<<<<<< HEAD
 	public List<ICouponDataObject> getCouponsByMaxPrice(@RequestParam("maxPrice") float maxPrice, @RequestAttribute("UserLoginData") UserLoginData userDetails) throws ApplicationException{
+=======
+	public List<CouponDto> getCouponsByMaxPrice(@RequestParam("maxPrice") float maxPrice, @RequestAttribute("UserLoginData") UserLoginData userDetails) throws ApplicationException{
+>>>>>>> 4ae497bc8b8df3f5c905e9e53d08c8227b914fa8
 		return con.getCouponsByMaxPrice(maxPrice, userDetails);
 	}
 	

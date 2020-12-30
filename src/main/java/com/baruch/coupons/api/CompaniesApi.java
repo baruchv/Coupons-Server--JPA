@@ -43,8 +43,13 @@ public class CompaniesApi {
 		return con.getAllCompanies();
 	}
 	
+<<<<<<< HEAD
 	@DeleteMapping("/{companyID}")
 	public void deleteCompany(@PathVariable("companyID") long id) throws ApplicationException{
+=======
+	@DeleteMapping("userID")
+	public void deleteCompany(@PathVariable("userID") long id) throws ApplicationException{
+>>>>>>> 4ae497bc8b8df3f5c905e9e53d08c8227b914fa8
 		con.deleteCompany(id);
 	}
 	
