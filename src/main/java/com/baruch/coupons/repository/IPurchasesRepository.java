@@ -30,5 +30,5 @@ public interface IPurchasesRepository extends CrudRepository<Purchase, Long> {
 	public List<IPurchaseDataObject> getPurchasesByCopmany(long companyID);
 
 	@Query("select new com.baruch.coupons.dataObjectsForPresentation.PurchaseDataForAdmin(p) from Purchase p where p.id = ?1")
-	public IPurchaseDataObject getPurchase(long id);
+	public IPurchaseDataObject getPurchase(long purchaseID);
 }

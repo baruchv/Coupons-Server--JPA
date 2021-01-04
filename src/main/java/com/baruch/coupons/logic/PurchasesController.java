@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import com.baruch.coupons.dataInterfaces.IPurchaseDataObject;
-import com.baruch.coupons.dataObjectsForPresentation.CouponDataBasic;
+import com.baruch.coupons.dataObjectsForPresentation.CouponBasicData;
 import com.baruch.coupons.dataObjectsForPresentation.PurchaseDataForAdmin;
 import com.baruch.coupons.dto.CouponDto;
 import com.baruch.coupons.dto.PurchaseDto;
@@ -92,11 +92,11 @@ public class PurchasesController {
 	/*
 	 * This method serves Admin users
 	 */
-	public IPurchaseDataObject getPurchase(long id) throws ApplicationException {
+	public IPurchaseDataObject getPurchase(long purchaseID) throws ApplicationException {
 		try {
-			return repository.getPurchase(id);
+			return repository.getPurchase(purchaseID);
 		} catch (Exception e) {
-			throw new ApplicationException("repository.deleteById() failed for purchaseID = " + id,
+			throw new ApplicationException("repository.deleteById() failed for purchaseID = " + purchaseID,
 					ErrorTypes.GENERAL_ERROR, e);
 		}
 	}

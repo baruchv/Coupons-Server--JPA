@@ -1,12 +1,16 @@
 package com.baruch.coupons.entities;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -36,7 +40,12 @@ public class User {
 	private Company company;
 	
 	@OneToMany(mappedBy = "user")
-	List<Purchase> purchases;
+	private List<Purchase> purchases;
+	
+	@ManyToMany
+	@JoinTable(name = "favorates", joinColumns = @JoinColumn(name = "user_id"), 
+	  inverseJoinColumns = @JoinColumn(name = "vacation_id"))
+	private Set<Coupon> favorates;
 	
 	public User() {
 		
@@ -95,13 +104,25 @@ public class User {
 	public void setPurchases(List<Purchase> purchases) {
 		this.purchases = purchases;
 	}
+	
+
+	public Set<Coupon> getFavorates() {
+		return favorates;
+	}
+
+	public void setFavorates(Set<Coupon> favorates) {
+		this.favorates = favorates;
+	}
 
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", userName=" + userName + ", password=" + password + ", type=" + type + ", company="
-				+ company + ", purchases=" + purchases + "]";
+				+ company + "]";
 	}
 
-	
+	@Override
+	public int hashCode() {
+		return this.toString().hashCode();
+	}
 	
 }

@@ -74,13 +74,13 @@ public class UsersController {
 		}
 	}
 
-	public UserData getUser(long id) throws ApplicationException{
-		validateUserId(id);
+	public UserData getUser(long userID) throws ApplicationException{
+		validateUserId(userID);
 		try {
-			return repository.getUser(id);
+			return repository.getUser(userID);
 		}
 		catch(Exception e) {
-			throw new ApplicationException("findById() failed for userID = " + id, ErrorTypes.GENERAL_ERROR,e);
+			throw new ApplicationException("findById() failed for userID = " + userID, ErrorTypes.GENERAL_ERROR,e);
 		}
 	}
 	
@@ -113,17 +113,12 @@ public class UsersController {
 	}
 
 	public SuccessfulLoginData login(String userName, String password) throws ApplicationException {
-
 		UserLoginData userDetails = repository.login(userName, getHashedPassword(password));
-
 		if(userDetails == null) {
 			throw new ApplicationException(ErrorTypes.LOGIN_ERROR);
 		}
-
 		String token = generateToken(userName, password);
-
 		cache.put(token, userDetails);
-
 		return new SuccessfulLoginData(token, userDetails.getType());
 	}
 
@@ -133,6 +128,14 @@ public class UsersController {
 
 	//PRIVATE-METHODS
 
+	protected void save(User user) throws ApplicationException{
+		try {
+			repository.save(user);
+		} catch (Exception e) {
+			throw new ApplicationException("UsersController.save failed for " + user,ErrorTypes.GENERAL_ERROR,e);
+		}
+	}
+	
 	private void validateCreateUser(UserDto userDto) throws ApplicationException{
 		try {
 			if(repository.existsByUserName(userDto.getUserName())) {
@@ -171,22 +174,22 @@ public class UsersController {
 		}
 	}
 
-	protected void validateUserId(long id) throws ApplicationException{
+	protected void validateUserId(long userID) throws ApplicationException{
 		try {
-			if( ! repository.existsById(id)) {
-				throw new ApplicationException("UsersController.validateUserID() failed for ID: " +id, ErrorTypes.NO_USER_ID);
+			if( ! repository.existsById(userID)) {
+				throw new ApplicationException("UsersController.validateUserID() failed for ID: " + userID, ErrorTypes.NO_USER_ID);
 			}
 		}
 		catch(Exception e) {
-			throw new ApplicationException("existsById failed for userID = " +id, ErrorTypes.GENERAL_ERROR,e);
+			throw new ApplicationException("existsById failed for userID = " + userID, ErrorTypes.GENERAL_ERROR,e);
 		}
 	}
 
-	private void validateCompanyID(Long id) throws ApplicationException{
-		if(id == null) {
+	private void validateCompanyID(Long companyID) throws ApplicationException{
+		if(companyID == null) {
 			throw new ApplicationException(ErrorTypes.EMPTY_COMPANYID_ERROR);
 		}
-		companiesController.validateCompanyID(id);
+		companiesController.validateCompanyID(companyID);
 	}
 
 	private String generateToken(String userName, String password) {

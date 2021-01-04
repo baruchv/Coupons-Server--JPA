@@ -14,14 +14,14 @@ import com.baruch.coupons.entities.Company;
 public interface ICompaniesRepository extends CrudRepository<Company, Long>{
 
 	@Query("select new com.baruch.coupons.dto.CompanyDto(c) from Company c where c.id = ?1")
-	public CompanyDto getCompany(long id);
+	public CompanyDto getCompany(long companyID);
 
 	@Query("select new com.baruch.coupons.dto.CompanyDto(c) from Company c")
 	public List<CompanyDto> getAllCompanies();
 	
 	@Modifying
 	@Query("update Company c set c.phoneNumber=?1, c.address=?2 where c.id=?3")
-	public void updateCompany(String phoneNumber, String address, long id);
+	public void updateCompany(String phoneNumber, String address, long companyID);
 	
 	public boolean existsByName(String name);	
 }

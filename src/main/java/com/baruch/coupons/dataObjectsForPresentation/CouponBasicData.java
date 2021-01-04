@@ -7,7 +7,7 @@ import com.baruch.coupons.entities.Coupon;
 import com.baruch.coupons.enums.ErrorTypes;
 import com.baruch.coupons.exceptions.ApplicationException;
 
-public class CouponDataBasic implements ICouponDataObject {
+public class CouponBasicData implements ICouponDataObject {
 	
 	//VARIABLES
 	
@@ -21,7 +21,7 @@ public class CouponDataBasic implements ICouponDataObject {
 	
 	//CTORS
 	
-	public CouponDataBasic(Coupon coupon) throws ApplicationException{
+	public CouponBasicData(Coupon coupon) throws ApplicationException{
 		try {
 			this.id = coupon.getId();
 			this.price = coupon.getPrice();
@@ -74,8 +74,5 @@ public class CouponDataBasic implements ICouponDataObject {
 	public void setId(long id) {
 		this.id = id;
 	}
-	
 
-
-	
 }

@@ -30,17 +30,17 @@ public class CompaniesController {
 		}
 	}
 
-	public void deleteCompany(long id) throws ApplicationException{
-		repository.deleteById(id);
+	public void deleteCompany(long companyID) throws ApplicationException{
+		repository.deleteById(companyID);
 	}
 
-	public CompanyDto getCompany(long id) throws ApplicationException{
-		validateCompanyID(id);
+	public CompanyDto getCompany(long companyID) throws ApplicationException{
+		validateCompanyID(companyID);
 		try {
-			return repository.getCompany(id);
+			return repository.getCompany(companyID);
 		}
 		catch(Exception e) {
-			throw new ApplicationException("getCompany() failed for id = " + id,ErrorTypes.GENERAL_ERROR,e);
+			throw new ApplicationException("getCompany() failed for id = " + companyID,ErrorTypes.GENERAL_ERROR,e);
 		}
 	}
 
@@ -69,19 +69,19 @@ public class CompaniesController {
 		}
 	}
 	
-	protected Company getCompanyEntity(long id) throws ApplicationException{
-		validateCompanyID(id);
+	protected Company getCompanyEntity(long companyID) throws ApplicationException{
+		validateCompanyID(companyID);
 		try {
-			return repository.findById(id).get();
+			return repository.findById(companyID).get();
 		}
 		catch(Exception e) {
-			throw new ApplicationException("getCompany() failed for id = " + id,ErrorTypes.GENERAL_ERROR,e);
+			throw new ApplicationException("getCompany() failed for id = " + companyID,ErrorTypes.GENERAL_ERROR,e);
 		}
 	}
 	
-	protected void validateCompanyID(long id) throws ApplicationException{
-		if( ! repository.existsById(id)) {
-			throw new ApplicationException("CompaniesController.validateCompanyID() failed for ID: " + id, ErrorTypes.NO_COMPANY_ID);
+	protected void validateCompanyID(long companyID) throws ApplicationException{
+		if( ! repository.existsById(companyID)) {
+			throw new ApplicationException("CompaniesController.validateCompanyID() failed for ID: " + companyID, ErrorTypes.NO_COMPANY_ID);
 		}
 	}
 

@@ -2,22 +2,19 @@ package com.baruch.coupons.dataObjectsForPresentation;
 
 import java.sql.Date;
 
-import org.apache.catalina.loader.WebappLoader;
-
 import com.baruch.coupons.dataInterfaces.ICouponDataObject;
-import com.baruch.coupons.entities.Company;
 import com.baruch.coupons.entities.Coupon;
 import com.baruch.coupons.enums.Category;
 import com.baruch.coupons.enums.ErrorTypes;
 import com.baruch.coupons.exceptions.ApplicationException;
 
-public class CouponData implements ICouponDataObject {
-
+public class CouponDataForCustomer implements ICouponDataObject {
+	
 	//VARIABLES
 
 	private int amount;
 
-	private long  id, companyID;
+	private long  id;
 
 	private float  price;
 
@@ -27,13 +24,15 @@ public class CouponData implements ICouponDataObject {
 
 	private Date startDate, endDate;
 	
+	private boolean isFavorate;
+
 	//CTROS
-	
+
 	/*
 	 * Due to lazy fetch type the method getCompany is a DB query, therefore it
 	 * might invoke an exception.
 	 */
-	public CouponData(Coupon coupon) throws ApplicationException{
+	public CouponDataForCustomer(Coupon coupon, boolean isFavorate) throws ApplicationException{
 		try {
 			this.id = coupon.getId();
 			this.amount = coupon.getAmount();
@@ -44,16 +43,13 @@ public class CouponData implements ICouponDataObject {
 			this.startDate = coupon.getStartDate();
 			this.category = coupon.getCategory();
 			this.endDate = coupon.getEndDate();
+			this.isFavorate = isFavorate;
 
-			Company company = coupon.getCompany();
-			this.companyID = coupon.getCompany().getId();
-			this.companyName = company.getName();
+			this.companyName = coupon.getCompany().getName();
 		} catch (Exception e) {
-			throw new ApplicationException("new CouponData(Coupon) failed for " + coupon, ErrorTypes.GENERAL_ERROR,e);
+			throw new ApplicationException("new CouponDataForCompany(Coupon) failed for " + coupon, ErrorTypes.GENERAL_ERROR,e);
 		}
 	}
-	
-	//METHODS
 
 	public int getAmount() {
 		return amount;
@@ -69,14 +65,6 @@ public class CouponData implements ICouponDataObject {
 
 	public void setId(long id) {
 		this.id = id;
-	}
-
-	public long getCompanyID() {
-		return companyID;
-	}
-
-	public void setCompanyID(long companyID) {
-		this.companyID = companyID;
 	}
 
 	public float getPrice() {
@@ -143,14 +131,20 @@ public class CouponData implements ICouponDataObject {
 		this.endDate = endDate;
 	}
 
+	public boolean isFavorate() {
+		return isFavorate;
+	}
+
+	public void setFavorate(boolean isFavorate) {
+		this.isFavorate = isFavorate;
+	}
+
 	@Override
 	public String toString() {
-		return "CouponData [amount=" + amount + ", id=" + id + ", companyID=" + companyID + ", price=" + price
-				+ ", title=" + title + ", description=" + description + ", image=" + image + ", companyName="
-				+ companyName + ", category=" + category + ", startDate=" + startDate + ", endDate=" + endDate + "]";
+		return "CouponDataForCustomer [amount=" + amount + ", id=" + id + ", price=" + price + ", title=" + title
+				+ ", description=" + description + ", image=" + image + ", companyName=" + companyName + ", category="
+				+ category + ", startDate=" + startDate + ", endDate=" + endDate + ", isFavorate=" + isFavorate + "]";
 	}
 	
-
-
 	
 }

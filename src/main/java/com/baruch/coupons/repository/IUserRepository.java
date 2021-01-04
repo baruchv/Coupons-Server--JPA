@@ -24,7 +24,7 @@ public interface IUserRepository extends CrudRepository<User, Long> {
 	public List<UserData> getUsersByCompany(long companyID);
 
 	@Query("select new com.baruch.coupons.dataObjectsForPresentation.UserData(u) from User u where u.id = ?1")
-	public UserData getUser(long id);
+	public UserData getUser(long userID);
 	
 	@Query("select new com.baruch.coupons.dto.UserLoginData(u) from User u where u.userName = ?1 and u.password = ?2")
 	public UserLoginData login(String userName, String password);
@@ -34,5 +34,5 @@ public interface IUserRepository extends CrudRepository<User, Long> {
 	
 	@Modifying
 	@Query("update User u set  u.password = ?1 where u.id = ?2 ")
-	public void updateUser(String password, long id);
+	public void updateUser(String password, long userID);
 }

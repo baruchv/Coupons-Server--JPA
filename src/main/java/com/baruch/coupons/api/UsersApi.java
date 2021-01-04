@@ -58,8 +58,8 @@ public class UsersApi {
 	}
 	
 	@GetMapping("/{userID}")
-	public UserData getUser(@PathVariable("userID") long id) throws ApplicationException{
-		return con.getUser(id);
+	public UserData getUser(@PathVariable("userID") long userID) throws ApplicationException{
+		return con.getUser(userID);
 	}
 	
 	@GetMapping("/byType")

@@ -2,12 +2,14 @@ package com.baruch.coupons.entities;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -53,6 +55,9 @@ public class Coupon {
 	
 	@OneToMany(mappedBy = "coupon")
 	private List<Purchase> purchases;
+	
+	@ManyToMany( mappedBy = "favorates")
+	private Set<User> users;
 	
 	public Coupon() {
 		
@@ -157,14 +162,23 @@ public class Coupon {
 		this.purchases = purchases;
 	}
 
+	public Set<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(Set<User> users) {
+		this.users = users;
+	}
+
 	@Override
 	public String toString() {
 		return "Coupon [id=" + id + ", title=" + title + ", description=" + description + ", image=" + image
 				+ ", amount=" + amount + ", price=" + price + ", category=" + category + ", startDate=" + startDate
-				+ ", endDate=" + endDate + ", company=" + company + ", purchases=" + purchases + "]";
+				+ ", endDate=" + endDate + ", company=" + company + "]";
 	}
 
-	
-	
-	
+	@Override
+	public int hashCode() {
+		return this.toString().hashCode();
+	}
 }
