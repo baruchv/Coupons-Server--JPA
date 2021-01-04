@@ -7,8 +7,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import com.baruch.coupons.dataInterfaces.IPurchaseDataObject;
-import com.baruch.coupons.dataObjectsForPresentation.PurchaseDataForAdmin;
-import com.baruch.coupons.dto.PurchaseDto;
 import com.baruch.coupons.entities.Purchase;
 
 @Repository

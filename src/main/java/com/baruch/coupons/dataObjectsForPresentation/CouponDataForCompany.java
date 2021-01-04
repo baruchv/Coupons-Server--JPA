@@ -3,7 +3,6 @@ package com.baruch.coupons.dataObjectsForPresentation;
 import java.sql.Date;
 
 import com.baruch.coupons.dataInterfaces.ICouponDataObject;
-import com.baruch.coupons.entities.Company;
 import com.baruch.coupons.entities.Coupon;
 import com.baruch.coupons.enums.Category;
 import com.baruch.coupons.enums.ErrorTypes;

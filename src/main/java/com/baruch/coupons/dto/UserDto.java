@@ -1,10 +1,6 @@
 package com.baruch.coupons.dto;
 
-import com.baruch.coupons.entities.Company;
-import com.baruch.coupons.entities.User;
-import com.baruch.coupons.enums.ErrorTypes;
 import com.baruch.coupons.enums.UserType;
-import com.baruch.coupons.exceptions.ApplicationException;
 
 public class UserDto {
 	

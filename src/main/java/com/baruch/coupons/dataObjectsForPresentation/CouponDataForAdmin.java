@@ -2,7 +2,6 @@ package com.baruch.coupons.dataObjectsForPresentation;
 
 import java.sql.Date;
 
-import org.apache.catalina.loader.WebappLoader;
 
 import com.baruch.coupons.dataInterfaces.ICouponDataObject;
 import com.baruch.coupons.entities.Company;

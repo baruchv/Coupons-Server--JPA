@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import com.baruch.coupons.dataInterfaces.IPurchaseDataObject;
-import com.baruch.coupons.dataObjectsForPresentation.CouponBasicData;
-import com.baruch.coupons.dataObjectsForPresentation.PurchaseDataForAdmin;
 import com.baruch.coupons.dto.CouponDto;
 import com.baruch.coupons.dto.PurchaseDto;
 import com.baruch.coupons.dto.UserLoginData;
@@ -15,7 +13,6 @@ import com.baruch.coupons.entities.Coupon;
 import com.baruch.coupons.entities.Purchase;
 import com.baruch.coupons.entities.User;
 import com.baruch.coupons.enums.ErrorTypes;
-import com.baruch.coupons.enums.UserType;
 import com.baruch.coupons.exceptions.ApplicationException;
 import com.baruch.coupons.repository.IPurchasesRepository;
 

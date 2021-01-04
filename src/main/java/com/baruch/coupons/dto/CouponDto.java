@@ -3,11 +3,8 @@ package com.baruch.coupons.dto;
 
 import java.sql.Date;
 
-import com.baruch.coupons.entities.Company;
 import com.baruch.coupons.entities.Coupon;
 import com.baruch.coupons.enums.Category;
-import com.baruch.coupons.enums.ErrorTypes;
-import com.baruch.coupons.exceptions.ApplicationException;
 
 public class CouponDto {
 	
