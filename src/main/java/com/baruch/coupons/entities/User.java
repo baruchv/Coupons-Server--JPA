@@ -60,6 +60,8 @@ public class User {
 	public User(UserDto userDto) {
 		this.userName = userDto.getUserName();
 		this.password = userDto.getPassword();
+		this.firstName = userDto.getFirstName();
+		this.surName = userDto.getSurName();
 		this.type = userDto.getType();
 	}
 

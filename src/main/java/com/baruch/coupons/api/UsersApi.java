@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.baruch.coupons.dataInterfaces.IUserDataObject;
-import com.baruch.coupons.dataObjectsForPresentation.UserFullDataCompany;
 import com.baruch.coupons.dto.LoginDetails;
 import com.baruch.coupons.dto.SuccessfulLoginData;
 import com.baruch.coupons.dto.UserDto;

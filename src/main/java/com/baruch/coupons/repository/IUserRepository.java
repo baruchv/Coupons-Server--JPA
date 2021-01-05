@@ -8,7 +8,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import com.baruch.coupons.dataInterfaces.IUserDataObject;
-import com.baruch.coupons.dataObjectsForPresentation.UserFullDataCompany;
 import com.baruch.coupons.dto.UserLoginData;
 import com.baruch.coupons.entities.User;
 import com.baruch.coupons.enums.UserType;
