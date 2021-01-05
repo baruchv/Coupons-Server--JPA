@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.baruch.coupons.dataObjectsForPresentation.UserData;
+import com.baruch.coupons.dataInterfaces.IUserDataObject;
+import com.baruch.coupons.dataObjectsForPresentation.UserFullDataCompany;
 import com.baruch.coupons.dto.LoginDetails;
 import com.baruch.coupons.dto.SuccessfulLoginData;
 import com.baruch.coupons.dto.UserDto;
@@ -53,22 +54,22 @@ public class UsersApi {
 	}
 	
 	@GetMapping
-	public List<UserData> getAllUsers() throws ApplicationException{
+	public List<IUserDataObject> getAllUsers() throws ApplicationException{
 		return con.getAllUsers();
 	}
 	
 	@GetMapping("/{userID}")
-	public UserData getUser(@PathVariable("userID") long userID) throws ApplicationException{
+	public IUserDataObject getUser(@PathVariable("userID") long userID) throws ApplicationException{
 		return con.getUser(userID);
 	}
 	
 	@GetMapping("/byType")
-	public List<UserData> getUsersByType(@RequestParam("type") UserType type) throws ApplicationException{
+	public List<IUserDataObject> getUsersByType(@RequestParam("type") UserType type) throws ApplicationException{
 		return con.getUsersByType(type);
 	}
 	
 	@GetMapping("/byCompany")
-	public List<UserData> getUsersByCompany(@RequestParam("companyID") long companyID) throws ApplicationException{
+	public List<IUserDataObject> getUsersByCompany(@RequestParam("companyID") long companyID) throws ApplicationException{
 		return con.getUsersByCompany(companyID);
 	}
 	

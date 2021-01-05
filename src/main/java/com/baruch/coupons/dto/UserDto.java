@@ -10,7 +10,7 @@ public class UserDto {
 	
 	private Long  companyID;
 	
-	private String  userName, password;
+	private String  userName, password, firstName, surName;
 	
 	private UserType  type;
 
@@ -62,6 +62,28 @@ public class UserDto {
 
 	public void setCompanyID(Long companyID) {
 		this.companyID = companyID;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getSurName() {
+		return surName;
+	}
+
+	public void setSurName(String surName) {
+		this.surName = surName;
+	}
+
+	@Override
+	public String toString() {
+		return "UserDto [id=" + id + ", companyID=" + companyID + ", userName=" + userName + ", password=" + password
+				+ ", firstName=" + firstName + ", surName=" + surName + ", type=" + type + "]";
 	}
 
 	

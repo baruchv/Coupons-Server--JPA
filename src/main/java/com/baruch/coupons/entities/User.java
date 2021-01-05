@@ -33,6 +33,12 @@ public class User {
 	@Column(name="password", nullable=false)
 	private String password;
 	
+	@Column(name="first_name", nullable=false)
+	private String firstName;
+	
+	@Column(name="sur_name", nullable=false)
+	private String surName;
+	
 	@Column(name="user_type", nullable=false)
 	private UserType type;
 	
@@ -114,10 +120,26 @@ public class User {
 		this.favorates = favorates;
 	}
 
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getSurName() {
+		return surName;
+	}
+
+	public void setSurName(String surName) {
+		this.surName = surName;
+	}
+
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", userName=" + userName + ", password=" + password + ", type=" + type + ", company="
-				+ company + "]";
+		return "User [id=" + id + ", userName=" + userName + ", password=" + password + ", firstName=" + firstName
+				+ ", surName=" + surName + ", type=" + type + ", company=" + company + "]";
 	}
 
 	@Override

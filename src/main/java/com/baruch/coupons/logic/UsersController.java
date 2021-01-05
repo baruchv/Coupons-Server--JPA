@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.baruch.coupons.dataObjectsForPresentation.UserData;
+import com.baruch.coupons.dataInterfaces.IUserDataObject;
+import com.baruch.coupons.dataObjectsForPresentation.UserFullDataCompany;
+import com.baruch.coupons.dataObjectsForPresentation.UserFullDataNotCompany;
 import com.baruch.coupons.dto.SuccessfulLoginData;
 import com.baruch.coupons.dto.UserDto;
 import com.baruch.coupons.dto.UserLoginData;
@@ -54,10 +56,13 @@ public class UsersController {
 	public void updateUser(UserDto userDto, UserLoginData userDetails) throws ApplicationException{
 		long id = userDetails.getId();
 		validateUserId(id);
+		validateNames(userDto.getFirstName(), userDto.getSurName());
 		validatePassword(userDto.getPassword());
 		String hashedPassword = getHashedPassword(userDto.getPassword());
+		String firstName = userDto.getFirstName();
+		String surName = userDto.getSurName();
 		try {
-			repository.updateUser(hashedPassword, id);
+			repository.updateUser(hashedPassword, firstName, surName, id);
 		}
 		catch(Exception e) {
 			throw new ApplicationException("updateUser() failed for " + userDto,ErrorTypes.GENERAL_ERROR,e);
@@ -74,17 +79,29 @@ public class UsersController {
 		}
 	}
 
-	public UserData getUser(long userID) throws ApplicationException{
+	public IUserDataObject getUser(long userID) throws ApplicationException{
 		validateUserId(userID);
 		try {
-			return repository.getUser(userID);
+			
+			User user = repository.findById(userID).get();
+			UserType type = user.getType();
+			IUserDataObject userData;
+			
+			if(type.equals(UserType.COMPANY)) {
+				userData = new UserFullDataCompany(user);
+			}
+			else {
+				userData = new UserFullDataNotCompany(user);
+			}
+			
+			return userData;
 		}
 		catch(Exception e) {
 			throw new ApplicationException("findById() failed for userID = " + userID, ErrorTypes.GENERAL_ERROR,e);
 		}
 	}
 	
-	public List<UserData> getAllUsers() throws ApplicationException{
+	public List<IUserDataObject> getAllUsers() throws ApplicationException{
 		try {
 			return repository.getAllUsers();
 		}
@@ -93,7 +110,7 @@ public class UsersController {
 		}
 	}
 
-	public List<UserData> getUsersByCompany(long companyID) throws ApplicationException{
+	public List<IUserDataObject> getUsersByCompany(long companyID) throws ApplicationException{
 		validateCompanyID(companyID);
 		try {
 			return repository.getUsersByCompany(companyID);
@@ -103,7 +120,7 @@ public class UsersController {
 		}
 	}
 
-	public List<UserData> getUsersByType(UserType type) throws ApplicationException{
+	public List<IUserDataObject> getUsersByType(UserType type) throws ApplicationException{
 		try {
 			return repository.getUsersByType(type);
 		}
@@ -167,6 +184,7 @@ public class UsersController {
 		}
 		validateUserName(userDto.getUserName());
 		validatePassword(userDto.getPassword());
+		validateNames(userDto.getFirstName(), userDto.getSurName());
 		if(userDto.getType() == UserType.COMPANY) {
 			validateCompanyID(userDto.getCompanyID());
 		}
@@ -182,6 +200,15 @@ public class UsersController {
 		}
 		if(userName.length()<2) {
 			throw new ApplicationException(ErrorTypes.INVALID_USERNAME_ERROR);
+		}
+	}
+	
+	private void validateNames(String firstName, String surName) throws ApplicationException{
+		if(firstName == null || surName == null) {
+			throw new ApplicationException(ErrorTypes.EMPTY_NAME_ERROR);
+		}
+		if(firstName.length() < 2 || surName.length() < 2) {
+			throw new ApplicationException(ErrorTypes.INVALID_NAME_ERROR);
 		}
 	}
 
