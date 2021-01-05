@@ -172,7 +172,7 @@ public class CouponsController {
 	
 	//PRIVATE-METHODS
 	
-	protected int getCouponsAmount(long couponID) throws ApplicationException{
+	int getCouponsAmount(long couponID) throws ApplicationException{
 		try {
 			return repository.getCouponsAmount(couponID);
 		} catch (Exception e) {
@@ -180,7 +180,7 @@ public class CouponsController {
 		}
 	}
 	
-	protected Coupon getCouponEntity(long couponID) throws ApplicationException{
+	 Coupon getCouponEntity(long couponID) throws ApplicationException{
 		try {
 			return repository.findById(couponID).get();
 		}
@@ -189,7 +189,7 @@ public class CouponsController {
 		}
 	}
 	
-	protected void validateCouponID(long couponID) throws ApplicationException{
+	 void validateCouponID(long couponID) throws ApplicationException{
 		if( ! repository.existsById(couponID)) {
 			throw new ApplicationException("CouponsController.validateCouponID failed for ID: " + couponID, ErrorTypes.GENERAL_ERROR);
 		}

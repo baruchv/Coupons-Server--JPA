@@ -128,7 +128,7 @@ public class UsersController {
 
 	//PRIVATE-METHODS
 
-	protected void save(User user) throws ApplicationException{
+	void save(User user) throws ApplicationException{
 		try {
 			repository.save(user);
 		} catch (Exception e) {
@@ -136,6 +136,26 @@ public class UsersController {
 		}
 	}
 	
+	User getUserEntity(long userID) throws ApplicationException{
+		try {
+			return repository.findById(userID).get();
+		}
+		catch(Exception e) {
+			throw new ApplicationException("repository.findById() failed for userID = " + userID, ErrorTypes.GENERAL_ERROR, e);
+		}
+	}
+	
+	void validateUserId(long userID) throws ApplicationException{
+		try {
+			if( ! repository.existsById(userID)) {
+				throw new ApplicationException("UsersController.validateUserID() failed for ID: " + userID, ErrorTypes.NO_USER_ID);
+			}
+		}
+		catch(Exception e) {
+			throw new ApplicationException("existsById failed for userID = " + userID, ErrorTypes.GENERAL_ERROR,e);
+		}
+	}
+
 	private void validateCreateUser(UserDto userDto) throws ApplicationException{
 		try {
 			if(repository.existsByUserName(userDto.getUserName())) {
@@ -174,17 +194,6 @@ public class UsersController {
 		}
 	}
 
-	protected void validateUserId(long userID) throws ApplicationException{
-		try {
-			if( ! repository.existsById(userID)) {
-				throw new ApplicationException("UsersController.validateUserID() failed for ID: " + userID, ErrorTypes.NO_USER_ID);
-			}
-		}
-		catch(Exception e) {
-			throw new ApplicationException("existsById failed for userID = " + userID, ErrorTypes.GENERAL_ERROR,e);
-		}
-	}
-
 	private void validateCompanyID(Long companyID) throws ApplicationException{
 		if(companyID == null) {
 			throw new ApplicationException(ErrorTypes.EMPTY_COMPANYID_ERROR);
@@ -213,14 +222,5 @@ public class UsersController {
 		}
 	}
 	
-	protected User getUserEntity(long userID) throws ApplicationException{
-		try {
-			return repository.findById(userID).get();
-		}
-		catch(Exception e) {
-			throw new ApplicationException("repository.findById() failed for userID = " + userID, ErrorTypes.GENERAL_ERROR, e);
-		}
-	}
-
 
 }

@@ -69,7 +69,10 @@ public class CompaniesController {
 		}
 	}
 	
-	protected Company getCompanyEntity(long companyID) throws ApplicationException{
+	
+	//PRIVATE-METHODS
+	
+	 Company getCompanyEntity(long companyID) throws ApplicationException{
 		validateCompanyID(companyID);
 		try {
 			return repository.findById(companyID).get();
@@ -79,7 +82,7 @@ public class CompaniesController {
 		}
 	}
 	
-	protected void validateCompanyID(long companyID) throws ApplicationException{
+	 void validateCompanyID(long companyID) throws ApplicationException{
 		if( ! repository.existsById(companyID)) {
 			throw new ApplicationException("CompaniesController.validateCompanyID() failed for ID: " + companyID, ErrorTypes.NO_COMPANY_ID);
 		}
