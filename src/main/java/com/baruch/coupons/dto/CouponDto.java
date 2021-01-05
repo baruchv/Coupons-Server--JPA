@@ -122,9 +122,14 @@ public class CouponDto {
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
-	
-	
-	
 
+	@Override
+	public String toString() {
+		return "CouponDto [amount=" + amount + ", id=" + id + ", companyID=" + companyID + ", price=" + price
+				+ ", title=" + title + ", description=" + description + ", image=" + image + ", category=" + category
+				+ ", startDate=" + startDate + ", endDate=" + endDate + "]";
+	}
+	
+	
 	
 }

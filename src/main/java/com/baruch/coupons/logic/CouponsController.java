@@ -38,8 +38,12 @@ public class CouponsController {
 		couponDto.setCompanyID(companyID);
 		validateCreateCoupon(couponDto, Calendar.getInstance());
 		Coupon coupon = generateEntity(couponDto);
-		repository.save(coupon);
-		return coupon.getId();
+		try {
+			repository.save(coupon);
+			return coupon.getId();
+		} catch (Exception e) {
+			throw new ApplicationException("createCoupon() failed for " + coupon,ErrorTypes.GENERAL_ERROR,e);
+		}
 	}
 	
 	@Transactional
@@ -50,7 +54,11 @@ public class CouponsController {
 		float price = couponDto.getPrice();
 		String image = couponDto.getImage();
 		long id = couponDto.getId();
-		repository.updateCoupon(amount, price, image, id);
+		try {
+			repository.updateCoupon(amount, price, image, id);
+		} catch (Exception e) {
+			throw new ApplicationException("updateCoupon() failed for " + couponDto,ErrorTypes.GENERAL_ERROR,e);
+		}
 	}
 	
 	public void markAsFavorate(long couponID, UserLoginData userDetails) throws ApplicationException{

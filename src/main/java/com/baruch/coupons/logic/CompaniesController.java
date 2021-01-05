@@ -26,7 +26,7 @@ public class CompaniesController {
 			return company.getId();
 		}
 		catch(Exception e) {
-			throw new ApplicationException("createCompany() failed for " + company.toString(),ErrorTypes.GENERAL_ERROR,e);
+			throw new ApplicationException("createCompany() failed for " + company,ErrorTypes.GENERAL_ERROR,e);
 		}
 	}
 
@@ -65,7 +65,7 @@ public class CompaniesController {
 			repository.updateCompany(phoneNumber, address, id);
 		}
 		catch(Exception e) {
-			throw new ApplicationException("updateCompany() failed",ErrorTypes.GENERAL_ERROR,e);
+			throw new ApplicationException("updateCompany() failed for " + companyDto,ErrorTypes.GENERAL_ERROR,e);
 		}
 	}
 	

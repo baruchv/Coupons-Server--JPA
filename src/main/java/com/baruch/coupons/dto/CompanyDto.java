@@ -58,5 +58,13 @@ public class CompanyDto {
 	public void setId(long id) {
 		this.id = id;
 	}
+
+	@Override
+	public String toString() {
+		return "CompanyDto [name=" + name + ", address=" + address + ", phoneNumber=" + phoneNumber + ", id=" + id
+				+ "]";
+	}
+	
+	
 	
 }

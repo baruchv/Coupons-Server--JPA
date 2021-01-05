@@ -51,7 +51,7 @@ public class PurchasesController {
 			return purchase.getId();
 		}
 		catch(Exception e) {
-			throw new ApplicationException("repository.addPurchase() failed for  = " + purchaseDto, ErrorTypes.GENERAL_ERROR,e);
+			throw new ApplicationException("repository.addPurchase() failed for  = " + purchase, ErrorTypes.GENERAL_ERROR,e);
 		}
 	}
 

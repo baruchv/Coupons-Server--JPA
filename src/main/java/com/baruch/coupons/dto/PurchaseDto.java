@@ -118,4 +118,13 @@ public class PurchaseDto  {
 	public void setTotalPrice(float totalPrice) {
 		this.totalPrice = totalPrice;
 	}
+
+	@Override
+	public String toString() {
+		return "PurchaseDto [amount=" + amount + ", id=" + id + ", userID=" + userID + ", couponID=" + couponID
+				+ ", timeStamp=" + timeStamp + ", totalPrice=" + totalPrice + ", couponTitle=" + couponTitle
+				+ ", companyName=" + companyName + "]";
+	}
+	
+	
 }
