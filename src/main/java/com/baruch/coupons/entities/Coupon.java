@@ -56,7 +56,7 @@ public class Coupon {
 	@OneToMany(mappedBy = "coupon")
 	private List<Purchase> purchases;
 	
-	@ManyToMany( mappedBy = "favorates")
+	@ManyToMany( mappedBy = "favorates", cascade = CascadeType.REMOVE)
 	private Set<User> users;
 	
 	public Coupon() {
