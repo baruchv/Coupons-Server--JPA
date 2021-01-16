@@ -50,13 +50,13 @@ public class Coupon {
 	@Column(name="end_date", nullable=false)
 	private Date endDate;
 	
-	@ManyToOne(cascade = CascadeType.REMOVE)
+	@ManyToOne()
 	private Company company;
 	
-	@OneToMany(mappedBy = "coupon")
+	@OneToMany(mappedBy = "coupon", cascade = CascadeType.REMOVE)
 	private List<Purchase> purchases;
 	
-	@ManyToMany( mappedBy = "favorates", cascade = CascadeType.REMOVE)
+	@ManyToMany( mappedBy = "favorates")
 	private Set<User> users;
 	
 	public Coupon() {

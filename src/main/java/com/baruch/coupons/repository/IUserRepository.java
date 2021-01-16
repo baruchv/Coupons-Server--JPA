@@ -1,6 +1,7 @@
 package com.baruch.coupons.repository;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.baruch.coupons.dataInterfaces.IUserDataObject;
 import com.baruch.coupons.dto.UserLoginData;
+import com.baruch.coupons.entities.Coupon;
 import com.baruch.coupons.entities.User;
 import com.baruch.coupons.enums.UserType;
 
@@ -32,4 +34,7 @@ public interface IUserRepository extends CrudRepository<User, Long> {
 	@Modifying
 	@Query("update User u set  u.password = ?1, u.firstName = ?2, u.surName = ?3 where u.id = ?4 ")
 	public void updateUser(String password, String firstName, String surName, long userID);
+	
+	@Query("select u from User u where ?1 member of u.favorates")
+	public List<User> getUsersByFavorateCoupon(Coupon coupon);
 }

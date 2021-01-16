@@ -29,52 +29,52 @@ import com.baruch.coupons.logic.UsersController;
 public class UsersApi {
 	
 	@Autowired
-	private UsersController con;
+	private UsersController controller;
 	
 	@PostMapping
 	public long createUser(@RequestBody UserDto userDto) throws ApplicationException{
-		return con.createUser(userDto);
+		return controller.createUser(userDto);
 	}
 	
 	@PostMapping("/login")
 	public SuccessfulLoginData login(@RequestBody LoginDetails loginDetails) throws ApplicationException{
-		return con.login(loginDetails.getUserName(), loginDetails.getPassword());
+		return controller.login(loginDetails.getUserName(), loginDetails.getPassword());
 	}
 	
 	@PostMapping("/logout")
 	public void logout(@RequestHeader("Authorization") String token) {
-		con.logout(token);
+		controller.logout(token);
 		
 	}
 	
 	@PutMapping
 	public void updateUser(@RequestBody UserDto userDto, @RequestAttribute("UserLoginData") UserLoginData userDetails) throws ApplicationException{
-		con.updateUser(userDto, userDetails);
+		controller.updateUser(userDto, userDetails);
 	}
 	
 	@GetMapping
 	public List<IUserDataObject> getAllUsers() throws ApplicationException{
-		return con.getAllUsers();
+		return controller.getAllUsers();
 	}
 	
 	@GetMapping("/{userID}")
 	public IUserDataObject getUser(@PathVariable("userID") long userID) throws ApplicationException{
-		return con.getUser(userID);
+		return controller.getUser(userID);
 	}
 	
 	@GetMapping("/byType")
 	public List<IUserDataObject> getUsersByType(@RequestParam("type") UserType type) throws ApplicationException{
-		return con.getUsersByType(type);
+		return controller.getUsersByType(type);
 	}
 	
 	@GetMapping("/byCompany")
 	public List<IUserDataObject> getUsersByCompany(@RequestParam("companyID") long companyID) throws ApplicationException{
-		return con.getUsersByCompany(companyID);
+		return controller.getUsersByCompany(companyID);
 	}
 	
 	@DeleteMapping
 	public void deleteUser(@RequestAttribute("UserLoginData") UserLoginData userDetails) throws ApplicationException{
-		con.deleteUser(userDetails);
+		controller.deleteUser(userDetails);
 	}
 	
 }

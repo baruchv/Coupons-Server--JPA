@@ -26,60 +26,60 @@ import com.baruch.coupons.logic.CouponsController;
 public class CouponsApi {
 	
 	@Autowired
-	private CouponsController con;
+	private CouponsController controller;
 	
 	@PostMapping
 	public long createCoupon(@RequestBody CouponDto couponDto, @RequestAttribute("UserLoginData") UserLoginData userDetails) throws ApplicationException{
-		return con.createCoupon(couponDto, userDetails);
+		return controller.createCoupon(couponDto, userDetails);
 	}
 	
 	@PutMapping
 	public void updateCoupon(@RequestBody CouponDto couponDto, @RequestAttribute("UserLoginData") UserLoginData userDetails) throws ApplicationException{
-		con.updateCoupon(couponDto, userDetails);;
+		controller.updateCoupon(couponDto, userDetails);;
 	}
 	
 	@GetMapping("/{couponID}")
 	public ICouponDataObject getCoupon(@PathVariable("couponID") long couponID, @RequestAttribute("UserLoginData") UserLoginData userDetails) throws ApplicationException{
-		return con.getCoupon(couponID,userDetails);
+		return controller.getCoupon(couponID,userDetails);
 	}
 	
 	@GetMapping
 	public List<ICouponDataObject> getAllCoupons() throws ApplicationException{
-		return con.getAllCoupons();
+		return controller.getAllCoupons();
 	}
 	
 	@GetMapping("/byCompany")
 	public List<ICouponDataObject> getCouponsByCompany(@RequestParam("companyID") long companyID) throws ApplicationException{
-		return con.getCouponsByCompany(companyID);
+		return controller.getCouponsByCompany(companyID);
 	}
 	
 	@GetMapping("/byCategory")
 	public List<ICouponDataObject> getCouponsByCategory(@RequestParam("category") Category category) throws ApplicationException{
-		return con.getCouponsByCategory(category);
+		return controller.getCouponsByCategory(category);
 	}
 	
 	@GetMapping("/byMaxPrice")
 	public List<ICouponDataObject> getCouponsByMaxPrice(@RequestParam("maxPrice") float maxPrice, @RequestAttribute("UserLoginData") UserLoginData userDetails) throws ApplicationException{
-		return con.getCouponsByMaxPrice(maxPrice, userDetails);
+		return controller.getCouponsByMaxPrice(maxPrice, userDetails);
 	}
 	
 	@DeleteMapping("/{couponID}")
 	public void deleteCoupon(@PathVariable("couponID") long couponID) throws ApplicationException{
-		con.deleteCoupon(couponID);
+		controller.deleteCoupon(couponID);
 	}
 	
 	@PutMapping("/favorates/{couponID}")
 	public void markAsFavorate(@PathVariable("couponID") long couponID, @RequestAttribute("UserLoginData") UserLoginData userDetails) throws ApplicationException{
-		con.markAsFavorate(couponID, userDetails);
+		controller.markAsFavorate(couponID, userDetails);
 	}
 	
 	@GetMapping("/favorates")
 	public List<ICouponDataObject> getAllFavorates(@RequestAttribute("UserLoginData") UserLoginData userDetails) throws ApplicationException{
-		return con.getAllFavorates(userDetails);
+		return controller.getAllFavorates(userDetails);
 	}
 	
 	@DeleteMapping("/favorates/{couponID}")
 	public void deleteFromFavorates(@PathVariable("couponID") long couponID, @RequestAttribute("UserLoginData") UserLoginData userDetails) throws ApplicationException{
-		con.deleteFromFavorates(couponID, userDetails);
+		controller.deleteFromFavorates(couponID, userDetails);
 	}
 }

@@ -2,6 +2,7 @@ package com.baruch.coupons.entities;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,10 +30,10 @@ public class Company {
 	@Column(name="phone_number", nullable=false)
 	private String phoneNumber;
 	
-	@OneToMany(mappedBy = "company")
+	@OneToMany(mappedBy = "company", cascade = CascadeType.REMOVE)
 	private List<User> users;
 	
-	@OneToMany(mappedBy = "company")
+	@OneToMany(mappedBy = "company", cascade = CascadeType.REMOVE)
 	private List<Coupon> coupons;
 	
 	public Company() {

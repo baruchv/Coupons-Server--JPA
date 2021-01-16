@@ -42,10 +42,10 @@ public class User {
 	@Column(name="user_type", nullable=false)
 	private UserType type;
 	
-	@ManyToOne(cascade = CascadeType.REMOVE)
+	@ManyToOne()
 	private Company company;
 	
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
 	private List<Purchase> purchases;
 	
 	@ManyToMany

@@ -2,6 +2,9 @@ package com.baruch.coupons.logic;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.Set;
+
+import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -96,7 +99,9 @@ public class CouponsController {
 	
 	public void deleteCoupon(long couponID) throws ApplicationException{
 		try {
-			repository.deleteById(couponID);
+			Coupon coupon = repository.findById(couponID).get();
+			usersController.deleteFromAllUsersFavorates(coupon);
+			repository.delete(coupon);
 		}
 		catch(Exception e) {
 			throw new ApplicationException("repository.deletCoupon() failed for id = " + couponID, ErrorTypes.GENERAL_ERROR, e);
@@ -289,5 +294,5 @@ public class CouponsController {
 		coupon.setCompany(company);
 		return coupon;
 	}
-
+	
 }

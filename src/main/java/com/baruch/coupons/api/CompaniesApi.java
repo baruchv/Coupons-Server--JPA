@@ -21,31 +21,31 @@ import com.baruch.coupons.logic.CompaniesController;
 public class CompaniesApi {
 	
 	@Autowired
-	private CompaniesController con;
+	private CompaniesController controller;
 	
 	@PostMapping
 	public long createCompany(@RequestBody CompanyDto companyDto) throws ApplicationException{
-		return con.createCompany(companyDto);
+		return controller.createCompany(companyDto);
 	}
 	
 	@PutMapping
 	public void updateCompany(@RequestBody CompanyDto companyDto) throws ApplicationException{
-		con.updateCompany(companyDto);
+		controller.updateCompany(companyDto);
 	}
 	
 	@GetMapping("/{companyID}")
 	public CompanyDto getCompany(@PathVariable("companyID") long companyID) throws ApplicationException{
-		return con.getCompany(companyID);
+		return controller.getCompany(companyID);
 	}
 	
 	@GetMapping
 	public List<CompanyDto> getAllCompanies() throws ApplicationException{
-		return con.getAllCompanies();
+		return controller.getAllCompanies();
 	}
 	
 	@DeleteMapping("/{companyID}")
 	public void deleteCompany(@PathVariable("companyID") long companyID) throws ApplicationException{
-		con.deleteCompany(companyID);
+		controller.deleteCompany(companyID);
 	}
 	
 }

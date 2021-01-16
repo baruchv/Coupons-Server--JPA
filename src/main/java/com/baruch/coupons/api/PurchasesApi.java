@@ -24,36 +24,36 @@ import com.baruch.coupons.logic.PurchasesController;
 public class PurchasesApi {
 	
 	@Autowired
-	private PurchasesController con;
+	private PurchasesController controller;
 	
 	@PostMapping
 	public long addPurchase(@RequestBody PurchaseDto purchaseDto, @RequestAttribute("UserLoginData") UserLoginData userDetails) throws ApplicationException{
-		return con.addPurchase(purchaseDto, userDetails);
+		return controller.addPurchase(purchaseDto, userDetails);
 	}
 	
 	@GetMapping
 	public List<IPurchaseDataObject> getAllPurchases(@RequestAttribute("UserLoginData") UserLoginData userDetails) throws ApplicationException{
-		return con.getAllPurchases(userDetails);
+		return controller.getAllPurchases(userDetails);
 	}
 	
 	@GetMapping("/{purchaseID}")
 	public IPurchaseDataObject getPurchase(@PathVariable("purchaseID") long purchaseID) throws ApplicationException{
-		return con.getPurchase(purchaseID);
+		return controller.getPurchase(purchaseID);
 	}
 	
 	@GetMapping("/byCompanyID")
 	public List<IPurchaseDataObject> getPurchaseByCompanyID(@RequestParam("companyID") long companyID) throws ApplicationException{
-		return con.getPurchasesByCompanyID(companyID);
+		return controller.getPurchasesByCompanyID(companyID);
 	}
 	
 	@GetMapping("/byUserID")
 	public List<IPurchaseDataObject> getPurchaseByUserID(@RequestParam("userID") long userID) throws ApplicationException{
-		return con.getPurchasesByUserID(userID);
+		return controller.getPurchasesByUserID(userID);
 	}
 	
 	@DeleteMapping("/{purchaseID}")
 	public void deletePurchase(@PathVariable("purchaseID") long purchaseID) throws ApplicationException{
-		con.deletePurchase(purchaseID);
+		controller.deletePurchase(purchaseID);
 	}
 
 }
