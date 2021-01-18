@@ -8,9 +8,15 @@ import com.baruch.coupons.entities.Purchase;
 import com.baruch.coupons.enums.ErrorTypes;
 import com.baruch.coupons.exceptions.ApplicationException;
 
-/*
- * The purpose of this DTO is receiving Purchase-related data from users:
- */
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
 public class PurchaseDto  {
 	
 	//VARIABLES
@@ -26,10 +32,6 @@ public class PurchaseDto  {
 	private String couponTitle, companyName;
 	
 	//CTORS
-	
-	public PurchaseDto() {
-		super();
-	}
 	
 	/*
 	 * Due to Lazy fetchType, the methods getCoupon(), getUser() , are DB queries.
@@ -52,79 +54,5 @@ public class PurchaseDto  {
 			throw new ApplicationException("new PurchaseDto(Purchase) failed for " + purchase, ErrorTypes.GENERAL_ERROR,e);
 		}
 	}
-	
-	//METHODS
-	
-	public long getId() {
-		return id;
-	}
-	
-	public void setId(long id) {
-		this.id = id;
-	}
-	
-	public long getUserID() {
-		return userID;
-	}
-	
-	public void setUserID(long userID) {
-		this.userID = userID;
-	}
-	
-	public long getCouponID() {
-		return couponID;
-	}
-	
-	public void setCouponID(long couponID) {
-		this.couponID = couponID;
-	}
-	
-	public int getAmount() {
-		return amount;
-	}
-	
-	public void setAmount(int amount) {
-		this.amount = amount;
-	}
-	
-	public Date getTimeStamp() {
-		return timeStamp;
-	}
-	
-	public void setTimeStamp(Date timeStamp) {
-		this.timeStamp = timeStamp;
-	}
-	
-	public String getCompanyName() {
-		return companyName;
-	}
-
-	public void setCompanyName(String companyName) {
-		this.companyName = companyName;
-	}
-
-	public String getCouponTitle() {
-		return couponTitle;
-	}
-
-	public void setCouponTitle(String couponTitle) {
-		this.couponTitle = couponTitle;
-	}
-
-	public float getTotalPrice() {
-		return totalPrice;
-	}
-
-	public void setTotalPrice(float totalPrice) {
-		this.totalPrice = totalPrice;
-	}
-
-	@Override
-	public String toString() {
-		return "PurchaseDto [amount=" + amount + ", id=" + id + ", userID=" + userID + ", couponID=" + couponID
-				+ ", timeStamp=" + timeStamp + ", totalPrice=" + totalPrice + ", couponTitle=" + couponTitle
-				+ ", companyName=" + companyName + "]";
-	}
-	
 	
 }

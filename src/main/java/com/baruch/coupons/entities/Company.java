@@ -12,8 +12,15 @@ import javax.persistence.Table;
 
 import com.baruch.coupons.dto.CompanyDto;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @Entity
 @Table(name="companies")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Company {
 	
 	@Id
@@ -36,62 +43,10 @@ public class Company {
 	@OneToMany(mappedBy = "company", cascade = CascadeType.REMOVE)
 	private List<Coupon> coupons;
 	
-	public Company() {
-		super();
-	}
-
 	public Company(CompanyDto companyDto){
 		this.name = companyDto.getName();
 		this.address = companyDto.getAddress();
 		this.phoneNumber = companyDto.getPhoneNumber();
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
-
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
-
-	public List<User> getUsers() {
-		return users;
-	}
-
-	public void setUsers(List<User> users) {
-		this.users = users;
-	}
-
-	public List<Coupon> getCoupons() {
-		return coupons;
-	}
-
-	public void setCoupons(List<Coupon> coupons) {
-		this.coupons = coupons;
 	}
 
 	@Override

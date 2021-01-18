@@ -2,9 +2,7 @@ package com.baruch.coupons.logic;
 
 import java.util.Calendar;
 import java.util.List;
-import java.util.Set;
 
-import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -167,12 +165,7 @@ public class CouponsController {
 	public List<ICouponDataObject> getAllFavorates(UserLoginData userDetails) throws ApplicationException{
 		
 		long userID = userDetails.getId();
-		UserType type = userDetails.getType();
-		
-		if( ! type.equals(UserType.CUSTOMER)) {
-			throw new ApplicationException(ErrorTypes.UN_AUTHORIZED);
-		}
-		
+
 		try {
 			User user = usersController.getUserEntity(userID);
 			return repository.getAllFavorates(user);

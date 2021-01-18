@@ -2,6 +2,15 @@ package com.baruch.coupons.dto;
 
 import com.baruch.coupons.entities.Company;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
 public class CompanyDto {
 	
 	//VARIABLES
@@ -13,58 +22,11 @@ public class CompanyDto {
 	
 	//CTORS
 	
-	public CompanyDto() {
-		super();
-	}
-	
 	public CompanyDto(Company company) {
 		this.id = company.getId();
 		this.name = company.getName();
 		this.address = company.getAddress();
 		this.phoneNumber = company.getPhoneNumber();
 	}
-	
-	
-	//METHODS
-	
-	public String getName() {
-		return name;
-	}
-	
-	public void setName(String name) {
-		this.name = name;
-	}
-	
-	public String getAddress() {
-		return address;
-	}
-	
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
-	
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
-	
-	public long getId() {
-		return id;
-	}
-	
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	@Override
-	public String toString() {
-		return "CompanyDto [name=" + name + ", address=" + address + ", phoneNumber=" + phoneNumber + ", id=" + id
-				+ "]";
-	}
-	
-	
 	
 }

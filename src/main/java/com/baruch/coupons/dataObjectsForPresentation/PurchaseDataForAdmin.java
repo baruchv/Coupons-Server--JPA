@@ -9,6 +9,13 @@ import com.baruch.coupons.entities.Purchase;
 import com.baruch.coupons.enums.ErrorTypes;
 import com.baruch.coupons.exceptions.ApplicationException;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
 public class PurchaseDataForAdmin implements IPurchaseDataObject{
 	
 		//VARIABLES
@@ -45,53 +52,5 @@ public class PurchaseDataForAdmin implements IPurchaseDataObject{
 			}
 		}
 		
-		//METHODS
 		
-		public int getAmount() {
-			return amount;
-		}
-
-		public void setAmount(int amount) {
-			this.amount = amount;
-		}
-
-		public Date getTimeStamp() {
-			return timeStamp;
-		}
-
-		public void setTimeStamp(Date timeStamp) {
-			this.timeStamp = timeStamp;
-		}
-
-		public float getTotalPrice() {
-			return totalPrice;
-		}
-
-		public void setTotalPrice(float totalPrice) {
-			this.totalPrice = totalPrice;
-		}
-
-		public String getCouponTitle() {
-			return couponTitle;
-		}
-
-		public void setCouponTitle(String couponTitle) {
-			this.couponTitle = couponTitle;
-		}
-
-		public String getCompanyName() {
-			return companyName;
-		}
-
-		public void setCompanyName(String companyName) {
-			this.companyName = companyName;
-		}
-
-		public long getUserID() {
-			return userID;
-		}
-
-		public void setUserID(long userID) {
-			this.userID = userID;
-		}
 }

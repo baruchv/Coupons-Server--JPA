@@ -17,8 +17,15 @@ import javax.persistence.Table;
 import com.baruch.coupons.dto.CouponDto;
 import com.baruch.coupons.enums.Category;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @Entity
 @Table(name="coupons")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Coupon {
 	
 	@Id
@@ -59,10 +66,6 @@ public class Coupon {
 	@ManyToMany( mappedBy = "favorates")
 	private Set<User> users;
 	
-	public Coupon() {
-		
-	}
-	
 	public Coupon(CouponDto couponDto) {
 		this.amount =couponDto.getAmount();
 		this.price = couponDto.getPrice();
@@ -72,102 +75,6 @@ public class Coupon {
 		this.image = couponDto.getImage();
 		this.startDate = couponDto.getStartDate();
 		this.endDate = couponDto.getEndDate();
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public String getImage() {
-		return image;
-	}
-
-	public void setImage(String image) {
-		this.image = image;
-	}
-
-	public int getAmount() {
-		return amount;
-	}
-
-	public void setAmount(int amount) {
-		this.amount = amount;
-	}
-
-	public float getPrice() {
-		return price;
-	}
-
-	public void setPrice(float price) {
-		this.price = price;
-	}
-
-	public Category getCategory() {
-		return category;
-	}
-
-	public void setCategory(Category category) {
-		this.category = category;
-	}
-
-	public Date getStartDate() {
-		return startDate;
-	}
-
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
-	}
-
-	public Date getEndDate() {
-		return endDate;
-	}
-
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
-	}
-
-	public Company getCompany() {
-		return company;
-	}
-
-	public void setCompany(Company company) {
-		this.company = company;
-	}
-
-	public List<Purchase> getPurchases() {
-		return purchases;
-	}
-
-	public void setPurchases(List<Purchase> purchases) {
-		this.purchases = purchases;
-	}
-
-	public Set<User> getUsers() {
-		return users;
-	}
-
-	public void setUsers(Set<User> users) {
-		this.users = users;
 	}
 
 	@Override

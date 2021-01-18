@@ -7,6 +7,13 @@ import com.baruch.coupons.enums.ErrorTypes;
 import com.baruch.coupons.enums.UserType;
 import com.baruch.coupons.exceptions.ApplicationException;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
 public class UserFullDataCompany implements IUserDataObject{
 		
 		//VARIABLES
@@ -41,76 +48,4 @@ public class UserFullDataCompany implements IUserDataObject{
 				throw new ApplicationException("new UserData(User) failed for " + user, ErrorTypes.GENERAL_ERROR,e);
 			}
 		}
-		
-		//METHODS
-
-		public long getId() {
-			return id;
-		}
-
-
-		public void setId(long id) {
-			this.id = id;
-		}
-
-
-		public Long getCompanyID() {
-			return companyID;
-		}
-
-
-		public void setCompanyID(Long companyID) {
-			this.companyID = companyID;
-		}
-
-
-		public String getUserName() {
-			return userName;
-		}
-
-
-		public void setUserName(String userName) {
-			this.userName = userName;
-		}
-
-
-		public String getCopmanyName() {
-			return copmanyName;
-		}
-
-
-		public void setCopmanyName(String copmanyName) {
-			this.copmanyName = copmanyName;
-		}
-
-
-		public UserType getType() {
-			return type;
-		}
-
-
-		public void setType(UserType type) {
-			this.type = type;
-		}
-
-
-		public String getFirstName() {
-			return firstName;
-		}
-
-
-		public void setFirstName(String firstName) {
-			this.firstName = firstName;
-		}
-
-
-		public String getSurName() {
-			return surName;
-		}
-
-
-		public void setSurName(String surName) {
-			this.surName = surName;
-		}
-		
 }

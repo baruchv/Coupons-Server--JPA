@@ -7,6 +7,13 @@ import com.baruch.coupons.entities.Coupon;
 import com.baruch.coupons.enums.ErrorTypes;
 import com.baruch.coupons.exceptions.ApplicationException;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
 public class CouponBasicData implements ICouponDataObject {
 	
 	//VARIABLES
@@ -33,46 +40,4 @@ public class CouponBasicData implements ICouponDataObject {
 		}
 	}
 	
-	//METHODS
-	
-	public String getCouponTitle() {
-		return couponTitle;
-	}
-
-	public void setCouponTitle(String couponTitle) {
-		this.couponTitle = couponTitle;
-	}
-
-	public String getCompanyName() {
-		return companyName;
-	}
-
-	public void setCompanyName(String companyName) {
-		this.companyName = companyName;
-	}
-
-	public Date getEndDate() {
-		return endDate;
-	}
-
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
-	}
-
-	public float getPrice() {
-		return price;
-	}
-
-	public void setPrice(float price) {
-		this.price = price;
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
 }

@@ -2,15 +2,24 @@ package com.baruch.coupons.dto;
 
 import com.baruch.coupons.enums.UserType;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
 public class SuccessfulLoginData {
 	
+	//VARIABLES
+
 	private String token;
+	
 	private UserType type;
 	
-	
-	public SuccessfulLoginData() {
-		super();
-	}
+	//CTORS
 
 	public SuccessfulLoginData(String token, UserType type) {
 		super();
@@ -18,27 +27,5 @@ public class SuccessfulLoginData {
 		this.type = type;
 	}
 
-	public String getToken() {
-		return token;
-	}
 
-	public void setToken(String token) {
-		this.token = token;
-	}
-
-	public UserType getType() {
-		return type;
-	}
-
-	public void setType(UserType type) {
-		this.type = type;
-	}
-
-	@Override
-	public String toString() {
-		return "SuccessfulLoginData [token=" + token + ", type=" + type + "]";
-	}
-	
-	
-	
 }

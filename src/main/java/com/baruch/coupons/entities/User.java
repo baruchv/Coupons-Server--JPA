@@ -18,8 +18,15 @@ import javax.persistence.Table;
 import com.baruch.coupons.dto.UserDto;
 import com.baruch.coupons.enums.UserType;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @Entity
 @Table(name="users")
+@Getter
+@Setter
+@NoArgsConstructor
 public class User {
 	
 	@Id
@@ -53,89 +60,12 @@ public class User {
 	  inverseJoinColumns = @JoinColumn(name = "vacation_id"))
 	private Set<Coupon> favorates;
 	
-	public User() {
-		
-	}
-	
 	public User(UserDto userDto) {
 		this.userName = userDto.getUserName();
 		this.password = userDto.getPassword();
 		this.firstName = userDto.getFirstName();
 		this.surName = userDto.getSurName();
 		this.type = userDto.getType();
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public UserType getType() {
-		return type;
-	}
-
-	public void setType(UserType type) {
-		this.type = type;
-	}
-
-	public Company getCompany() {
-		return company;
-	}
-
-	public void setCompany(Company company) {
-		this.company = company;
-	}
-
-	public List<Purchase> getPurchases() {
-		return purchases;
-	}
-
-	public void setPurchases(List<Purchase> purchases) {
-		this.purchases = purchases;
-	}
-	
-
-	public Set<Coupon> getFavorates() {
-		return favorates;
-	}
-
-	public void setFavorates(Set<Coupon> favorates) {
-		this.favorates = favorates;
-	}
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getSurName() {
-		return surName;
-	}
-
-	public void setSurName(String surName) {
-		this.surName = surName;
 	}
 
 	@Override

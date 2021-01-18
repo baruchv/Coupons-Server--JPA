@@ -70,9 +70,7 @@ public enum ErrorTypes {
 	
 	TIMER_TASK_ERROR(333,"sorry",false),
 	
-	AMOUNT_RESTORING_ERROR(334,"System could'nt restore coupon's amount after deleting purchase",false),
-		
-	UN_AUTHORIZED(401,"You don't have the authorization for this method",true);
+	AMOUNT_RESTORING_ERROR(334,"System could'nt restore coupon's amount after deleting purchase",false);
 	//VERIABLES
 	
 	private boolean  isPresented;

@@ -12,8 +12,15 @@ import javax.persistence.Table;
 
 import com.baruch.coupons.dto.PurchaseDto;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @Entity
 @Table(name="purchases")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Purchase {
 
 	@Id
@@ -33,55 +40,11 @@ public class Purchase {
 	@ManyToOne(cascade = CascadeType.REMOVE)
 	private Coupon coupon;
 	
-	public Purchase() {
-		
-	}
-	
 	public Purchase(PurchaseDto purchaseDto, Coupon coupon, User user) {
 		this.coupon = coupon;
 		this.user = user;
 		this.amount = purchaseDto.getAmount();
 		this.timeStamp = purchaseDto.getTimeStamp();
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public int getAmount() {
-		return amount;
-	}
-
-	public void setAmount(int amount) {
-		this.amount = amount;
-	}
-
-	public Date getTimeStamp() {
-		return timeStamp;
-	}
-
-	public void setTimeStamp(Date timeStamp) {
-		this.timeStamp = timeStamp;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public Coupon getCoupon() {
-		return coupon;
-	}
-
-	public void setCoupon(Coupon coupon) {
-		this.coupon = coupon;
 	}
 
 	@Override
