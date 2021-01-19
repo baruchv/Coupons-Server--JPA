@@ -12,6 +12,7 @@ import com.baruch.coupons.entities.Company;
 import com.baruch.coupons.entities.Coupon;
 import com.baruch.coupons.entities.User;
 import com.baruch.coupons.dataInterfaces.ICouponDataObject;
+import com.baruch.coupons.dataObjectsForPresentation.CouponDataForCustomer;
 import com.baruch.coupons.dto.CouponDto;
 import com.baruch.coupons.dto.UserLoginData;
 import com.baruch.coupons.enums.Category;
@@ -113,7 +114,9 @@ public class CouponsController {
 			switch (type) {
 			case CUSTOMER:
 				User user = usersController.getUserEntity(userID);
-				return repository.getCouponForCustomer(user, couponID);
+				Coupon coupon = repository.findById(couponID).get();
+				boolean isFavorate = user.getFavorates().contains(coupon);
+				return new CouponDataForCustomer(coupon, isFavorate);
 			case COMPANY:
 				return repository.getCouponForCompany(couponID);
 			default:

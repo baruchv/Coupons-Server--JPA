@@ -29,9 +29,6 @@ public interface ICouponRespository extends CrudRepository<Coupon, Long> {
 	
 	@Query("select new com.baruch.coupons.dataObjectsForPresentation.CouponDataForCompany(c) from Coupon c where c.id = ?1")
 	public ICouponDataObject getCouponForCompany(long couponID);
-	
-	@Query("select new com.baruch.coupons.dataObjectsForPresentation.CouponDataForCustomer(c, ?1 member of c.users) from Coupon c where c.id = ?2")
-	public ICouponDataObject getCouponForCustomer(User user, long couponID);
 
 	@Query("select new com.baruch.coupons.dataObjectsForPresentation.CouponBasicData(c) from Coupon c where c in (select p.coupon from Purchase p where p.user.id = ?1) and c.price <= ?2")
 	public List<ICouponDataObject> getPurchasedCouponsByMaxPrice(long userID, float price);
