@@ -68,7 +68,7 @@ public class CouponsApi {
 		controller.deleteCoupon(couponID);
 	}
 	
-	@PutMapping("/favorates/{couponID}")
+	@PostMapping("/favorates/{couponID}")
 	public void markAsFavorate(@PathVariable("couponID") long couponID, @RequestAttribute("UserLoginData") UserLoginData userDetails) throws ApplicationException{
 		controller.markAsFavorate(couponID, userDetails);
 	}
