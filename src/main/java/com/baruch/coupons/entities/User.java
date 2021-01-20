@@ -56,9 +56,9 @@ public class User {
 	private List<Purchase> purchases;
 	
 	@ManyToMany
-	@JoinTable(name = "favorates", joinColumns = @JoinColumn(name = "user_id"), 
+	@JoinTable(name = "favorites", joinColumns = @JoinColumn(name = "user_id"), 
 	  inverseJoinColumns = @JoinColumn(name = "vacation_id"))
-	private Set<Coupon> favorates;
+	private Set<Coupon> favorites;
 	
 	public User(UserDto userDto) {
 		this.userName = userDto.getUserName();

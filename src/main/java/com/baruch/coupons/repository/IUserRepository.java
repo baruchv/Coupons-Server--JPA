@@ -34,6 +34,6 @@ public interface IUserRepository extends CrudRepository<User, Long> {
 	@Query("update User u set  u.password = ?1, u.firstName = ?2, u.surName = ?3 where u.id = ?4 ")
 	public void updateUser(String password, String firstName, String surName, long userID);
 	
-	@Query("select u from User u where ?1 member of u.favorates")
-	public List<User> getUsersByFavorateCoupon(Coupon coupon);
+	@Query("select u from User u where ?1 member of u.favorites")
+	public List<User> getUsersByfavoriteCoupon(Coupon coupon);
 }

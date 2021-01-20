@@ -31,7 +31,7 @@ public class CouponDataForCustomer implements ICouponDataObject {
 
 	private Date startDate, endDate;
 	
-	private boolean isFavorate;
+	private boolean isfavorite;
 
 	//CTROS
 
@@ -39,7 +39,7 @@ public class CouponDataForCustomer implements ICouponDataObject {
 	 * Due to lazy fetch type the method getCompany is a DB query, therefore it
 	 * might invoke an exception.
 	 */
-	public CouponDataForCustomer(Coupon coupon, boolean isFavorate) throws ApplicationException{
+	public CouponDataForCustomer(Coupon coupon, boolean isfavorite) throws ApplicationException{
 		try {
 			this.id = coupon.getId();
 			this.amount = coupon.getAmount();
@@ -50,7 +50,7 @@ public class CouponDataForCustomer implements ICouponDataObject {
 			this.startDate = coupon.getStartDate();
 			this.category = coupon.getCategory();
 			this.endDate = coupon.getEndDate();
-			this.isFavorate = isFavorate;
+			this.isfavorite = isfavorite;
 
 			this.companyName = coupon.getCompany().getName();
 		} catch (Exception e) {

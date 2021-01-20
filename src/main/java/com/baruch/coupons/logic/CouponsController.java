@@ -63,47 +63,47 @@ public class CouponsController {
 		}
 	}
 	
-	public void markAsFavorate(long couponID, UserLoginData userDetails) throws ApplicationException{
+	public void markAsfavorite(long couponID, UserLoginData userDetails) throws ApplicationException{
 		try {
 			validateCouponID(couponID);
 			Coupon coupon = repository.findById(couponID).get();
 			long userID = userDetails.getId();
 			User user = usersController.getUserEntity(userID);
 			coupon.getUsers().add(user);
-			user.getFavorates().add(coupon);
+			user.getFavorites().add(coupon);
 			repository.save(coupon);
 			usersController.save(user);
 		} catch (Exception e) {
-			throw new ApplicationException("markAsFavorate() failed for " + couponID +", " + userDetails, ErrorTypes.GENERAL_ERROR,e);
+			throw new ApplicationException("markAsfavorite() failed for " + couponID +", " + userDetails, ErrorTypes.GENERAL_ERROR,e);
 		}
 	}
 	
-	public void deleteFromFavorates(long couponID, UserLoginData userDetails) throws ApplicationException{
+	public void deleteFromfavorites(long couponID, UserLoginData userDetails) throws ApplicationException{
 		try {
 			validateCouponID(couponID);
 			Coupon coupon = repository.findById(couponID).get();
 			long userID = userDetails.getId();
 			User user = usersController.getUserEntity(userID);
-			if( coupon.getUsers() == null || user.getFavorates() == null) {
+			if( coupon.getUsers() == null || user.getFavorites() == null) {
 				return;
 			}
 			coupon.getUsers().remove(user);
-			user.getFavorates().remove(coupon);
+			user.getFavorites().remove(coupon);
 			repository.save(coupon);
 			usersController.save(user);
 		} catch (Exception e) {
-			throw new ApplicationException("deleteFromFavorate() failed for " + couponID +", " + userDetails, ErrorTypes.GENERAL_ERROR,e);
+			throw new ApplicationException("deleteFromfavorite() failed for " + couponID +", " + userDetails, ErrorTypes.GENERAL_ERROR,e);
 		}
 	}
 	
 	public void deleteCoupon(long couponID) throws ApplicationException{
 		try {
 			Coupon coupon = repository.findById(couponID).get();
-			usersController.deleteFromAllUsersFavorates(coupon);
+			usersController.deleteFromAllUsersfavorites(coupon);
 			repository.delete(coupon);
 		}
 		catch(Exception e) {
-			throw new ApplicationException("repository.deletCoupon() failed for id = " + couponID, ErrorTypes.GENERAL_ERROR, e);
+			throw new ApplicationException("repository.deleteCoupon() failed for id = " + couponID, ErrorTypes.GENERAL_ERROR, e);
 		}
 	}
 	
@@ -115,8 +115,8 @@ public class CouponsController {
 			case CUSTOMER:
 				User user = usersController.getUserEntity(userID);
 				Coupon coupon = repository.findById(couponID).get();
-				boolean isFavorate = user.getFavorates().contains(coupon);
-				return new CouponDataForCustomer(coupon, isFavorate);
+				boolean isfavorite = user.getFavorites().contains(coupon);
+				return new CouponDataForCustomer(coupon, isfavorite);
 			case COMPANY:
 				return repository.getCouponForCompany(couponID);
 			default:
@@ -165,16 +165,16 @@ public class CouponsController {
 		}
 	}
 	
-	public List<ICouponDataObject> getAllFavorates(UserLoginData userDetails) throws ApplicationException{
+	public List<ICouponDataObject> getAllfavorites(UserLoginData userDetails) throws ApplicationException{
 		
 		long userID = userDetails.getId();
 
 		try {
 			User user = usersController.getUserEntity(userID);
-			return repository.getAllFavorates(user);
+			return repository.getAllfavorites(user);
 		} 
 		catch (Exception e) {
-			throw new ApplicationException("getAllFavorates() failed for userID = " +userID, ErrorTypes.GENERAL_ERROR,e);
+			throw new ApplicationException("getAllfavorites() failed for userID = " +userID, ErrorTypes.GENERAL_ERROR,e);
 		}
 	}
 	

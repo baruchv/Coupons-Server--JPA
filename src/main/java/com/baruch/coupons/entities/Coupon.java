@@ -63,7 +63,7 @@ public class Coupon {
 	@OneToMany(mappedBy = "coupon", cascade = CascadeType.REMOVE)
 	private List<Purchase> purchases;
 	
-	@ManyToMany( mappedBy = "favorates")
+	@ManyToMany( mappedBy = "favorites")
 	private Set<User> users;
 	
 	public Coupon(CouponDto couponDto) {

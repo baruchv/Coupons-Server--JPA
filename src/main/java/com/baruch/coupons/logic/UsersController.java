@@ -146,15 +146,15 @@ public class UsersController {
 
 	//PRIVATE-METHODS
 	
-	void deleteFromAllUsersFavorates(Coupon coupon) throws ApplicationException{
+	void deleteFromAllUsersfavorites(Coupon coupon) throws ApplicationException{
 		try {
-			List<User> relevantUsers = repository.getUsersByFavorateCoupon(coupon);
+			List<User> relevantUsers = repository.getUsersByfavoriteCoupon(coupon);
 			for (User user : relevantUsers) {
-				user.getFavorates().remove(coupon);
+				user.getFavorites().remove(coupon);
 			}
 			repository.saveAll(relevantUsers);
 		} catch (Exception e) {
-			throw new ApplicationException("deleteFromAllUsersFavorates() failed for " + coupon, ErrorTypes.GENERAL_ERROR, e);
+			throw new ApplicationException("deleteFromAllUsersfavorites() failed for " + coupon, ErrorTypes.GENERAL_ERROR, e);
 		}
 	}
 
