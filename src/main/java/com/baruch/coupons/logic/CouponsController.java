@@ -200,7 +200,7 @@ public class CouponsController {
 	
 	 void validateCouponID(long couponID) throws ApplicationException{
 		if( ! repository.existsById(couponID)) {
-			throw new ApplicationException("CouponsController.validateCouponID failed for ID: " + couponID, ErrorTypes.GENERAL_ERROR);
+			throw new ApplicationException(ErrorTypes.NO_COUPON_ID);
 		}
 	}
 	

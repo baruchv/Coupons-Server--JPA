@@ -2,6 +2,11 @@ package com.baruch.coupons.exceptions;
 
 import com.baruch.coupons.enums.ErrorTypes;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class ApplicationException extends Exception {
 	private Exception origin;
 	ErrorTypes type;
@@ -22,12 +27,6 @@ public class ApplicationException extends Exception {
 		this.type = type;
 	}
 
-	public Exception getOrigin() {
-		return origin;
-	}
-
-	public ErrorTypes getType() {
-		return type;
-	}
+	
 	
 }
