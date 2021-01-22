@@ -1,6 +1,6 @@
 package com.baruch.coupons.dto;
 
-import com.baruch.coupons.enums.UserType;
+import com.baruch.coupons.enums.UserTypes;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,11 +17,11 @@ public class SuccessfulLoginData {
 
 	private String token;
 	
-	private UserType type;
+	private UserTypes type;
 	
 	//CTORS
 
-	public SuccessfulLoginData(String token, UserType type) {
+	public SuccessfulLoginData(String token, UserTypes type) {
 		super();
 		this.token = token;
 		this.type = type;

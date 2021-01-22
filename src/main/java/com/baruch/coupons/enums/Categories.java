@@ -1,6 +1,6 @@
 package com.baruch.coupons.enums;
 
-public enum Category {
+public enum Categories {
 
 	GROCERIES,ELECTRICITY,VACATION,RESTAURANT,SPORT,FATION,ATRACTIONS;
 	

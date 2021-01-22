@@ -1,13 +1,8 @@
 package com.baruch.coupons.dataObjectsForPresentation;
 
-import java.sql.Date;
+import java.util.Date;
 
 import com.baruch.coupons.dataInterfaces.IPurchaseDataObject;
-import com.baruch.coupons.entities.Company;
-import com.baruch.coupons.entities.Coupon;
-import com.baruch.coupons.entities.Purchase;
-import com.baruch.coupons.enums.ErrorTypes;
-import com.baruch.coupons.exceptions.ApplicationException;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -28,28 +23,17 @@ public class PurchaseDataForAdmin implements IPurchaseDataObject{
 
 		private String couponTitle, companyName;
 		
-		private long userID;
+		private String userName;
 		
 		//CTORS
 		
-		/*
-		 * Due to Lazy FetchType, the methods getCoupon(), getCompany() , getUser() are DB queries.
-		 * Therefore, they might invoke exceptions.
-		 */
-		public PurchaseDataForAdmin(Purchase purchase) throws ApplicationException{
-			try {
-				this.userID = purchase.getUser().getId();
-				this.amount = purchase.getAmount();
-				this.timeStamp = purchase.getTimeStamp();
-				Coupon coupon = purchase.getCoupon();
-				this.couponTitle = coupon.getTitle();
-				float price = coupon.getPrice();
-				this.totalPrice = this.amount * price;
-				Company company = coupon.getCompany();
-				this.companyName = company.getName();
-			} catch (Exception e) {
-				throw new ApplicationException("new PurchaseDataforAdmin(Purchase) failed for " + purchase, ErrorTypes.GENERAL_ERROR,e);
-			}
+		public PurchaseDataForAdmin(int amount, float price, Date timeStamp, String couponTitle, String companyName, String userName) {
+			this.userName = userName;
+			this.amount = amount;
+			this.timeStamp = timeStamp;
+			this.couponTitle = couponTitle;
+			this.totalPrice = this.amount * price;
+			this.companyName = companyName;
 		}
 		
 		

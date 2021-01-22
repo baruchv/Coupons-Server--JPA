@@ -15,17 +15,19 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.baruch.coupons.dto.CouponDto;
-import com.baruch.coupons.enums.Category;
+import com.baruch.coupons.enums.Categories;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
+
+//Lombok's @NoArgsConstructor annotation is not used here due to it's eager fetch type. 
 
 @Entity
 @Table(name="coupons")
 @Getter
 @Setter
-@NoArgsConstructor
+@ToString
 public class Coupon {
 	
 	@Id
@@ -49,7 +51,7 @@ public class Coupon {
 	private float price;
 	
 	@Column(name="category", nullable=false)
-	private Category category;
+	private Categories category;
 	
 	@Column(name="start_date", nullable=false)
 	private Date startDate;
@@ -60,13 +62,15 @@ public class Coupon {
 	@ManyToOne()
 	private Company company;
 	
+	@ToString.Exclude
 	@OneToMany(mappedBy = "coupon", cascade = CascadeType.REMOVE)
 	private List<Purchase> purchases;
 	
+	@ToString.Exclude
 	@ManyToMany( mappedBy = "favorites")
 	private Set<User> users;
 	
-	public Coupon(CouponDto couponDto) {
+	public Coupon(CouponDto couponDto, Company company ) {
 		this.amount =couponDto.getAmount();
 		this.price = couponDto.getPrice();
 		this.category = couponDto.getCategory();
@@ -75,13 +79,11 @@ public class Coupon {
 		this.image = couponDto.getImage();
 		this.startDate = couponDto.getStartDate();
 		this.endDate = couponDto.getEndDate();
+		this.company = company;
 	}
 
-	@Override
-	public String toString() {
-		return "Coupon [id=" + id + ", title=" + title + ", description=" + description + ", image=" + image
-				+ ", amount=" + amount + ", price=" + price + ", category=" + category + ", startDate=" + startDate
-				+ ", endDate=" + endDate + ", company=" + company + "]";
+	public Coupon(){
+		
 	}
 
 	@Override

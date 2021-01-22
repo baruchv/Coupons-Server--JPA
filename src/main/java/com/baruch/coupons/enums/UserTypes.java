@@ -1,6 +1,6 @@
 package com.baruch.coupons.enums;
 
-public enum UserType {
+public enum UserTypes {
 	
 	ADMIN, CUSTOMER, COMPANY;
 	

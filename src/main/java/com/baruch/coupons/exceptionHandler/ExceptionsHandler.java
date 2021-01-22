@@ -28,26 +28,22 @@ public class ExceptionsHandler {
 			int errorNumber = errorType.getSerialNumber();
 			String errorMessage = errorType.getMessage();
 			String errorName = errorType.toString();
-			if (appException.getType().isPresented()) {
-				response.setStatus(errorNumber);
-				ErrorDataObject ErrorDataObject = new ErrorDataObject(errorNumber, errorMessage, errorName);
-
-				return ErrorDataObject;
-			}
-			if(errorNumber > 500){
+			response.setStatus(errorNumber);
+			ErrorDataObject errorDataObject = new ErrorDataObject(errorNumber, errorMessage, errorName);
+			if(errorType.shouldPrintStackTrace()){
 				appException.printStackTrace();
 			}
-			return null;
+			return errorDataObject;
 		}
 		
-		response.setStatus(501);
+		response.setStatus(332);
 
-		ErrorDataObject ErrorDataObject = new ErrorDataObject(301, "General error", 
+		ErrorDataObject errorDataObject = new ErrorDataObject(301, "General error", 
 		"Sorry, our services are currently unavailable");
 		
 		throwable.printStackTrace();
 
-		return ErrorDataObject;
+		return errorDataObject;
 	}
 
 }

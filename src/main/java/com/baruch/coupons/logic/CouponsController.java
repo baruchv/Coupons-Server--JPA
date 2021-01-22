@@ -1,8 +1,11 @@
 package com.baruch.coupons.logic;
 
 import java.util.Calendar;
+import java.sql.Date;
 import java.util.List;
+import java.util.Timer;
 
+import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,13 +16,15 @@ import com.baruch.coupons.entities.Coupon;
 import com.baruch.coupons.entities.User;
 import com.baruch.coupons.dataInterfaces.ICouponDataObject;
 import com.baruch.coupons.dataObjectsForPresentation.CouponDataForCustomer;
+import com.baruch.coupons.dto.CouponAmountAndTime;
 import com.baruch.coupons.dto.CouponDto;
 import com.baruch.coupons.dto.UserLoginData;
-import com.baruch.coupons.enums.Category;
+import com.baruch.coupons.enums.Categories;
 import com.baruch.coupons.enums.ErrorTypes;
-import com.baruch.coupons.enums.UserType;
+import com.baruch.coupons.enums.UserTypes;
 import com.baruch.coupons.exceptions.ApplicationException;
 import com.baruch.coupons.repository.ICouponRespository;
+import com.baruch.coupons.timertasks.CouponsValidator;
 
 @Controller
 public class CouponsController {
@@ -32,19 +37,22 @@ public class CouponsController {
 	
 	@Autowired
 	private UsersController usersController;
+
+	@Autowired
+	CouponsValidator timerTask;
 	
 	//PUBLIC-METHODS
 	
 	public long createCoupon(CouponDto couponDto, UserLoginData userDetails) throws ApplicationException{
-		long companyID = userDetails.getCompanyID();
-		couponDto.setCompanyID(companyID);
 		validateCreateCoupon(couponDto, Calendar.getInstance());
-		Coupon coupon = generateEntity(couponDto);
+		long companyID = userDetails.getCompanyID();
 		try {
+			Company company = companiesController.getCompanyEntity(companyID);
+			Coupon coupon = new Coupon(couponDto, company);
 			repository.save(coupon);
 			return coupon.getId();
 		} catch (Exception e) {
-			throw new ApplicationException("createCoupon() failed for " + coupon,ErrorTypes.GENERAL_ERROR,e);
+			throw new ApplicationException("createCoupon() failed for " + couponDto + " " + userDetails,ErrorTypes.GENERAL_ERROR,e);
 		}
 	}
 	
@@ -108,15 +116,17 @@ public class CouponsController {
 	}
 	
 	public ICouponDataObject getCoupon(long couponID, UserLoginData userDetails) throws ApplicationException{
-		long userID = userDetails.getId();
-		UserType type = userDetails.getType();
+		UserTypes type = userDetails.getType();
 		try {
 			switch (type) {
 			case CUSTOMER:
+				long userID = userDetails.getId();
 				User user = usersController.getUserEntity(userID);
-				Coupon coupon = repository.findById(couponID).get();
-				boolean isfavorite = user.getFavorites().contains(coupon);
-				return new CouponDataForCustomer(coupon, isfavorite);
+				CouponDataForCustomer coupon = (CouponDataForCustomer) repository.getCouponForCustomer(couponID);
+				if(repository.isFavorite(user, couponID)){
+					coupon.setIsfavorite(true);
+				}
+				return coupon;
 			case COMPANY:
 				return repository.getCouponForCompany(couponID);
 			default:
@@ -128,16 +138,20 @@ public class CouponsController {
 		}
 	}
 	
-	public List<ICouponDataObject> getAllCoupons() throws ApplicationException{
+	public List<ICouponDataObject> getAllCoupons(UserLoginData userDetails) throws ApplicationException{
 		try {
-			return repository.getAllCoupons();
+			UserTypes type = userDetails.getType();
+			if(type.equals(UserTypes.CUSTOMER)){
+				return repository.getAllCouponsForCustomer(new Date(System.currentTimeMillis()));
+			}
+			return repository.getAllCoupons();	
 		}
 		catch(Exception e) {
 			throw new ApplicationException("repository.getAllCoupons() failed", ErrorTypes.GENERAL_ERROR, e);
 		}
 	}
 	
-	public List<ICouponDataObject> getCouponsByCategory(Category category) throws ApplicationException{
+	public List<ICouponDataObject> getCouponsByCategory(Categories category) throws ApplicationException{
 		try {
 			return repository.getCouponsByCategory(category);
 		}
@@ -180,10 +194,30 @@ public class CouponsController {
 	
 	
 	//PRIVATE-METHODS
-	
-	int getCouponsAmount(long couponID) throws ApplicationException{
+
+	@PostConstruct
+	private void validateCoupons(){
+		System.out.println("timerTask");
+		Timer timer = new Timer();
+		Calendar firstTime = Calendar.getInstance();
+		firstTime.add(Calendar.DAY_OF_MONTH, 1);
+		firstTime.set(Calendar.HOUR_OF_DAY, 0);
+		long dayInMilliseconds = 1000*60*60*24;
+		timer.scheduleAtFixedRate(timerTask, firstTime.getTimeInMillis(), dayInMilliseconds);
+	}
+
+	@Transactional
+	void decreseFromCouponAmount(int amount, long couponID) throws ApplicationException{
 		try {
-			return repository.getCouponsAmount(couponID);
+			repository.decreseFromCouponAmount(amount, couponID);
+		} catch (Exception e) {
+			throw new ApplicationException("decreseFromCouponAmount() failed for amount: " + amount + " couponID: " + couponID, ErrorTypes.GENERAL_ERROR,e);
+		}
+	}
+	
+	CouponAmountAndTime getCouponAmountAndTime(long couponID) throws ApplicationException{
+		try {
+			return repository.getCouponAmountAndTime(couponID);
 		} catch (Exception e) {
 			throw new ApplicationException("getBasicCoupon() failed for couponID = " + couponID, ErrorTypes.GENERAL_ERROR, e);
 		}
@@ -280,15 +314,9 @@ public class CouponsController {
 				}
 			}	
 		}
-		
 		return false;
 	}
 	
-	private Coupon generateEntity(CouponDto couponDto) throws ApplicationException {
-		Company company = companiesController.getCompanyEntity(couponDto.getCompanyID());
-		Coupon coupon = new Coupon(couponDto);
-		coupon.setCompany(company);
-		return coupon;
-	}
+	
 	
 }

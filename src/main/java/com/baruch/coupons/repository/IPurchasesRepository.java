@@ -12,21 +12,33 @@ import com.baruch.coupons.entities.Purchase;
 @Repository
 public interface IPurchasesRepository extends CrudRepository<Purchase, Long> {
 	
-	@Query("select new com.baruch.coupons.dataObjectsForPresentation.PurchaseDataForCustomer(p) from Purchase p where p.user.id = ?1")
+	//This method serves Customer users only.
+	
+	@Query("select new com.baruch.coupons.dataObjectsForPresentation.PurchaseDataForCustomer" + 
+	"(p.coupon.amount, p.timeStamp, p.coupon.price, p.coupon.title, p.coupon.company.name) from Purchase p where p.user.id = ?1")
 	public List<IPurchaseDataObject> getAllPurchasesForCustomer(long userID);
 	
-	@Query("select new com.baruch.coupons.dataObjectsForPresentation.PurchaseDataForCompanyUser(p) from Purchase p where p.coupon.company.id = ?1")
+	//This method serves Company users only.
+
+	@Query("select new com.baruch.coupons.dataObjectsForPresentation.PurchaseDataForCompanyUser"+
+	"(p.coupon.amount, p.timeStamp, p.coupon.price, p.coupon.title) from Purchase p where p.coupon.company.id = ?1")
 	public List<IPurchaseDataObject> getAllPurchasesForCompany(long companyId);
 	
-	@Query("select new com.baruch.coupons.dataObjectsForPresentation.PurchaseDataForAdmin(p) from Purchase p")
-	public List<IPurchaseDataObject> getAllPurchases();
-	
-	@Query("select new com.baruch.coupons.dataObjectsForPresentation.PurchaseDataForAdmin(p) from Purchase p where p.user.id = ?1")
-	public List<IPurchaseDataObject> getPurchasesByUserID(long userID);
-	
-	@Query("select new com.baruch.coupons.dataObjectsForPresentation.PurchaseDataForAdmin(p) from Purchase p where p.coupon.company.id = ?1")
+	//This methods serve Admin users only.
+
+	@Query("select new com.baruch.coupons.dataObjectsForPresentation.PurchaseDataForAdmin"+
+	"(p.coupon.amount, p.coupon.price, p.timeStamp, p.coupon.title, p.coupon.company.name, p.user.userName) from Purchase p where p.coupon.company.id = ?1")
 	public List<IPurchaseDataObject> getPurchasesByCopmany(long companyID);
 
-	@Query("select new com.baruch.coupons.dataObjectsForPresentation.PurchaseDataForAdmin(p) from Purchase p where p.id = ?1")
+	@Query("select new com.baruch.coupons.dataObjectsForPresentation.PurchaseDataForAdmin"+
+	"(p.coupon.amount, p.coupon.price, p.timeStamp, p.coupon.title, p.coupon.company.name, p.user.userName) from Purchase p where p.id = ?1")
 	public IPurchaseDataObject getPurchase(long purchaseID);
+
+	@Query("select new com.baruch.coupons.dataObjectsForPresentation.PurchaseDataForAdmin"+ 
+	"(p.coupon.amount, p.coupon.price, p.timeStamp, p.coupon.title, p.coupon.company.name, p.user.userName) from Purchase p")
+	public List<IPurchaseDataObject> getAllPurchases();
+
+	@Query("select new com.baruch.coupons.dataObjectsForPresentation.PurchaseDataForAdmin"+ 
+	"(p.coupon.amount, p.coupon.price, p.timeStamp, p.coupon.title, p.coupon.company.name, p.user.userName) from Purchase p where p.user.id = ?1")
+	public List<IPurchaseDataObject> getPurchasesByUserID(long userID);
 }

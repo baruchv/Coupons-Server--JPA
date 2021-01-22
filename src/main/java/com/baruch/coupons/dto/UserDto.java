@@ -1,6 +1,6 @@
 package com.baruch.coupons.dto;
 
-import com.baruch.coupons.enums.UserType;
+import com.baruch.coupons.enums.UserTypes;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,7 +21,7 @@ public class UserDto {
 	
 	private String  userName, password, firstName, surName;
 	
-	private UserType  type;
+	private UserTypes  type;
 
 	
 }

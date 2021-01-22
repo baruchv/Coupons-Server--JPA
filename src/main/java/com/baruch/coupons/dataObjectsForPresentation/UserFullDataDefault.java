@@ -3,6 +3,7 @@ package com.baruch.coupons.dataObjectsForPresentation;
 import com.baruch.coupons.dataInterfaces.IUserDataObject;
 import com.baruch.coupons.enums.UserTypes;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -10,24 +11,13 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class UserBasicData implements IUserDataObject{
-	
+@AllArgsConstructor
+public class UserFullDataDefault implements IUserDataObject{
+
 	//VARIABLES
-	
-	private long id;
-	
-	private String  userName;
-	
+
+	private String  userName, firstName, surName;
+
 	private UserTypes  type;
-	
-	//CTORS
-	
-	public UserBasicData(long id, String userName, UserTypes type) {
-		super();
-		this.id = id;
-		this.userName = userName;
-		this.type = type;
-	}
-	
-	
+
 }

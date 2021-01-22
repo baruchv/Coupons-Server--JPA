@@ -69,7 +69,6 @@ public class CompaniesController {
 		}
 	}
 	
-	
 	//PRIVATE-METHODS
 	
 	 Company getCompanyEntity(long companyID) throws ApplicationException{

@@ -8,8 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.baruch.coupons.dataInterfaces.IUserDataObject;
-import com.baruch.coupons.dataObjectsForPresentation.UserFullDataCompany;
-import com.baruch.coupons.dataObjectsForPresentation.UserFullDataNotCompany;
 import com.baruch.coupons.dto.SuccessfulLoginData;
 import com.baruch.coupons.dto.UserDto;
 import com.baruch.coupons.dto.UserLoginData;
@@ -17,7 +15,7 @@ import com.baruch.coupons.entities.Company;
 import com.baruch.coupons.entities.Coupon;
 import com.baruch.coupons.entities.User;
 import com.baruch.coupons.enums.ErrorTypes;
-import com.baruch.coupons.enums.UserType;
+import com.baruch.coupons.enums.UserTypes;
 import com.baruch.coupons.exceptions.ApplicationException;
 import com.baruch.coupons.repository.IUserRepository;
 
@@ -84,18 +82,14 @@ public class UsersController {
 		validateUserId(userID);
 		try {
 			
-			User user = repository.findById(userID).get();
-			UserType type = user.getType();
-			IUserDataObject userData;
+			UserTypes type = repository.getUserType(userID);
 			
-			if(type.equals(UserType.COMPANY)) {
-				userData = new UserFullDataCompany(user);
+			if(type.equals(UserTypes.COMPANY)) {
+				return repository.getCompanyUser(userID);
 			}
 			else {
-				userData = new UserFullDataNotCompany(user);
+				return repository.getDefaultUser(userID);
 			}
-			
-			return userData;
 		}
 		catch(Exception e) {
 			throw new ApplicationException("findById() failed for userID = " + userID, ErrorTypes.GENERAL_ERROR,e);
@@ -121,7 +115,7 @@ public class UsersController {
 		}
 	}
 
-	public List<IUserDataObject> getUsersByType(UserType type) throws ApplicationException{
+	public List<IUserDataObject> getUsersByType(UserTypes type) throws ApplicationException{
 		try {
 			return repository.getUsersByType(type);
 		}
@@ -198,7 +192,7 @@ public class UsersController {
 		validateUserName(userDto.getUserName());
 		validatePassword(userDto.getPassword());
 		validateNames(userDto.getFirstName(), userDto.getSurName());
-		if(userDto.getType() == UserType.COMPANY) {
+		if(userDto.getType() == UserTypes.COMPANY) {
 			validateCompanyID(userDto.getCompanyID());
 		}
 	}
@@ -249,13 +243,12 @@ public class UsersController {
 
 	private User generateEntity(UserDto userDto) throws ApplicationException{
 		try {
-			User user = new User(userDto);
 			Long companyID = userDto.getCompanyID();
 			Company company = null;
 			if (companyID != null) {
 				company = companiesController.getCompanyEntity(companyID);
 			}
-			user.setCompany(company);
+			User user = new User(userDto,company);
 			return user;
 		} catch (Exception e) {
 			throw new ApplicationException("usersController.generateEntity() failed for " + userDto,ErrorTypes.GENERAL_ERROR,e);

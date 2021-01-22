@@ -4,77 +4,78 @@ public enum ErrorTypes {
 	
 	//TYPES
 	
-	NO_COMPANY_ID(301,"sorry",true),
+	NO_PURCHASE_ID(301,"sorry there is no coupon with the specified id",false),
 	
-	NO_USER_ID(302,"sorry",true),
+	EMPTY_PHONENUMBER_ERROR(302,"Must enter a phone number",false),
 	
-	NO_COUPON_ID(303,"",true),
+	INVALID_PHONENUMBER_ERROR(303,"Phone number must be at least 9 digits long",false),
 	
-	NO_PURCHASE_ID(304,"",true),
+	EMPTY_ADDRESS_ERROR(304,"Must enter an address",false),
 	
-	EMPTY_PHONENUMBER_ERROR(305,"Must enter a phone number",true),
+	INAVLID_ADDRESS_ERROR(305,"An address string must be at least 2 characters long",false),
 	
-	INVALID_PHONENUMBER_ERROR(306,"Phone number must be at least 9 digits long",true),
+	EMPTY_NAME_ERROR(306,"Must enter a name",false),
 	
-	EMPTY_ADDRESS_ERROR(307,"Must enter an address",true),
+	INVALID_NAME_ERROR(307,"A name string must be at least 2 characters long",false),
 	
-	INAVLID_ADDRESS_ERROR(308,"An address string must be at least 2 characters long",true),
+	EXISTING_COMPANY_ERROR(308,"This Company already exists",false),
 	
-	EMPTY_NAME_ERROR(309,"Must enter a name",true),
+	EXISTING_USERNAME_ERROR(309,"This User-Name already exists",false),
 	
-	INVALID_NAME_ERROR(310,"A name string must be at least 2 characters long",true),
+	EMPTY_USERNAME_ERROR(310,"Must enter a User-Name",false),
 	
-	EXISTING_COMPANY_ERROR(311,"This Company already exists",true),
+	INVALID_USERNAME_ERROR(311,"User-Name string must be at least 2 characters long",false),
 	
-	EXISTING_USERNAME_ERROR(312,"This User-Name already exists",true),
+	EMPTY_PASSWORD_ERROR(312,"Must enter a password",false),
 	
-	EMPTY_USERNAME_ERROR(313,"Must enter a User-Name",true),
+	INVALID_PASSWORD_ERROR(313,"Password string should be at least 8 characters long",false),
 	
-	INVALID_USERNAME_ERROR(314,"User-Name string must be at least 2 characters long",true),
+	EMPTY_COMPANYID_ERROR(314,"Company users must have a company ID",false),
 	
-	EMPTY_PASSWORD_ERROR(315,"Must enter a password",true),
+	EMPTY_TITLE_ERROR(315,"Must enter coupon's title",false),
 	
-	INVALID_PASSWORD_ERROR(316,"Password string should be at least 8 characters long",true),
+	INVALID_TITLE_ERROR(316,"Coupon's title string must be at least 2 characters long",false),
 	
-	EMPTY_COMPANYID_ERROR(317,"Company users must have a company ID",true),
+	EMPTY_DESCRIPTION_ERROR(317,"Must enter coupon's description",false),
 	
-	EMPTY_TITLE_ERROR(318,"Must enter coupon's title",true),
+	INVALID_DESCRIPTION_ERROR(318,"Coupon's description must be at least 2 characters long",false),
 	
-	INVALID_TITLE_ERROR(319,"Coupon's title string must be at least 2 characters long",true),
+	INVALID_STARTDATE_ERROR(319,"Start date had already past",false),
 	
-	EMPTY_DESCRIPTION_ERROR(320,"Must enter coupon's description",true),
+	INVALID_ENDDATE_ERROR(320,"End-date had already past",false),
 	
-	INVALID_DESCRIPTION_ERROR(321,"Coupon's description must be at least 2 characters long",true),
+	INVALID_DATES_ERROR(321,"End-date must be after start_date",false),
 	
-	INVALID_STARTDATE_ERROR(322,"Start date had already past",true),
+	EMPTY_ENDDATE_ERROR(322,"Must eneter a end-date",false),
 	
-	INVALID_ENDDATE_ERROR(323,"End-date had already past",true),
+	INVALID_AMOUNT_ERROR(323,"The amount value must be at least 1",false),
 	
-	INVALID_DATES_ERROR(324,"End-date must be after start_date",true),
+	INVALID_PRICE_ERROR(324,"The price cannot be negative",false),
 	
-	EMPTY_ENDDATE_ERROR(325,"Must eneter a end-date",true),
+	OUT_OF_STOCK_ERROR(325,"there are not enough coupons in stock",false),
 	
-	INVALID_AMOUNT_ERROR(326,"The amount value must be at least 1",true),
+	DUPLICATE_TITLE_ERROR(326,"Your company has already a coupon with the same title",false),
 	
-	INVALID_PRICE_ERROR(327,"The price cannot be negative",true),
-	
-	INVALID_COUPON_ERROR(328,"Sorry, the desired coupon was expired",true),
-	
-	OUT_OF_STOCK_ERROR(329,"there are not enough coupons in stock",true),
-	
-	DUPLICATE_TITLE_ERROR(330,"Your company has already a coupon with the same title",true),
-	
-	LOGIN_ERROR(331,"Sorry, Wrong user-name or password",true),
+	LOGIN_ERROR(327,"Sorry, Wrong user-name or password",false),
 
-	GENERAL_ERROR(501, "Sorry, our services are currently unavailable", true),
-	
-	TIMER_TASK_ERROR(502,"sorry",false),
-	
-	AMOUNT_RESTORING_ERROR(503,"System could'nt restore coupon's amount after deleting purchase",false);
+	//Those errors might indicate that a user was trying to bypass the client,
+	// therefore the technical teams should know.
+
+	NO_COMPANY_ID(328, "sorry there is no company with the specified id", true),
+
+	NO_USER_ID(329, "sorry there is no user with the specified id", true),
+
+	NO_COUPON_ID(330, "sorry there is no coupon with the specified id", true),
+
+	INVALID_COUPON_ERROR(331, "Sorry, the desired coupon is not valid", true),
+
+	//This error indicate a technical problem, therefore the technical teams should know.
+
+	GENERAL_ERROR(332, "Sorry, our services are currently unavailable", true);
 	
 	//VERIABLES
 	
-	private boolean  isPresented;
+	private boolean  shouldPrintStackTrace;
 	
 	private String  message;
 	
@@ -82,16 +83,16 @@ public enum ErrorTypes {
 	
 	//CTORS
 	
-	private ErrorTypes(int serialNumber,String message,boolean isPresented)  {
-		this.isPresented = isPresented;
+	private ErrorTypes(int serialNumber,String message,boolean shouldPrintStackTrace)  {
+		this.shouldPrintStackTrace = shouldPrintStackTrace;
 		this.message = message;
 		this.errorNumber = serialNumber;
 	}
 
 	// METHODS
 
-	public boolean isPresented() {
-		return isPresented;
+	public boolean shouldPrintStackTrace() {
+		return shouldPrintStackTrace;
 	}
 
 	public String getMessage() {

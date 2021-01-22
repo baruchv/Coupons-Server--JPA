@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.baruch.coupons.dataInterfaces.ICouponDataObject;
 import com.baruch.coupons.dto.CouponDto;
 import com.baruch.coupons.dto.UserLoginData;
-import com.baruch.coupons.enums.Category;
+import com.baruch.coupons.enums.Categories;
 import com.baruch.coupons.exceptions.ApplicationException;
 import com.baruch.coupons.logic.CouponsController;
 
@@ -44,8 +44,8 @@ public class CouponsApi {
 	}
 	
 	@GetMapping
-	public List<ICouponDataObject> getAllCoupons() throws ApplicationException{
-		return controller.getAllCoupons();
+	public List<ICouponDataObject> getAllCoupons(@RequestAttribute("UserLoginData") UserLoginData userDetails) throws ApplicationException{
+		return controller.getAllCoupons(userDetails);
 	}
 	
 	@GetMapping("/byCompany")
@@ -54,7 +54,7 @@ public class CouponsApi {
 	}
 	
 	@GetMapping("/byCategory")
-	public List<ICouponDataObject> getCouponsByCategory(@RequestParam("category") Category category) throws ApplicationException{
+	public List<ICouponDataObject> getCouponsByCategory(@RequestParam("category") Categories category) throws ApplicationException{
 		return controller.getCouponsByCategory(category);
 	}
 	

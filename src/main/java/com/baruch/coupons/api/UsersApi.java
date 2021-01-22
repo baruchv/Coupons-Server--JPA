@@ -20,7 +20,7 @@ import com.baruch.coupons.dto.LoginDetails;
 import com.baruch.coupons.dto.SuccessfulLoginData;
 import com.baruch.coupons.dto.UserDto;
 import com.baruch.coupons.dto.UserLoginData;
-import com.baruch.coupons.enums.UserType;
+import com.baruch.coupons.enums.UserTypes;
 import com.baruch.coupons.exceptions.ApplicationException;
 import com.baruch.coupons.logic.UsersController;
 
@@ -63,7 +63,7 @@ public class UsersApi {
 	}
 	
 	@GetMapping("/byType")
-	public List<IUserDataObject> getUsersByType(@RequestParam("type") UserType type) throws ApplicationException{
+	public List<IUserDataObject> getUsersByType(@RequestParam("type") UserTypes type) throws ApplicationException{
 		return controller.getUsersByType(type);
 	}
 	

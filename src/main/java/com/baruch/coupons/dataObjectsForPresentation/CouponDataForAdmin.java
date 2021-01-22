@@ -1,15 +1,12 @@
 package com.baruch.coupons.dataObjectsForPresentation;
 
-import java.sql.Date;
+import java.util.Date;
 
 
 import com.baruch.coupons.dataInterfaces.ICouponDataObject;
-import com.baruch.coupons.entities.Company;
-import com.baruch.coupons.entities.Coupon;
-import com.baruch.coupons.enums.Category;
-import com.baruch.coupons.enums.ErrorTypes;
-import com.baruch.coupons.exceptions.ApplicationException;
+import com.baruch.coupons.enums.Categories;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -17,6 +14,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@AllArgsConstructor
 public class CouponDataForAdmin implements ICouponDataObject {
 
 	//VARIABLES
@@ -29,34 +27,9 @@ public class CouponDataForAdmin implements ICouponDataObject {
 
 	private String  title, description, image, companyName;
 
-	private Category  category;
+	private Categories  category;
 
 	private Date startDate, endDate;
 	
-	//CTROS
-	
-	/*
-	 * Due to lazy fetch type the method getCompany is a DB query, therefore it
-	 * might invoke an exception.
-	 */
-	public CouponDataForAdmin(Coupon coupon) throws ApplicationException{
-		try {
-			this.id = coupon.getId();
-			this.amount = coupon.getAmount();
-			this.price = coupon.getPrice();
-			this.description = coupon.getDescription();
-			this.title = coupon.getTitle();
-			this.image = coupon.getImage();
-			this.startDate = coupon.getStartDate();
-			this.category = coupon.getCategory();
-			this.endDate = coupon.getEndDate();
-
-			Company company = coupon.getCompany();
-			this.companyID = coupon.getCompany().getId();
-			this.companyName = company.getName();
-		} catch (Exception e) {
-			throw new ApplicationException("new CouponDataForAdmin(Coupon) failed for " + coupon, ErrorTypes.GENERAL_ERROR,e);
-		}
-	}
 	
 }

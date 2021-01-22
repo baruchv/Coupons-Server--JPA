@@ -16,17 +16,19 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.baruch.coupons.dto.UserDto;
-import com.baruch.coupons.enums.UserType;
+import com.baruch.coupons.enums.UserTypes;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
+
+//Lombok's @NoArgsConstructor annotation is not used here due to it's eager fetch type. 
 
 @Entity
 @Table(name="users")
 @Getter
 @Setter
-@NoArgsConstructor
+@ToString
 public class User {
 	
 	@Id
@@ -47,31 +49,33 @@ public class User {
 	private String surName;
 	
 	@Column(name="user_type", nullable=false)
-	private UserType type;
+	private UserTypes type;
 	
+	@ToString.Exclude
 	@ManyToOne()
 	private Company company;
 	
+	@ToString.Exclude
 	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
 	private List<Purchase> purchases;
 	
+	@ToString.Exclude
 	@ManyToMany
 	@JoinTable(name = "favorites", joinColumns = @JoinColumn(name = "user_id"), 
 	  inverseJoinColumns = @JoinColumn(name = "vacation_id"))
 	private Set<Coupon> favorites;
 	
-	public User(UserDto userDto) {
+	public User(UserDto userDto, Company company) {
 		this.userName = userDto.getUserName();
 		this.password = userDto.getPassword();
 		this.firstName = userDto.getFirstName();
 		this.surName = userDto.getSurName();
 		this.type = userDto.getType();
+		this.company = company;
 	}
 
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", userName=" + userName + ", password=" + password + ", firstName=" + firstName
-				+ ", surName=" + surName + ", type=" + type + ", company=" + company + "]";
+	public User(){
+		
 	}
 
 	@Override

@@ -13,14 +13,16 @@ import javax.persistence.Table;
 import com.baruch.coupons.dto.PurchaseDto;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
+
+//Lombok's @NoArgsConstructor annotation is not used here due to it's eager fetch type. 
 
 @Entity
 @Table(name="purchases")
 @Getter
 @Setter
-@NoArgsConstructor
+@ToString
 public class Purchase {
 
 	@Id
@@ -47,13 +49,8 @@ public class Purchase {
 		this.timeStamp = purchaseDto.getTimeStamp();
 	}
 
-	@Override
-	public String toString() {
-		return "Purchase [id=" + id + ", amount=" + amount + ", timeStamp=" + timeStamp + ", user=" + user + ", coupon="
-				+ coupon + "]";
+	public Purchase(){
+		
 	}
-
-	
-	
-	
+		
 }

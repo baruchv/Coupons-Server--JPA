@@ -1,12 +1,13 @@
 	package com.baruch.coupons.logic;
 
+import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import com.baruch.coupons.dataInterfaces.IPurchaseDataObject;
-import com.baruch.coupons.dto.CouponDto;
+import com.baruch.coupons.dto.CouponAmountAndTime;
 import com.baruch.coupons.dto.PurchaseDto;
 import com.baruch.coupons.dto.UserLoginData;
 import com.baruch.coupons.entities.Coupon;
@@ -36,7 +37,6 @@ public class PurchasesController {
 
 	/* Adding a new purchase.
 	 * The amount of the purchased coupon will be changed accordingly.
-	 * The method assumes all coupons in the DB are valid.
 	 */
 	public long addPurchase(PurchaseDto purchaseDto, UserLoginData userDetails) throws ApplicationException{
 		validateAddPurchase(purchaseDto.getAmount(), purchaseDto.getCouponID());
@@ -44,10 +44,16 @@ public class PurchasesController {
 		Purchase purchase = generateEntity(purchaseDto);
 		try {
 			repository.save(purchase);
-			CouponDto couponDto = new CouponDto(purchase.getCoupon());
-			int newAmount = couponDto.getAmount() - purchaseDto.getAmount();
-			couponDto.setAmount(newAmount);
-			couponsController.updateCoupon(couponDto, userDetails);
+			//This is an internal process that does'nt effect the UX at all.
+			//Therefore, if this process has invoked an exception it should'nt be thrown at all, 
+			// its stackTrace is printed for the development team.
+			try {
+				int amount = purchase.getAmount();
+				long couponID = purchaseDto.getCouponID();
+				couponsController.decreseFromCouponAmount(amount, couponID);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			return purchase.getId();
 		}
 		catch(Exception e) {
@@ -125,17 +131,27 @@ public class PurchasesController {
 
 	//PRIVATE-METHODS
 
-	/*
-	 * An assumption - all coupons in the DB are valid, thanks to the CouponsValidator class.
-	 * In case there is no coupon associated with couponID, couponsController.getCoupon(couponID) will throw an ApplicationException.
-	 */
+	
+	 // In case there is no coupon associated with couponID, couponsController.getCoupon(couponID) will throw an ApplicationException.
+
 	private void validateAddPurchase(int amount, long couponID) throws ApplicationException{
 		if(amount < 1) {
 			throw new ApplicationException(ErrorTypes.INVALID_AMOUNT_ERROR);
 		}
-		int couponAmount =  couponsController.getCouponsAmount(couponID);
-		if(couponAmount < amount) {
+		CouponAmountAndTime couponDetails =  couponsController.getCouponAmountAndTime(couponID);
+		if( couponDetails.getAmount() < amount) {
 			throw new ApplicationException(ErrorTypes.OUT_OF_STOCK_ERROR);
+		}
+		Calendar now = Calendar.getInstance();
+		Calendar startDate = Calendar.getInstance();
+		startDate.setTime(couponDetails.getStartDate());
+		if(now.before(startDate)){
+			throw new ApplicationException("addPurchase failed for couponID: " + couponID, ErrorTypes.INVALID_COUPON_ERROR);
+		}
+		Calendar endDate = Calendar.getInstance();
+		endDate.setTime(couponDetails.getEndDate());
+		if(now.after(endDate)){
+			throw new ApplicationException("addPurchase failed for couponID: " + couponID, ErrorTypes.INVALID_COUPON_ERROR);
 		}
 	}
 	
