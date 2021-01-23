@@ -15,18 +15,5 @@ public class CompanyDto {
 	
 	//VARIABLES
 	
-	private String  name, address, phoneNumber;
-	
-	private long  id;
-	
-	
-	//CTORS
-	
-	public CompanyDto(Company company) {
-		this.id = company.getId();
-		this.name = company.getName();
-		this.address = company.getAddress();
-		this.phoneNumber = company.getPhoneNumber();
-	}
-	
+	private String  name, address, phoneNumber;	
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.baruch.coupons.dataInterfaces.ICompanyDataObject;
 import com.baruch.coupons.dto.CompanyDto;
 import com.baruch.coupons.entities.Company;
 import com.baruch.coupons.enums.ErrorTypes;
@@ -34,8 +35,7 @@ public class CompaniesController {
 		repository.deleteById(companyID);
 	}
 
-	public CompanyDto getCompany(long companyID) throws ApplicationException{
-		validateCompanyID(companyID);
+	public ICompanyDataObject getCompany(long companyID) throws ApplicationException{
 		try {
 			return repository.getCompany(companyID);
 		}
@@ -44,7 +44,7 @@ public class CompaniesController {
 		}
 	}
 
-	public List<CompanyDto> getAllCompanies() throws ApplicationException{
+	public List<ICompanyDataObject> getAllCompanies() throws ApplicationException{
 		try {
 			return repository.getAllCompanies();
 		}
@@ -53,16 +53,14 @@ public class CompaniesController {
 		}
 	}
 	
-	//Only Adim users have access to this method.
 	@Transactional
-	public void updateCompany(CompanyDto companyDto) throws ApplicationException{
-		validateUpdateCompany(companyDto);
-		long id = companyDto.getId();
+	public void updateCompany(CompanyDto companyDto, long companyID) throws ApplicationException{
+		validateUpdateCompany(companyDto, companyID);
 		String phoneNumber = companyDto.getPhoneNumber();
 		String address = companyDto.getAddress();
 
 		try {
-			repository.updateCompany(phoneNumber, address, id);
+			repository.updateCompany(phoneNumber, address, companyID);
 		}
 		catch(Exception e) {
 			throw new ApplicationException("updateCompany() failed for " + companyDto,ErrorTypes.GENERAL_ERROR,e);
@@ -97,8 +95,8 @@ public class CompaniesController {
 		validateAddress(companyDto.getAddress());
 	}
 	
-	private void validateUpdateCompany(CompanyDto companyDto) throws ApplicationException{
-		validateCompanyID(companyDto.getId());
+	private void validateUpdateCompany(CompanyDto companyDto, long companyID) throws ApplicationException{
+		validateCompanyID(companyID);
 		validatePhoneNumber(companyDto.getPhoneNumber());
 		validateAddress(companyDto.getAddress());
 	}

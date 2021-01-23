@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.baruch.coupons.dataInterfaces.ICompanyDataObject;
 import com.baruch.coupons.dto.CompanyDto;
 import com.baruch.coupons.exceptions.ApplicationException;
 import com.baruch.coupons.logic.CompaniesController;
@@ -28,18 +29,18 @@ public class CompaniesApi {
 		return controller.createCompany(companyDto);
 	}
 	
-	@PutMapping
-	public void updateCompany(@RequestBody CompanyDto companyDto) throws ApplicationException{
-		controller.updateCompany(companyDto);
+	@PutMapping("/{companyID}")
+	public void updateCompany(@PathVariable("companyID") long companyID, @RequestBody CompanyDto companyDto) throws ApplicationException{
+		controller.updateCompany(companyDto, companyID);
 	}
 	
 	@GetMapping("/{companyID}")
-	public CompanyDto getCompany(@PathVariable("companyID") long companyID) throws ApplicationException{
+	public ICompanyDataObject getCompany(@PathVariable("companyID") long companyID) throws ApplicationException{
 		return controller.getCompany(companyID);
 	}
 	
 	@GetMapping
-	public List<CompanyDto> getAllCompanies() throws ApplicationException{
+	public List<ICompanyDataObject> getAllCompanies() throws ApplicationException{
 		return controller.getAllCompanies();
 	}
 	

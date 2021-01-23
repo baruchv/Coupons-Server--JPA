@@ -7,17 +7,17 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import com.baruch.coupons.dto.CompanyDto;
+import com.baruch.coupons.dataInterfaces.ICompanyDataObject;
 import com.baruch.coupons.entities.Company;
 
 @Repository
 public interface ICompaniesRepository extends CrudRepository<Company, Long>{
 
-	@Query("select new com.baruch.coupons.dto.CompanyDto(c) from Company c where c.id = ?1")
-	public CompanyDto getCompany(long companyID);
+	@Query("select new com.baruch.coupons.dto.CompanyFullData(c.id, c.name, c.address, c.phoneNumber) from Company c where c.id = ?1")
+	public ICompanyDataObject getCompany(long companyID);
 
-	@Query("select new com.baruch.coupons.dto.CompanyDto(c) from Company c")
-	public List<CompanyDto> getAllCompanies();
+	@Query("select new com.baruch.coupons.dto.CompanyBasicData(c.name, c.id) from Company c")
+	public List<ICompanyDataObject> getAllCompanies();
 	
 	@Modifying
 	@Query("update Company c set c.phoneNumber=?1, c.address=?2 where c.id=?3")
