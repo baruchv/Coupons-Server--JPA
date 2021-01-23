@@ -18,7 +18,9 @@ import javax.persistence.Table;
 import com.baruch.coupons.dto.UserDto;
 import com.baruch.coupons.enums.UserTypes;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -26,6 +28,8 @@ import lombok.ToString;
 
 @Entity
 @Table(name="users")
+@NoArgsConstructor
+@EqualsAndHashCode
 @Getter
 @Setter
 @ToString
@@ -72,15 +76,6 @@ public class User {
 		this.surName = userDto.getSurName();
 		this.type = userDto.getType();
 		this.company = company;
-	}
-
-	public User(){
-		
-	}
-
-	@Override
-	public int hashCode() {
-		return this.toString().hashCode();
 	}
 	
 }

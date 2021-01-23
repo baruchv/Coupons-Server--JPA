@@ -39,7 +39,7 @@ public class CouponsController {
 	private UsersController usersController;
 
 	@Autowired
-	CouponsValidator timerTask;
+	private CouponsValidator timerTask;
 	
 	//PUBLIC-METHODS
 	
@@ -72,8 +72,8 @@ public class CouponsController {
 	}
 	
 	public void markAsfavorite(long couponID, UserLoginData userDetails) throws ApplicationException{
+	    validateCouponID(couponID);
 		try {
-			validateCouponID(couponID);
 			Coupon coupon = repository.findById(couponID).get();
 			long userID = userDetails.getId();
 			User user = usersController.getUserEntity(userID);
@@ -87,8 +87,8 @@ public class CouponsController {
 	}
 	
 	public void deleteFromfavorites(long couponID, UserLoginData userDetails) throws ApplicationException{
+		validateCouponID(couponID);
 		try {
-			validateCouponID(couponID);
 			Coupon coupon = repository.findById(couponID).get();
 			long userID = userDetails.getId();
 			User user = usersController.getUserEntity(userID);
@@ -197,7 +197,6 @@ public class CouponsController {
 
 	@PostConstruct
 	private void validateCoupons(){
-		System.out.println("timerTask");
 		Timer timer = new Timer();
 		Calendar firstTime = Calendar.getInstance();
 		firstTime.add(Calendar.DAY_OF_MONTH, 1);
@@ -207,11 +206,12 @@ public class CouponsController {
 	}
 
 	@Transactional
-	void decreseFromCouponAmount(int amount, long couponID) throws ApplicationException{
+	void decreseFromCouponAmount(int amount, long couponID){
 		try {
 			repository.decreseFromCouponAmount(amount, couponID);
 		} catch (Exception e) {
-			throw new ApplicationException("decreseFromCouponAmount() failed for amount: " + amount + " couponID: " + couponID, ErrorTypes.GENERAL_ERROR,e);
+			ApplicationException appException = new ApplicationException("decreseFromCouponAmount() failed for amount: " + amount + " couponID: " + couponID, ErrorTypes.GENERAL_ERROR,e);
+			appException.printStackTrace();
 		}
 	}
 	

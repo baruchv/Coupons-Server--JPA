@@ -17,7 +17,9 @@ import javax.persistence.Table;
 import com.baruch.coupons.dto.CouponDto;
 import com.baruch.coupons.enums.Categories;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -25,6 +27,8 @@ import lombok.ToString;
 
 @Entity
 @Table(name="coupons")
+@NoArgsConstructor
+@EqualsAndHashCode
 @Getter
 @Setter
 @ToString
@@ -82,12 +86,4 @@ public class Coupon {
 		this.company = company;
 	}
 
-	public Coupon(){
-		
-	}
-
-	@Override
-	public int hashCode() {
-		return this.toString().hashCode();
-	}
 }

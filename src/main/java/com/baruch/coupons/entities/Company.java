@@ -13,6 +13,7 @@ import javax.persistence.Table;
 import com.baruch.coupons.dto.CompanyDto;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -20,6 +21,7 @@ import lombok.ToString;
 
 @Entity
 @Table(name="companies")
+@NoArgsConstructor
 @Getter
 @Setter
 @ToString
@@ -47,10 +49,6 @@ public class Company {
 	@OneToMany(mappedBy = "company", cascade = CascadeType.REMOVE)
 	private List<Coupon> coupons;
 
-	public Company(){
-
-	}
-	
 	public Company(CompanyDto companyDto){
 		this.name = companyDto.getName();
 		this.address = companyDto.getAddress();

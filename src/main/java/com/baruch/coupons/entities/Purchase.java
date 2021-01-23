@@ -13,6 +13,7 @@ import javax.persistence.Table;
 import com.baruch.coupons.dto.PurchaseDto;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -20,6 +21,7 @@ import lombok.ToString;
 
 @Entity
 @Table(name="purchases")
+@NoArgsConstructor
 @Getter
 @Setter
 @ToString
@@ -47,10 +49,6 @@ public class Purchase {
 		this.user = user;
 		this.amount = purchaseDto.getAmount();
 		this.timeStamp = purchaseDto.getTimeStamp();
-	}
-
-	public Purchase(){
-		
 	}
 		
 }
