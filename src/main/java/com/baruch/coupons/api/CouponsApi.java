@@ -33,9 +33,9 @@ public class CouponsApi {
 		return controller.createCoupon(couponDto, userDetails);
 	}
 	
-	@PutMapping
-	public void updateCoupon(@RequestBody CouponDto couponDto, @RequestAttribute("UserLoginData") UserLoginData userDetails) throws ApplicationException{
-		controller.updateCoupon(couponDto, userDetails);;
+	@PutMapping("/{couponID}")
+	public void updateCoupon(@PathVariable("couponID") long couponID, @RequestBody CouponDto couponDto, @RequestAttribute("UserLoginData") UserLoginData userDetails) throws ApplicationException{
+		controller.updateCoupon(couponDto, couponID, userDetails);;
 	}
 	
 	@GetMapping("/{couponID}")

@@ -27,18 +27,18 @@ public interface IPurchasesRepository extends CrudRepository<Purchase, Long> {
 	//This methods serve Admin users only.
 
 	@Query("select new com.baruch.coupons.dataObjectsForPresentation.PurchaseDataForAdmin"+
-	"(p.coupon.amount, p.coupon.price, p.timeStamp, p.coupon.title, p.coupon.company.name, p.user.userName) from Purchase p where p.coupon.company.id = ?1")
+	"(p.id, p.coupon.amount, p.coupon.price, p.timeStamp, p.coupon.title, p.coupon.company.name, p.user.userName) from Purchase p where p.coupon.company.id = ?1")
 	public List<IPurchaseDataObject> getPurchasesByCopmany(long companyID);
 
 	@Query("select new com.baruch.coupons.dataObjectsForPresentation.PurchaseDataForAdmin"+
-	"(p.coupon.amount, p.coupon.price, p.timeStamp, p.coupon.title, p.coupon.company.name, p.user.userName) from Purchase p where p.id = ?1")
+	"(p.id, p.coupon.amount, p.coupon.price, p.timeStamp, p.coupon.title, p.coupon.company.name, p.user.userName) from Purchase p where p.id = ?1")
 	public IPurchaseDataObject getPurchase(long purchaseID);
 
 	@Query("select new com.baruch.coupons.dataObjectsForPresentation.PurchaseDataForAdmin"+ 
-	"(p.coupon.amount, p.coupon.price, p.timeStamp, p.coupon.title, p.coupon.company.name, p.user.userName) from Purchase p")
+	"(p.id, p.coupon.amount, p.coupon.price, p.timeStamp, p.coupon.title, p.coupon.company.name, p.user.userName) from Purchase p")
 	public List<IPurchaseDataObject> getAllPurchases();
 
 	@Query("select new com.baruch.coupons.dataObjectsForPresentation.PurchaseDataForAdmin"+ 
-	"(p.coupon.amount, p.coupon.price, p.timeStamp, p.coupon.title, p.coupon.company.name, p.user.userName) from Purchase p where p.user.id = ?1")
+	"(p.id, p.coupon.amount, p.coupon.price, p.timeStamp, p.coupon.title, p.coupon.company.name, p.user.userName) from Purchase p where p.user.id = ?1")
 	public List<IPurchaseDataObject> getPurchasesByUserID(long userID);
 }

@@ -13,10 +13,10 @@ import com.baruch.coupons.entities.Company;
 @Repository
 public interface ICompaniesRepository extends CrudRepository<Company, Long>{
 
-	@Query("select new com.baruch.coupons.dto.CompanyFullData(c.id, c.name, c.address, c.phoneNumber) from Company c where c.id = ?1")
+	@Query("select new com.baruch.coupons.dataObjectsForPresentation.CompanyFullData(c.id, c.name, c.address, c.phoneNumber) from Company c where c.id = ?1")
 	public ICompanyDataObject getCompany(long companyID);
 
-	@Query("select new com.baruch.coupons.dto.CompanyBasicData(c.name, c.id) from Company c")
+	@Query("select new com.baruch.coupons.dataObjectsForPresentation.CompanyBasicData(c.id, c.name) from Company c")
 	public List<ICompanyDataObject> getAllCompanies();
 	
 	@Modifying

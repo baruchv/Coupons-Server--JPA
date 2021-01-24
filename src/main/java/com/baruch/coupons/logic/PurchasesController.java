@@ -39,9 +39,11 @@ public class PurchasesController {
 	 * The amount of the purchased coupon will be changed accordingly.
 	 */
 	public long addPurchase(PurchaseDto purchaseDto, UserLoginData userDetails) throws ApplicationException{
-		validateAddPurchase(purchaseDto.getAmount(), purchaseDto.getCouponID());
-		purchaseDto.setUserID(userDetails.getId());
-		Purchase purchase = generateEntity(purchaseDto);
+		int purchaseAmount = purchaseDto.getAmount();
+		long couponID = purchaseDto.getCouponID();
+		long userID = purchaseDto.getUserID();
+		validateAddPurchase(purchaseAmount, couponID, userID);
+		Purchase purchase = generateEntity(purchaseDto, userID);
 		try {
 			repository.save(purchase);
 			//This is an internal process that does'nt effect the UX at all.
@@ -49,7 +51,7 @@ public class PurchasesController {
 			// its stackTrace is printed for the development team.
 			try {
 				int amount = purchase.getAmount();
-				long couponID = purchaseDto.getCouponID();
+				couponID = purchaseDto.getCouponID();
 				couponsController.decreseFromCouponAmount(amount, couponID);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -131,14 +133,15 @@ public class PurchasesController {
 
 	//PRIVATE-METHODS
 
-	
-	 // In case there is no coupon associated with couponID, couponsController.getCoupon(couponID) will throw an ApplicationException.
 
-	private void validateAddPurchase(int amount, long couponID) throws ApplicationException{
+	private void validateAddPurchase(int amount, long couponID, long userID) throws ApplicationException{
 		if(amount < 1) {
 			throw new ApplicationException(ErrorTypes.INVALID_AMOUNT_ERROR);
 		}
 		CouponAmountAndTime couponDetails =  couponsController.getCouponAmountAndTime(couponID);
+		if(couponDetails == null){
+			throw new ApplicationException("ERROR: validateUpdateCoupon() failed for couponID: " + couponID +" userID: " + userID, ErrorTypes.NO_COUPON_ID);
+		}
 		if( couponDetails.getAmount() < amount) {
 			throw new ApplicationException(ErrorTypes.OUT_OF_STOCK_ERROR);
 		}
@@ -155,9 +158,9 @@ public class PurchasesController {
 		}
 	}
 	
-	private Purchase generateEntity(PurchaseDto purchaseDto) throws ApplicationException{
+	private Purchase generateEntity(PurchaseDto purchaseDto, long userID) throws ApplicationException{
 		Coupon coupon = couponsController.getCouponEntity(purchaseDto.getCouponID());
-		User user = usersController.getUserEntity(purchaseDto.getUserID());
+		User user = usersController.getUserEntity(userID);
 		return new Purchase(purchaseDto,coupon,user);
 	}
 

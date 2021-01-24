@@ -20,7 +20,7 @@ public class CouponDto {
 	
 	private int amount;
 	
-	private long  id, companyID;
+	private long  companyID;
 	
 	private float  price;
 	

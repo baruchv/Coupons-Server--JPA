@@ -57,22 +57,26 @@ public class CouponsController {
 	}
 	
 	@Transactional
-	public void updateCoupon(CouponDto couponDto, UserLoginData userDetails) throws ApplicationException{
+	public void updateCoupon(CouponDto couponDto, long couponID, UserLoginData userDetails) throws ApplicationException{
 		couponDto.setCompanyID(userDetails.getCompanyID());
-		validateUpdateCoupon(couponDto);
+		validateUpdateCoupon(couponDto, couponID, userDetails.getId());
 		int amount = couponDto.getAmount();
 		float price = couponDto.getPrice();
 		String image = couponDto.getImage();
-		long id = couponDto.getId();
 		try {
-			repository.updateCoupon(amount, price, image, id);
+			repository.updateCoupon(amount, price, image, couponID);
 		} catch (Exception e) {
 			throw new ApplicationException("updateCoupon() failed for " + couponDto,ErrorTypes.GENERAL_ERROR,e);
 		}
 	}
 	
+	/*
+	Validation is needed for two reasons:
+	1) Avoiding NullPointerException for coupon.getUsers.
+	2) It may indicate a cleint bypass.
+	*/
 	public void markAsfavorite(long couponID, UserLoginData userDetails) throws ApplicationException{
-	    validateCouponID(couponID);
+	    validateCouponID(couponID, userDetails.getId());
 		try {
 			Coupon coupon = repository.findById(couponID).get();
 			long userID = userDetails.getId();
@@ -86,8 +90,13 @@ public class CouponsController {
 		}
 	}
 	
+	/*
+	 * Validation is needed for two reasons:
+	 *  1) Avoiding NullPointerException for coupon.getUsers.
+	 *  2) It may indicate a cleint bypass.
+	 */
 	public void deleteFromfavorites(long couponID, UserLoginData userDetails) throws ApplicationException{
-		validateCouponID(couponID);
+		validateCouponID(couponID, userDetails.getId());
 		try {
 			Coupon coupon = repository.findById(couponID).get();
 			long userID = userDetails.getId();
@@ -232,9 +241,10 @@ public class CouponsController {
 		}
 	}
 	
-	 void validateCouponID(long couponID) throws ApplicationException{
+	//This validation may indicate a cleint bypass, therefore the user should be tracked.
+	 void validateCouponID(long couponID, long userID) throws ApplicationException{
 		if( ! repository.existsById(couponID)) {
-			throw new ApplicationException(ErrorTypes.NO_COUPON_ID);
+			throw new ApplicationException("ERROR: validateCouponID failed for couponID: " + couponID +" userID: " + userID ,ErrorTypes.NO_COUPON_ID);
 		}
 	}
 	
@@ -250,8 +260,9 @@ public class CouponsController {
 		}
 	}
 	
-	private void validateUpdateCoupon(CouponDto couponDto) throws ApplicationException{
-		validateCouponID(couponDto.getId());
+	// This validation may indicate a cleint bypass, therefore the user should be tracked.
+	private void validateUpdateCoupon(CouponDto couponDto, long couponID, long userID) throws ApplicationException{
+		validateCouponID(couponID, userID);
 		if(couponDto.getAmount() < 1) {
 			throw new ApplicationException(ErrorTypes.INVALID_AMOUNT_ERROR);
 		}

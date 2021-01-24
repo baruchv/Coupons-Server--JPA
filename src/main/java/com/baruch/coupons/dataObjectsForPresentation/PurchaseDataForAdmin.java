@@ -14,6 +14,8 @@ import lombok.ToString;
 public class PurchaseDataForAdmin implements IPurchaseDataObject{
 	
 		//VARIABLES
+
+		private long id;
 	
 		private int   amount;
 		
@@ -27,7 +29,8 @@ public class PurchaseDataForAdmin implements IPurchaseDataObject{
 		
 		//CTORS
 		
-		public PurchaseDataForAdmin(int amount, float price, Date timeStamp, String couponTitle, String companyName, String userName) {
+		public PurchaseDataForAdmin(long id, int amount, float price, Date timeStamp, String couponTitle, String companyName, String userName) {
+			this.id = id;
 			this.userName = userName;
 			this.amount = amount;
 			this.timeStamp = timeStamp;
