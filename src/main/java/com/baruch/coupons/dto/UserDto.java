@@ -15,8 +15,6 @@ public class UserDto {
 	
 	//VARIABLES
 	
-	private long id;
-	
 	private Long  companyID;
 	
 	private String  userName, password, firstName, surName;

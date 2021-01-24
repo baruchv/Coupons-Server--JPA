@@ -53,15 +53,15 @@ public class UsersController {
 	
 	@Transactional
 	public void updateUser(UserDto userDto, UserLoginData userDetails) throws ApplicationException{
-		long id = userDetails.getId();
-		validateUserId(id);
+		long userID = userDetails.getId();
+		validateUserId(userID);
 		validateNames(userDto.getFirstName(), userDto.getSurName());
 		validatePassword(userDto.getPassword());
 		String hashedPassword = getHashedPassword(userDto.getPassword());
 		String firstName = userDto.getFirstName();
 		String surName = userDto.getSurName();
 		try {
-			repository.updateUser(hashedPassword, firstName, surName, id);
+			repository.updateUser(hashedPassword, firstName, surName, userID);
 		}
 		catch(Exception e) {
 			throw new ApplicationException("updateUser() failed for " + userDto,ErrorTypes.GENERAL_ERROR,e);
@@ -69,12 +69,12 @@ public class UsersController {
 	}
 
 	public void deleteUser(UserLoginData userDetails) throws ApplicationException{
-		long id = userDetails.getId();
+		long userID = userDetails.getId();
 		try {
-			repository.deleteById(id);
+			repository.deleteById(userID);
 		}
 		catch(Exception e) {
-			throw new ApplicationException("deleteById() failed for userID = " + id, ErrorTypes.GENERAL_ERROR,e);
+			throw new ApplicationException("deleteById() failed for userID = " + userID, ErrorTypes.GENERAL_ERROR,e);
 		}
 	}
 
@@ -106,7 +106,6 @@ public class UsersController {
 	}
 
 	public List<IUserDataObject> getUsersByCompany(long companyID) throws ApplicationException{
-		validateCompanyID(companyID);
 		try {
 			return repository.getUsersByCompany(companyID);
 		}
@@ -181,20 +180,19 @@ public class UsersController {
 	}
 
 	private void validateCreateUser(UserDto userDto) throws ApplicationException{
+		boolean isNameTaken = false;
 		try {
-			if(repository.existsByUserName(userDto.getUserName())) {
-				throw new ApplicationException(ErrorTypes.EXISTING_USERNAME_ERROR);
-			}
+			isNameTaken = repository.existsByUserName(userDto.getUserName());
 		}
 		catch(Exception e) {
 			throw new ApplicationException("existsByUserName() failed for " + userDto, ErrorTypes.GENERAL_ERROR,e);
 		}
+		if(isNameTaken) {
+			throw new ApplicationException(ErrorTypes.EXISTING_USERNAME_ERROR);
+		}
 		validateUserName(userDto.getUserName());
 		validatePassword(userDto.getPassword());
 		validateNames(userDto.getFirstName(), userDto.getSurName());
-		if(userDto.getType() == UserTypes.COMPANY) {
-			validateCompanyID(userDto.getCompanyID());
-		}
 	}
 
 	private String getHashedPassword(String password ) {
@@ -226,13 +224,6 @@ public class UsersController {
 		if(password.length()<8) {
 			throw new ApplicationException(ErrorTypes.INVALID_PASSWORD_ERROR);
 		}
-	}
-
-	private void validateCompanyID(Long companyID) throws ApplicationException{
-		if(companyID == null) {
-			throw new ApplicationException(ErrorTypes.EMPTY_COMPANYID_ERROR);
-		}
-		companiesController.validateCompanyID(companyID);
 	}
 
 	private String generateToken(String userName, String password) {
