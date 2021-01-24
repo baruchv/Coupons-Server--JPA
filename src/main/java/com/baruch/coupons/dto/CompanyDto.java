@@ -1,6 +1,5 @@
 package com.baruch.coupons.dto;
 
-import com.baruch.coupons.entities.Company;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

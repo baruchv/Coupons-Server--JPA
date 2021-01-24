@@ -29,7 +29,7 @@ public interface ICouponRespository extends CrudRepository<Coupon, Long> {
 	@Query("select new com.baruch.coupons.dataObjectsForPresentation.CouponBasicData(c.title, c.company.name, c.endDate, c.price, c.id) from Coupon c")
 	public List<ICouponDataObject> getAllCoupons();
 
-	@Query("select new com.baruch.coupons.dataObjectsForPresentation.CouponBasicData(c.title, c.company.name, c.endDate, c.price, c.id) from Coupon c where c.startDate <= ?1")
+	@Query("select new com.baruch.coupons.dataObjectsForPresentation.CouponBasicData(c.title, c.company.name, c.endDate, c.price, c.id) from Coupon c where c.startDate <= ?1 and c.endDate > ?1")
 	public List<ICouponDataObject> getAllCouponsForCustomer(Date now);
 
 	@Query("select new com.baruch.coupons.dataObjectsForPresentation.CouponDataForAdmin(c.amount, c.id, c.company.id, c.price, c.title, c.description, c.image, c.company.name, c.category, c.startDate, c.endDate) from Coupon c where c.id = ?1")
