@@ -12,7 +12,6 @@ import com.baruch.coupons.dataInterfaces.ICouponDataObject;
 import com.baruch.coupons.dto.CouponAmountAndTime;
 import com.baruch.coupons.entities.Company;
 import com.baruch.coupons.entities.Coupon;
-import com.baruch.coupons.entities.User;
 import com.baruch.coupons.enums.Categories;
 
 @Repository

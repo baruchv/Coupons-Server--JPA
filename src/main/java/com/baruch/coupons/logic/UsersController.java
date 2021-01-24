@@ -177,6 +177,9 @@ public class UsersController {
 		if(isNameTaken) {
 			throw new ApplicationException(ErrorTypes.EXISTING_USERNAME_ERROR);
 		}
+		if(userDto.getType() == null){
+			throw new ApplicationException(ErrorTypes.NO_TYPE_ERROR);
+		}
 		validateUserName(userDto.getUserName());
 		validatePassword(userDto.getPassword());
 		validateNames(userDto.getFirstName(), userDto.getSurName());
