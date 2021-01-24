@@ -171,7 +171,7 @@ public class CouponsController {
 	//This validation may indicate a cleint bypass, therefore the user should be tracked.
 	 void validateCouponID(long couponID, long userID) throws ApplicationException{
 		if( ! repository.existsById(couponID)) {
-			throw new ApplicationException("ERROR: validateCouponID failed for couponID: " + couponID +" userID: " + userID ,ErrorTypes.NO_COUPON_ID);
+			throw new ApplicationException("ERROR: validateCouponID failed for couponID: " + couponID +" userID: " + userID ,ErrorTypes.NO_COUPON_FOUND);
 		}
 	}
 	

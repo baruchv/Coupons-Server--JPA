@@ -158,7 +158,7 @@ public class UsersController {
 	void validateUserId(long userID) throws ApplicationException{
 		try {
 			if( ! repository.existsById(userID)) {
-				throw new ApplicationException("UsersController.validateUserID() failed for ID: " + userID, ErrorTypes.NO_USER_ID);
+				throw new ApplicationException("UsersController.validateUserID() failed for ID: " + userID, ErrorTypes.NO_USER_FOUND);
 			}
 		}
 		catch(Exception e) {

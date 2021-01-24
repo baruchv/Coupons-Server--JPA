@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import com.baruch.coupons.dataInterfaces.IUserDataObject;
 import com.baruch.coupons.dto.UserLoginData;
-import com.baruch.coupons.entities.Coupon;
 import com.baruch.coupons.entities.User;
 import com.baruch.coupons.enums.UserTypes;
 
@@ -44,8 +43,4 @@ public interface IUserRepository extends CrudRepository<User, Long> {
 	@Modifying
 	@Query("update User u set  u.password = ?1, u.firstName = ?2, u.surName = ?3 where u.id = ?4 ")
 	public void updateUser(String password, String firstName, String surName, long userID);
-	
-	@Query("select u from User u where ?1 member of u.favorites")
-	public List<User> getUsersByfavoriteCoupon(Coupon coupon);
-
 }

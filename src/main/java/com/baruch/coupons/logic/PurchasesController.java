@@ -140,7 +140,7 @@ public class PurchasesController {
 		}
 		CouponAmountAndTime couponDetails =  couponsController.getCouponAmountAndTime(couponID);
 		if(couponDetails == null){
-			throw new ApplicationException("ERROR: validateUpdateCoupon() failed for couponID: " + couponID +" userID: " + userID, ErrorTypes.NO_COUPON_ID);
+			throw new ApplicationException("ERROR: validateUpdateCoupon() failed for couponID: " + couponID +" userID: " + userID, ErrorTypes.NO_COUPON_FOUND);
 		}
 		if( couponDetails.getAmount() < amount) {
 			throw new ApplicationException(ErrorTypes.OUT_OF_STOCK_ERROR);

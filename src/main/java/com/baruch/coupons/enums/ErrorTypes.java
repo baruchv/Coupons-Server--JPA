@@ -58,20 +58,22 @@ public enum ErrorTypes {
 	
 	LOGIN_ERROR(327,"Sorry, Wrong user-name or password",false),
 
+	NO_TYPE_ERROR(328,"Error, you should insert a user-type",false),
+
 	//Those errors might indicate that a user was trying to bypass the client,
 	// therefore the technical teams should know.
 
-	NO_COMPANY_ID(328, "sorry there is no company with the specified id", true),
+	NO_COMPANY_FOUND(329, "sorry there is no company with the specified id", true),
 
-	NO_USER_ID(329, "sorry there is no user with the specified id", true),
+	NO_USER_FOUND(330, "sorry there is no user with the specified id", true),
 
-	NO_COUPON_ID(330, "sorry there is no coupon with the specified id", true),
+	NO_COUPON_FOUND(331, "sorry there is no coupon with the specified id", true),
 
-	INVALID_COUPON_ERROR(331, "Sorry, the desired coupon is not valid", true),
+	INVALID_COUPON_ERROR(332, "Sorry, the desired coupon is not valid", true),
 
 	//This error indicate a technical problem, therefore the technical teams should know.
 
-	GENERAL_ERROR(332, "Sorry, our services are currently unavailable", true);
+	GENERAL_ERROR(333, "Sorry, our services are currently unavailable", true);
 	
 	//VERIABLES
 	
