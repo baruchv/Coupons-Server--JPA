@@ -300,32 +300,24 @@ public class CouponsController {
 		Calendar startDate = Calendar.getInstance();
 		if(couponDto.getStartDate() != null){
 			startDate.setTimeInMillis(couponDto.getStartDate().getTime());
-			if(isBefore(startDate,now)) {
+		}
+		roundByHours(startDate);
+		roundByHours(now);
+		if (startDate.before(now)) {
 			throw new ApplicationException(ErrorTypes.INVALID_STARTDATE_ERROR);
-			}
 		}
 		Calendar endDate = Calendar.getInstance();
 		endDate.setTimeInMillis(couponDto.getEndDate().getTime());;
-		if(isBefore(endDate,startDate)) {
+		roundByHours(endDate);
+		if(endDate.before(now)){
 			throw new ApplicationException(ErrorTypes.INVALID_DATES_ERROR);
 		}
 	}
-	
-	private boolean isBefore(Calendar time1, Calendar time2) {
-		if(time1.get(Calendar.YEAR) < time2.get(Calendar.YEAR)) {
-			return true;
-		}
-		else if(time1.get(Calendar.YEAR) == time2.get(Calendar.YEAR)) {
-			if(time1.get(Calendar.MONTH) < time2.get(Calendar.MONTH)) {
-				return true;
-			}
-			else if(time1.get(Calendar.MONTH) == time2.get(Calendar.MONTH)) {
-				if(time1.get(Calendar.DAY_OF_MONTH) < time2.get(Calendar.DAY_OF_MONTH)) {
-					return true;
-				}
-			}	
-		}
-		return false;
+
+	private void roundByHours(Calendar time){
+		time.set(Calendar.MILLISECOND, 0);
+		time.set(Calendar.SECOND, 0);
+		time.set(Calendar.MINUTE, 0);
 	}
 	
 	
