@@ -5,6 +5,7 @@ import java.util.Date;
 import com.baruch.coupons.dataInterfaces.ICouponDataObject;
 import com.baruch.coupons.enums.Categories;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,8 +15,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @AllArgsConstructor
-public class CouponDataForCustomer implements ICouponDataObject {
-	
+public class CouponFullDataDefault implements ICouponDataObject{
 	//VARIABLES
 
 	private int amount;
@@ -29,7 +29,5 @@ public class CouponDataForCustomer implements ICouponDataObject {
 	private Categories  category;
 
 	private Date startDate, endDate;
-	
-	private boolean isfavorite;
-	
+
 }

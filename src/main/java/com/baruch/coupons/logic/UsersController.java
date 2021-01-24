@@ -12,7 +12,6 @@ import com.baruch.coupons.dto.SuccessfulLoginData;
 import com.baruch.coupons.dto.UserDto;
 import com.baruch.coupons.dto.UserLoginData;
 import com.baruch.coupons.entities.Company;
-import com.baruch.coupons.entities.Coupon;
 import com.baruch.coupons.entities.User;
 import com.baruch.coupons.enums.ErrorTypes;
 import com.baruch.coupons.enums.UserTypes;
@@ -138,18 +137,6 @@ public class UsersController {
 	}
 
 	//PRIVATE-METHODS
-	
-	void deleteFromAllUsersfavorites(Coupon coupon) throws ApplicationException{
-		try {
-			List<User> relevantUsers = repository.getUsersByfavoriteCoupon(coupon);
-			for (User user : relevantUsers) {
-				user.getFavorites().remove(coupon);
-			}
-			repository.saveAll(relevantUsers);
-		} catch (Exception e) {
-			throw new ApplicationException("deleteFromAllUsersfavorites() failed for " + coupon, ErrorTypes.GENERAL_ERROR, e);
-		}
-	}
 
 	void save(User user) throws ApplicationException{
 		try {

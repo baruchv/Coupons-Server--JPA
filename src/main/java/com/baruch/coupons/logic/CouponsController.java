@@ -13,9 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.baruch.coupons.entities.Company;
 import com.baruch.coupons.entities.Coupon;
-import com.baruch.coupons.entities.User;
 import com.baruch.coupons.dataInterfaces.ICouponDataObject;
-import com.baruch.coupons.dataObjectsForPresentation.CouponDataForCustomer;
 import com.baruch.coupons.dto.CouponAmountAndTime;
 import com.baruch.coupons.dto.CouponDto;
 import com.baruch.coupons.dto.UserLoginData;
@@ -34,9 +32,6 @@ public class CouponsController {
 	
 	@Autowired
 	private CompaniesController companiesController;
-	
-	@Autowired
-	private UsersController usersController;
 
 	@Autowired
 	private CouponsValidator timerTask;
@@ -70,54 +65,9 @@ public class CouponsController {
 		}
 	}
 	
-	/*
-	Validation is needed for two reasons:
-	1) Avoiding NullPointerException for coupon.getUsers.
-	2) It may indicate a cleint bypass.
-	*/
-	public void markAsfavorite(long couponID, UserLoginData userDetails) throws ApplicationException{
-	    validateCouponID(couponID, userDetails.getId());
-		try {
-			Coupon coupon = repository.findById(couponID).get();
-			long userID = userDetails.getId();
-			User user = usersController.getUserEntity(userID);
-			coupon.getUsers().add(user);
-			user.getFavorites().add(coupon);
-			repository.save(coupon);
-			usersController.save(user);
-		} catch (Exception e) {
-			throw new ApplicationException("markAsfavorite() failed for " + couponID +", " + userDetails, ErrorTypes.GENERAL_ERROR,e);
-		}
-	}
-	
-	/*
-	 * Validation is needed for two reasons:
-	 *  1) Avoiding NullPointerException for coupon.getUsers.
-	 *  2) It may indicate a cleint bypass.
-	 */
-	public void deleteFromfavorites(long couponID, UserLoginData userDetails) throws ApplicationException{
-		validateCouponID(couponID, userDetails.getId());
-		try {
-			Coupon coupon = repository.findById(couponID).get();
-			long userID = userDetails.getId();
-			User user = usersController.getUserEntity(userID);
-			if( coupon.getUsers() == null || user.getFavorites() == null) {
-				return;
-			}
-			coupon.getUsers().remove(user);
-			user.getFavorites().remove(coupon);
-			repository.save(coupon);
-			usersController.save(user);
-		} catch (Exception e) {
-			throw new ApplicationException("deleteFromfavorite() failed for " + couponID +", " + userDetails, ErrorTypes.GENERAL_ERROR,e);
-		}
-	}
-	
 	public void deleteCoupon(long couponID) throws ApplicationException{
 		try {
-			Coupon coupon = repository.findById(couponID).get();
-			usersController.deleteFromAllUsersfavorites(coupon);
-			repository.delete(coupon);
+			repository.deleteById(couponID);
 		}
 		catch(Exception e) {
 			throw new ApplicationException("repository.deleteCoupon() failed for id = " + couponID, ErrorTypes.GENERAL_ERROR, e);
@@ -127,20 +77,10 @@ public class CouponsController {
 	public ICouponDataObject getCoupon(long couponID, UserLoginData userDetails) throws ApplicationException{
 		UserTypes type = userDetails.getType();
 		try {
-			switch (type) {
-			case CUSTOMER:
-				long userID = userDetails.getId();
-				User user = usersController.getUserEntity(userID);
-				CouponDataForCustomer coupon = (CouponDataForCustomer) repository.getCouponForCustomer(couponID);
-				if(repository.isFavorite(user, couponID)){
-					coupon.setIsfavorite(true);
-				}
-				return coupon;
-			case COMPANY:
-				return repository.getCouponForCompany(couponID);
-			default:
+			if(type.equals(UserTypes.ADMIN)){
 				return repository.getCouponForAdmin(couponID);
 			}
+			return repository.getCouponDefault(couponID);
 		}
 		catch(Exception e) {
 			throw new ApplicationException("repository.getCoupon() failed for couponID = " + couponID, ErrorTypes.GENERAL_ERROR, e);
@@ -185,19 +125,6 @@ public class CouponsController {
 		}
 		catch(Exception e) {
 			throw new ApplicationException("repository.getCouponsByMaxPrice() failed for userID = " +userID +", maxPrice = " + price, ErrorTypes.GENERAL_ERROR, e);
-		}
-	}
-	
-	public List<ICouponDataObject> getAllfavorites(UserLoginData userDetails) throws ApplicationException{
-		
-		long userID = userDetails.getId();
-
-		try {
-			User user = usersController.getUserEntity(userID);
-			return repository.getAllfavorites(user);
-		} 
-		catch (Exception e) {
-			throw new ApplicationException("getAllfavorites() failed for userID = " +userID, ErrorTypes.GENERAL_ERROR,e);
 		}
 	}
 	

@@ -1,16 +1,12 @@
 package com.baruch.coupons.entities;
 
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -62,12 +58,6 @@ public class User {
 	@ToString.Exclude
 	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
 	private List<Purchase> purchases;
-	
-	@ToString.Exclude
-	@ManyToMany
-	@JoinTable(name = "favorites", joinColumns = @JoinColumn(name = "user_id"), 
-	  inverseJoinColumns = @JoinColumn(name = "vacation_id"))
-	private Set<Coupon> favorites;
 	
 	public User(UserDto userDto, Company company) {
 		this.userName = userDto.getUserName();

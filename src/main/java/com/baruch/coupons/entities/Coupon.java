@@ -2,14 +2,12 @@ package com.baruch.coupons.entities;
 
 import java.sql.Date;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -69,10 +67,6 @@ public class Coupon {
 	@ToString.Exclude
 	@OneToMany(mappedBy = "coupon", cascade = CascadeType.REMOVE)
 	private List<Purchase> purchases;
-	
-	@ToString.Exclude
-	@ManyToMany( mappedBy = "favorites")
-	private Set<User> users;
 	
 	public Coupon(CouponDto couponDto, Company company ) {
 		this.amount =couponDto.getAmount();

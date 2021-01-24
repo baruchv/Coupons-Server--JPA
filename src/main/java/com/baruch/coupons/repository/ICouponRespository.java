@@ -32,11 +32,11 @@ public interface ICouponRespository extends CrudRepository<Coupon, Long> {
 	@Query("select new com.baruch.coupons.dataObjectsForPresentation.CouponBasicData(c.title, c.company.name, c.endDate, c.price, c.id) from Coupon c where c.startDate <= ?1 and c.endDate > ?1")
 	public List<ICouponDataObject> getAllCouponsForCustomer(Date now);
 
-	@Query("select new com.baruch.coupons.dataObjectsForPresentation.CouponDataForAdmin(c.amount, c.id, c.company.id, c.price, c.title, c.description, c.image, c.company.name, c.category, c.startDate, c.endDate) from Coupon c where c.id = ?1")
+	@Query("select new com.baruch.coupons.dataObjectsForPresentation.CouponFullDataForAdmin(c.amount, c.id, c.company.id, c.price, c.title, c.description, c.image, c.company.name, c.category, c.startDate, c.endDate) from Coupon c where c.id = ?1")
 	public ICouponDataObject getCouponForAdmin(long couponID);
 	
-	@Query("select new com.baruch.coupons.dataObjectsForPresentation.CouponDataForCompany(c.amount, c.id, c.price, c.title, c.description, c.image, c.company.name, c.category, c.startDate, c.endDate) from Coupon c where c.id = ?1")
-	public ICouponDataObject getCouponForCompany(long couponID);
+	@Query("select new com.baruch.coupons.dataObjectsForPresentation.CouponFullDataDefault(c.amount, c.id, c.price, c.title, c.description, c.image, c.company.name, c.category, c.startDate, c.endDate) from Coupon c where c.id = ?1")
+	public ICouponDataObject getCouponDefault(long couponID);
 
 	@Query("select new com.baruch.coupons.dataObjectsForPresentation.CouponBasicData(c.title, c.company.name, c.endDate, c.price, c.id) from Coupon c where c in (select p.coupon from Purchase p where p.user.id = ?1) and c.price <= ?2")
 	public List<ICouponDataObject> getPurchasedCouponsByMaxPrice(long userID, float price);
@@ -47,20 +47,11 @@ public interface ICouponRespository extends CrudRepository<Coupon, Long> {
 	@Query("select new com.baruch.coupons.dataObjectsForPresentation.CouponBasicData(c.title, c.company.name, c.endDate, c.price, c.id) from Coupon c where c.category= ?1")
 	public List<ICouponDataObject> getCouponsByCategory(Categories category);
 	
-	@Query("select new com.baruch.coupons.dataObjectsForPresentation.CouponBasicData(c.title, c.company.name, c.endDate, c.price, c.id) from Coupon c where ?1 member of c.users")
-	public List<ICouponDataObject> getAllfavorites(User user);
-	
 	@Query("select new com.baruch.coupons.dto.CouponAmountAndTime(c.amount, c.startDate, c.endDate) from Coupon c where c.id = ?1")
 	public CouponAmountAndTime getCouponAmountAndTime(long couponID);
-
-	@Query("select new com.baruch.coupons.dataObjectsForPresentation.CouponDataForCustomer(c.amount, c.id, c.price, c.title, c.description, c.image, c.company.name, c.category, c.startDate, c.endDate,false) from Coupon c where c.id = ?1")
-	public ICouponDataObject getCouponForCustomer(long couponID);
 	
 	@Query("delete Coupon c where c.endDate <= ?1")
 	public void deleteExpiredCoupons(Date now);
-
-	@Query("select (?1 member of c.users) from Coupon c where c.id = ?2")
-	public boolean isFavorite(User user, long couponID);
 	
 	public boolean existsByCompanyAndTitle(Company company, String title);
 	

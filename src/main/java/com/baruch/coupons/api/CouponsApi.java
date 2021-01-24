@@ -67,19 +67,4 @@ public class CouponsApi {
 	public void deleteCoupon(@PathVariable("couponID") long couponID) throws ApplicationException{
 		controller.deleteCoupon(couponID);
 	}
-	
-	@PostMapping("/favorites/{couponID}")
-	public void markAsfavorite(@PathVariable("couponID") long couponID, @RequestAttribute("UserLoginData") UserLoginData userDetails) throws ApplicationException{
-		controller.markAsfavorite(couponID, userDetails);
-	}
-	
-	@GetMapping("/favorites")
-	public List<ICouponDataObject> getAllfavorites(@RequestAttribute("UserLoginData") UserLoginData userDetails) throws ApplicationException{
-		return controller.getAllfavorites(userDetails);
-	}
-	
-	@DeleteMapping("/favorites/{couponID}")
-	public void deleteFromfavorites(@PathVariable("couponID") long couponID, @RequestAttribute("UserLoginData") UserLoginData userDetails) throws ApplicationException{
-		controller.deleteFromfavorites(couponID, userDetails);
-	}
 }
