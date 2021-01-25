@@ -53,8 +53,7 @@ public class CouponsController {
 	
 	@Transactional
 	public void updateCoupon(CouponDto couponDto, long couponID, UserLoginData userDetails) throws ApplicationException{
-		couponDto.setCompanyID(userDetails.getCompanyID());
-		validateUpdateCoupon(couponDto, couponID, userDetails.getId());
+		validateUpdateCoupon(couponDto, couponID, userDetails.getCompanyID());
 		int amount = couponDto.getAmount();
 		float price = couponDto.getPrice();
 		String image = couponDto.getImage();
@@ -169,9 +168,10 @@ public class CouponsController {
 	}
 	
 	//This validation may indicate a cleint bypass, therefore the user should be tracked.
-	 void validateCouponID(long couponID, long userID) throws ApplicationException{
-		if( ! repository.existsById(couponID)) {
-			throw new ApplicationException("ERROR: validateCouponID failed for couponID: " + couponID +" userID: " + userID ,ErrorTypes.NO_COUPON_FOUND);
+	 void validateCouponID(long couponID, long companyID) throws ApplicationException{
+		Company company = companiesController.getCompanyEntity(companyID);
+		if( ! repository.existsByCompanyAndId(company, couponID)) {
+			throw new ApplicationException("ERROR: validateCouponID failed for couponID: " + couponID +" userID: " + companyID ,ErrorTypes.NO_COUPON_FOUND);
 		}
 	}
 	

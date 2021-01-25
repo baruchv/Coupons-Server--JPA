@@ -51,6 +51,8 @@ public interface ICouponRespository extends CrudRepository<Coupon, Long> {
 	
 	@Query("delete Coupon c where c.endDate <= ?1")
 	public void deleteExpiredCoupons(Date now);
+
+	public boolean existsByCompanyAndId(Company company, long couponID);
 	
 	public boolean existsByCompanyAndTitle(Company company, String title);
 	
