@@ -41,7 +41,7 @@ public class PurchasesController {
 	public long addPurchase(PurchaseDto purchaseDto, UserLoginData userDetails) throws ApplicationException{
 		int purchaseAmount = purchaseDto.getAmount();
 		long couponID = purchaseDto.getCouponID();
-		long userID = purchaseDto.getUserID();
+		long userID = userDetails.getId();
 		validateAddPurchase(purchaseAmount, couponID, userID);
 		Purchase purchase = generateEntity(purchaseDto, userID);
 		try {

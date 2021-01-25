@@ -171,7 +171,7 @@ public class CouponsController {
 	 void validateCouponID(long couponID, long companyID) throws ApplicationException{
 		Company company = companiesController.getCompanyEntity(companyID);
 		if( ! repository.existsByCompanyAndId(company, couponID)) {
-			throw new ApplicationException("ERROR: validateCouponID failed for couponID: " + couponID +" userID: " + companyID ,ErrorTypes.NO_COUPON_FOUND);
+			throw new ApplicationException("ERROR: validateCouponID failed for couponID: " + couponID +" companyID: " + companyID ,ErrorTypes.NO_COUPON_FOUND);
 		}
 	}
 	

@@ -18,7 +18,7 @@ public class PurchaseDto  {
 	
 	private int   amount;
 	
-	private long  userID, couponID;
+	private long  couponID;
 	
 	private Date  timeStamp;
 
