@@ -74,7 +74,7 @@ public class CompaniesController {
 			return repository.findById(companyID).get();
 		}
 		catch(Exception e) {
-			throw new ApplicationException("getCompany() failed for id = " + companyID,ErrorTypes.GENERAL_ERROR,e);
+			throw new ApplicationException("getCompanyEntity() failed for id = " + companyID,ErrorTypes.GENERAL_ERROR,e);
 		}
 	}
 

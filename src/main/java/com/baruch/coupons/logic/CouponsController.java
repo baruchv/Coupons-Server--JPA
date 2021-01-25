@@ -39,11 +39,11 @@ public class CouponsController {
 	//PUBLIC-METHODS
 	
 	public long createCoupon(CouponDto couponDto, UserLoginData userDetails) throws ApplicationException{
-		validateCreateCoupon(couponDto, Calendar.getInstance());
 		long companyID = userDetails.getCompanyID();
+		validateCreateCoupon(couponDto, companyID, Calendar.getInstance());
+		Company company = companiesController.getCompanyEntity(companyID);
+		Coupon coupon = new Coupon(couponDto, company);
 		try {
-			Company company = companiesController.getCompanyEntity(companyID);
-			Coupon coupon = new Coupon(couponDto, company);
 			repository.save(coupon);
 			return coupon.getId();
 		} catch (Exception e) {
@@ -175,8 +175,8 @@ public class CouponsController {
 		}
 	}
 	
-	private void validateCreateCoupon(CouponDto couponDto,Calendar now) throws ApplicationException{
-		validateTitle(couponDto.getTitle(),couponDto.getCompanyID());
+	private void validateCreateCoupon(CouponDto couponDto, long companyID, Calendar now) throws ApplicationException{
+		validateTitle(couponDto.getTitle(),companyID);
 		validateDescription(couponDto.getDescription());
 		validateDates(couponDto,now);
 		if(couponDto.getAmount() < 1) {

@@ -30,11 +30,11 @@ public interface IUserRepository extends CrudRepository<User, Long> {
 	public List<IUserDataObject> getAllUsers();
 
 	@Query("select new com.baruch.coupons.dataObjectsForPresentation.UserFullDataCompany"+
-	"(u.userName, u.company.name, u.firstName, u.surName, u.type) from User u where u.id = ?1")
+	"(u.id, u.company.id, u.userName, u.company.name, u.firstName, u.surName, u.type) from User u where u.id = ?1")
 	public IUserDataObject getCompanyUser(long userID);
 
 	@Query("select new com.baruch.coupons.dataObjectsForPresentation.UserFullDataDefault"+ 
-	"(u.userName, u.firstName, u.surName, u.type) from User u where u.id = ?1")
+	"(u.id, u.userName, u.firstName, u.surName, u.type) from User u where u.id = ?1")
 	public IUserDataObject getDefaultUser(long userID);
 
 	@Query("select u.type from User u where u.id = ?1")

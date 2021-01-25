@@ -32,6 +32,7 @@ public class ExceptionsHandler {
 			ErrorDataObject errorDataObject = new ErrorDataObject(errorNumber, errorMessage, errorName);
 			if(errorType.shouldPrintStackTrace()){
 				appException.printStackTrace();
+				System.out.println(appException.getMessage());
 			}
 			return errorDataObject;
 		}

@@ -16,6 +16,8 @@ public class UserFullDataDefault implements IUserDataObject{
 
 	//VARIABLES
 
+	private long id;
+
 	private String  userName, firstName, surName;
 
 	private UserTypes  type;

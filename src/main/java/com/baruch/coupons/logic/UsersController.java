@@ -227,7 +227,7 @@ public class UsersController {
 			Long companyID = userDto.getCompanyID();
 			Company company = null;
 			if (companyID != null) {
-				company = companiesController.	getCompanyEntity(companyID);
+				company = companiesController.getCompanyEntity(companyID);
 			}
 			User user = new User(userDto,company);
 			return user;
