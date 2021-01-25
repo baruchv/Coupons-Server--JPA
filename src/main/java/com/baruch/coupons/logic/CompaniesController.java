@@ -32,7 +32,11 @@ public class CompaniesController {
 	}
 
 	public void deleteCompany(long companyID) throws ApplicationException{
-		repository.deleteById(companyID);
+		try {
+			repository.deleteById(companyID);
+		} catch (Exception e) {
+			throw new ApplicationException("deleteCompany() failed for id = " + companyID, ErrorTypes.GENERAL_ERROR, e);
+		}
 	}
 
 	public ICompanyDataObject getCompany(long companyID) throws ApplicationException{

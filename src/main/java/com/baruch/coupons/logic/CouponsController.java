@@ -224,17 +224,20 @@ public class CouponsController {
 		if (couponDto.getEndDate() == null) {
 			throw new ApplicationException(ErrorTypes.EMPTY_ENDDATE_ERROR);
 		}
+		//In case couponDto.startDate is null, we would like to initialise the new coupon's
+		//startDate property to the current time.
 		Calendar startDate = Calendar.getInstance();
 		if(couponDto.getStartDate() != null){
 			startDate.setTimeInMillis(couponDto.getStartDate().getTime());
 		}
+		//As product conception - the dates should be rounded down.  
 		roundByHours(startDate);
 		roundByHours(now);
 		if (startDate.before(now)) {
 			throw new ApplicationException(ErrorTypes.INVALID_STARTDATE_ERROR);
 		}
 		Calendar endDate = Calendar.getInstance();
-		endDate.setTimeInMillis(couponDto.getEndDate().getTime());;
+		endDate.setTimeInMillis(couponDto.getEndDate().getTime());
 		roundByHours(endDate);
 		if(endDate.before(now)){
 			throw new ApplicationException(ErrorTypes.INVALID_DATES_ERROR);

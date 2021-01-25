@@ -17,6 +17,8 @@ import com.baruch.coupons.dto.CompanyDto;
 import com.baruch.coupons.exceptions.ApplicationException;
 import com.baruch.coupons.logic.CompaniesController;
 
+//As product conceptions - only Admin users are authorized for this api.
+
 @RestController
 @RequestMapping("/companies")
 public class CompaniesApi {

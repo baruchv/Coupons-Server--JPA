@@ -145,6 +145,10 @@ public class PurchasesController {
 		if( couponDetails.getAmount() < amount) {
 			throw new ApplicationException(ErrorTypes.OUT_OF_STOCK_ERROR);
 		}
+		
+		//Dates validation are needed for 2 reasons:
+		//1) Timer task failure.
+		//2) Cleint bypass.
 		Calendar now = Calendar.getInstance();
 		Calendar startDate = Calendar.getInstance();
 		startDate.setTime(couponDetails.getStartDate());
