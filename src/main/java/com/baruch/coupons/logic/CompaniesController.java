@@ -83,12 +83,8 @@ public class CompaniesController {
 	}
 
 	private void validateCreateCompany(CompanyDto companyDto) throws ApplicationException{
-		String name = companyDto.getName();
-		if(repository.existsByName(name)) {
-			throw new ApplicationException(ErrorTypes.EXISTING_COMPANY_ERROR);
-		}
-		validatePhoneNumber(companyDto.getPhoneNumber());
 		validateName(companyDto.getName());
+		validatePhoneNumber(companyDto.getPhoneNumber());
 		validateAddress(companyDto.getAddress());
 	}
 	
@@ -116,9 +112,22 @@ public class CompaniesController {
 	}
 
 	private void validateName(String name) throws ApplicationException{
+		
+		try {
+			if (repository.existsByName(name)) {
+				throw new ApplicationException(ErrorTypes.EXISTING_COMPANY_ERROR);
+			}
+		} catch (Exception e) {
+			if (e instanceof ApplicationException) {
+				throw e;
+			}
+			throw new ApplicationException("validateName() failed for " + name, ErrorTypes.GENERAL_ERROR, e);
+		}
+		
 		if(name == null) {
 			throw new ApplicationException(ErrorTypes.EMPTY_ADDRESS_ERROR);
 		}
+		
 		if(name.length()<2) {
 			throw new ApplicationException(ErrorTypes.INAVLID_ADDRESS_ERROR);
 		}

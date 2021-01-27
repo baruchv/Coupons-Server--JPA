@@ -6,17 +6,16 @@ import java.util.TimerTask;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import lombok.NoArgsConstructor;
+
 import com.baruch.coupons.repository.ICouponRespository;
 
 @Component
+@NoArgsConstructor
 public class CouponsValidator extends TimerTask{
 	
 	@Autowired
 	private ICouponRespository repository;
-	
-	public CouponsValidator() {
-		
-	}
 
 	public void run() {
 		try{

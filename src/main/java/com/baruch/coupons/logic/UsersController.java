@@ -167,16 +167,6 @@ public class UsersController {
 	}
 
 	private void validateCreateUser(UserDto userDto) throws ApplicationException{
-		boolean isNameTaken = false;
-		try {
-			isNameTaken = repository.existsByUserName(userDto.getUserName());
-		}
-		catch(Exception e) {
-			throw new ApplicationException("existsByUserName() failed for " + userDto, ErrorTypes.GENERAL_ERROR,e);
-		}
-		if(isNameTaken) {
-			throw new ApplicationException(ErrorTypes.EXISTING_USERNAME_ERROR);
-		}
 		if(userDto.getType() == null){
 			throw new ApplicationException(ErrorTypes.NO_TYPE_ERROR);
 		}
@@ -190,9 +180,22 @@ public class UsersController {
 	}
 
 	private void validateUserName(String userName) throws ApplicationException{
+		
+		try {
+			if(repository.existsByUserName(userName)){
+				throw new ApplicationException(ErrorTypes.EXISTING_USERNAME_ERROR);
+			}
+		} catch (Exception e) {
+			if(e instanceof ApplicationException){
+				throw e;
+			}
+			throw new ApplicationException("validateUserName() failed for username: " + userName, ErrorTypes.GENERAL_ERROR,e);
+		}
+		
 		if(userName == null) {
 			throw new ApplicationException(ErrorTypes.EMPTY_USERNAME_ERROR);
 		}
+		
 		if(userName.length()<2) {
 			throw new ApplicationException(ErrorTypes.INVALID_USERNAME_ERROR);
 		}

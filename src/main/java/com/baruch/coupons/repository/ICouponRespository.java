@@ -3,10 +3,13 @@ package com.baruch.coupons.repository;
 import java.sql.Date;
 import java.util.List;
 
+import javax.transaction.TransactionScoped;
+
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.baruch.coupons.dataInterfaces.ICouponDataObject;
 import com.baruch.coupons.dto.CouponAmountAndTime;
@@ -49,6 +52,8 @@ public interface ICouponRespository extends CrudRepository<Coupon, Long> {
 	@Query("select new com.baruch.coupons.dto.CouponAmountAndTime(c.amount, c.startDate, c.endDate) from Coupon c where c.id = ?1")
 	public CouponAmountAndTime getCouponAmountAndTime(long couponID);
 	
+	@Transactional
+	@Modifying
 	@Query("delete Coupon c where c.endDate <= ?1")
 	public void deleteExpiredCoupons(Date now);
 

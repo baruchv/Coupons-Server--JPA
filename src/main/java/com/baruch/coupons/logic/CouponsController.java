@@ -86,6 +86,7 @@ public class CouponsController {
 		}
 	}
 	
+	//Customers get only valid coupons.	
 	public List<ICouponDataObject> getAllCoupons(UserLoginData userDetails) throws ApplicationException{
 		try {
 			UserTypes type = userDetails.getType();
@@ -133,11 +134,8 @@ public class CouponsController {
 	@PostConstruct
 	private void validateCoupons(){
 		Timer timer = new Timer();
-		Calendar firstTime = Calendar.getInstance();
-		firstTime.add(Calendar.DAY_OF_MONTH, 1);
-		firstTime.set(Calendar.HOUR_OF_DAY, 0);
 		long dayInMilliseconds = 1000*60*60*24;
-		timer.scheduleAtFixedRate(timerTask, firstTime.getTimeInMillis(), dayInMilliseconds);
+		timer.scheduleAtFixedRate(timerTask, 0, dayInMilliseconds);
 	}
 
 	@Transactional
@@ -199,15 +197,26 @@ public class CouponsController {
 	}
 	
 	private void validateTitle(String title,long companyID) throws ApplicationException{
+		
 		if(title == null) {
 			throw new ApplicationException(ErrorTypes.EMPTY_TITLE_ERROR);
 		}
+		
 		if(title.length()<2) {
 			throw new ApplicationException(ErrorTypes.INVALID_TITLE_ERROR);
 		}
+		
 		Company company = companiesController.getCompanyEntity(companyID);
-		if(repository.existsByCompanyAndTitle(company, title)) {
-			throw new ApplicationException(ErrorTypes.DUPLICATE_TITLE_ERROR);
+		try {
+			if (repository.existsByCompanyAndTitle(company, title)) {
+				throw new ApplicationException(ErrorTypes.DUPLICATE_TITLE_ERROR);
+			}
+		} catch (Exception e) {
+			if(e instanceof ApplicationException){
+				throw e;
+			}
+			throw new ApplicationException("validateTitle() failed for title: " + title + " companyID: " +
+			 companyID, ErrorTypes.GENERAL_ERROR, e);
 		}
 	}
 	
