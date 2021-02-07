@@ -1,4 +1,4 @@
-package com.baruch.coupons.dataObjectsForPresentation;
+package com.baruch.coupons.datapresentation;
 
 import com.baruch.coupons.dataInterfaces.IUserDataObject;
 import com.baruch.coupons.enums.UserTypes;

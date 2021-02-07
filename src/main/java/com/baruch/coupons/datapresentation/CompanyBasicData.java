@@ -1,4 +1,4 @@
-package com.baruch.coupons.dataObjectsForPresentation;
+package com.baruch.coupons.datapresentation;
 
 import com.baruch.coupons.dataInterfaces.ICompanyDataObject;
 
@@ -11,9 +11,10 @@ import lombok.ToString;
 @Setter
 @AllArgsConstructor
 @ToString
-public class CompanyFullData implements ICompanyDataObject {
+public class CompanyBasicData implements ICompanyDataObject{
     
     private long id;
 
-    private String name, address, phoneNumber;
+    private String name;
+
 }

@@ -1,4 +1,4 @@
-package com.baruch.coupons.exceptionHandler;
+package com.baruch.coupons.exceptionhandler;
 
 
 import javax.servlet.http.HttpServletResponse;
@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.baruch.coupons.dataObjectsForPresentation.ErrorDataObject;
+import com.baruch.coupons.datapresentation.ErrorDataObject;
 import com.baruch.coupons.enums.ErrorTypes;
 import com.baruch.coupons.exceptions.ApplicationException;
 

@@ -1,4 +1,4 @@
-package com.baruch.coupons.dataObjectsForPresentation;
+package com.baruch.coupons.datapresentation;
 
 import java.util.Date;
 
