@@ -7,16 +7,16 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import com.baruch.coupons.dataInterfaces.ICompanyDataObject;
+import com.baruch.coupons.datapresentation.dataInterfaces.ICompanyDataObject;
 import com.baruch.coupons.entities.Company;
 
 @Repository
 public interface ICompaniesRepository extends CrudRepository<Company, Long>{
 
-	@Query("select new com.baruch.coupons.datapresentation.CompanyFullData(c.id, c.name, c.address, c.phoneNumber) from Company c where c.id = ?1")
+	@Query("select new com.baruch.coupons.datapresentation.company.CompanyFullData(c.id, c.name, c.address, c.phoneNumber) from Company c where c.id = ?1")
 	public ICompanyDataObject getCompany(long companyID);
 
-	@Query("select new com.baruch.coupons.datapresentation.CompanyBasicData(c.id, c.name) from Company c")
+	@Query("select new com.baruch.coupons.datapresentation.company.CompanyBasicData(c.id, c.name) from Company c")
 	public List<ICompanyDataObject> getAllCompanies();
 	
 	@Modifying

@@ -1,12 +1,14 @@
 	package com.baruch.coupons.logic;
 
+import java.sql.Date;
 import java.util.Calendar;
 import java.util.List;
 
+import org.hibernate.usertype.UserType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import com.baruch.coupons.dataInterfaces.IPurchaseDataObject;
+import com.baruch.coupons.datapresentation.dataInterfaces.IPurchaseDataObject;
 import com.baruch.coupons.dto.CouponAmountAndTime;
 import com.baruch.coupons.dto.PurchaseDto;
 import com.baruch.coupons.dto.UserLoginData;
@@ -14,6 +16,7 @@ import com.baruch.coupons.entities.Coupon;
 import com.baruch.coupons.entities.Purchase;
 import com.baruch.coupons.entities.User;
 import com.baruch.coupons.enums.ErrorTypes;
+import com.baruch.coupons.enums.UserTypes;
 import com.baruch.coupons.exceptions.ApplicationException;
 import com.baruch.coupons.repository.IPurchasesRepository;
 
@@ -43,6 +46,8 @@ public class PurchasesController {
 		long couponID = purchaseDto.getCouponID();
 		long userID = userDetails.getId();
 		validateAddPurchase(purchaseAmount, couponID, userID);
+		Date now = new Date(System.currentTimeMillis());
+		purchaseDto.setTimeStamp(now);
 		Purchase purchase = generateEntity(purchaseDto, userID);
 		try {
 			repository.save(purchase);
@@ -94,12 +99,15 @@ public class PurchasesController {
 		}
 	}
 
-	/*
-	 * This method serves Admin users
-	 */
-	public IPurchaseDataObject getPurchase(long purchaseID) throws ApplicationException {
+	//This method doesn't serve Company users.
+
+	public IPurchaseDataObject getPurchase(long purchaseID, UserLoginData userDetails) throws ApplicationException {
+		UserTypes userType = userDetails.getType();
 		try {
-			return repository.getPurchase(purchaseID);
+			if(userType.equals(UserTypes.ADMIN)){
+				return repository.getPurchaseForAdmin(purchaseID);
+			}
+			return repository.getPurchaseForCustomer(purchaseID);
 		} catch (Exception e) {
 			throw new ApplicationException("repository.deleteById() failed for purchaseID = " + purchaseID,
 					ErrorTypes.GENERAL_ERROR, e);

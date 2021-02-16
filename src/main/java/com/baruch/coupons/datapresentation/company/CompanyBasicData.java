@@ -1,6 +1,6 @@
-package com.baruch.coupons.datapresentation;
+package com.baruch.coupons.datapresentation.company;
 
-import com.baruch.coupons.dataInterfaces.ICompanyDataObject;
+import com.baruch.coupons.datapresentation.dataInterfaces.ICompanyDataObject;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

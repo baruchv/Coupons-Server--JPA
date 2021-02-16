@@ -1,4 +1,4 @@
-package com.baruch.coupons.datapresentation;
+package com.baruch.coupons.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

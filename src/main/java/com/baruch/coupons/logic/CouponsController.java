@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.baruch.coupons.entities.Company;
 import com.baruch.coupons.entities.Coupon;
-import com.baruch.coupons.dataInterfaces.ICouponDataObject;
+import com.baruch.coupons.datapresentation.dataInterfaces.ICouponDataObject;
 import com.baruch.coupons.dto.CouponAmountAndTime;
 import com.baruch.coupons.dto.CouponDto;
 import com.baruch.coupons.dto.UserLoginData;
@@ -90,10 +90,15 @@ public class CouponsController {
 	public List<ICouponDataObject> getAllCoupons(UserLoginData userDetails) throws ApplicationException{
 		try {
 			UserTypes type = userDetails.getType();
-			if(type.equals(UserTypes.CUSTOMER)){
-				return repository.getAllCouponsForCustomer(new Date(System.currentTimeMillis()));
+			switch (type) {
+				case CUSTOMER:
+					return repository.getAllCouponsForCustomer(new Date(System.currentTimeMillis()));
+				case COMPANY:
+					long companyID = userDetails.getCompanyID();
+					return repository.getCouponsByCompany(companyID);
+				default:
+					return repository.getAllCoupons();
 			}
-			return repository.getAllCoupons();	
 		}
 		catch(Exception e) {
 			throw new ApplicationException("repository.getAllCoupons() failed", ErrorTypes.GENERAL_ERROR, e);

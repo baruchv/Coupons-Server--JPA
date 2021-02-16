@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.baruch.coupons.dataInterfaces.IPurchaseDataObject;
+import com.baruch.coupons.datapresentation.dataInterfaces.IPurchaseDataObject;
 import com.baruch.coupons.dto.PurchaseDto;
 import com.baruch.coupons.dto.UserLoginData;
 import com.baruch.coupons.exceptions.ApplicationException;
@@ -37,8 +37,8 @@ public class PurchasesApi {
 	}
 	
 	@GetMapping("/{purchaseID}")
-	public IPurchaseDataObject getPurchase(@PathVariable("purchaseID") long purchaseID) throws ApplicationException{
-		return controller.getPurchase(purchaseID);
+	public IPurchaseDataObject getPurchase(@PathVariable("purchaseID") long purchaseID, @RequestAttribute("UserLoginData") UserLoginData userDetails) throws ApplicationException{
+		return controller.getPurchase(purchaseID, userDetails);
 	}
 	
 	@GetMapping("/byCompanyID")

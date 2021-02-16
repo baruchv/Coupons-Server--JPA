@@ -1,6 +1,6 @@
-package com.baruch.coupons.datapresentation;
+package com.baruch.coupons.datapresentation.user;
 
-import com.baruch.coupons.dataInterfaces.IUserDataObject;
+import com.baruch.coupons.datapresentation.dataInterfaces.IUserDataObject;
 import com.baruch.coupons.enums.UserTypes;
 
 import lombok.Getter;

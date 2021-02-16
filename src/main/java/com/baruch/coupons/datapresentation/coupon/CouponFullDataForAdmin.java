@@ -1,10 +1,10 @@
-package com.baruch.coupons.datapresentation;
+package com.baruch.coupons.datapresentation.coupon;
 
 import java.util.Date;
 
-import com.baruch.coupons.dataInterfaces.ICouponDataObject;
-import com.baruch.coupons.enums.Categories;
 
+import com.baruch.coupons.datapresentation.dataInterfaces.ICouponDataObject;
+import com.baruch.coupons.enums.Categories;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,12 +15,13 @@ import lombok.ToString;
 @Setter
 @ToString
 @AllArgsConstructor
-public class CouponFullDataDefault implements ICouponDataObject{
+public class CouponFullDataForAdmin implements ICouponDataObject {
+
 	//VARIABLES
 
 	private int amount;
 
-	private long  id;
+	private long  id, companyID;
 
 	private float  price;
 
@@ -29,5 +30,6 @@ public class CouponFullDataDefault implements ICouponDataObject{
 	private Categories  category;
 
 	private Date startDate, endDate;
-
+	
+	
 }
