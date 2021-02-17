@@ -4,7 +4,6 @@ import java.sql.Date;
 import java.util.Calendar;
 import java.util.List;
 
-import org.hibernate.usertype.UserType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 

@@ -3,7 +3,6 @@ package com.baruch.coupons.repository;
 import java.sql.Date;
 import java.util.List;
 
-import javax.transaction.TransactionScoped;
 
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
