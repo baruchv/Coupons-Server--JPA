@@ -77,6 +77,13 @@ public class UsersController {
 		}
 	}
 
+	//This method serves all users,
+	public IUserDataObject getAccountDetails(UserLoginData userDetails) throws ApplicationException{
+		long userID = userDetails.getId();
+		return getUser(userID);
+	}
+
+	//This method serves Admin users only.
 	public IUserDataObject getUser(long userID) throws ApplicationException{
 		validateUserId(userID);
 		try {

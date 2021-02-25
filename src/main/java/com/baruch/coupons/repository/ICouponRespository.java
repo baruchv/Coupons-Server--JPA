@@ -24,8 +24,8 @@ public interface ICouponRespository extends CrudRepository<Coupon, Long> {
 	public void updateCoupon(int amount, float price, String image, long id);
 	
 	@Modifying
-	@Query("update Coupon c set c.amount = c.amount - ?1 where c.id = ?2")
-	public void decreseFromCouponAmount(int amount, long couponID);
+	@Query("update Coupon c set c.amount = (c.amount - ?1) where c.id = ?2")
+	public void decreaseFromCouponAmount(int amount, long couponID);
 
 	@Query("select new com.baruch.coupons.datapresentation.coupon.CouponBasicData(c.title, c.company.name, c.endDate, c.price, c.id) from Coupon c")
 	public List<ICouponDataObject> getAllCoupons();

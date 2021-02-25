@@ -146,10 +146,9 @@ public class CouponsController {
 	@Transactional
 	void decreseFromCouponAmount(int amount, long couponID){
 		try {
-			repository.decreseFromCouponAmount(amount, couponID);
+			repository.decreaseFromCouponAmount(amount, couponID);
 		} catch (Exception e) {
-			ApplicationException appException = new ApplicationException("decreseFromCouponAmount() failed for amount: " + amount + " couponID: " + couponID, ErrorTypes.GENERAL_ERROR,e);
-			appException.printStackTrace();
+			e.printStackTrace();
 		}
 	}
 	

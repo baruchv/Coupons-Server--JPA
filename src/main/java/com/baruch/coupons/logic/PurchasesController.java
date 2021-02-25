@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.baruch.coupons.datapresentation.dataInterfaces.IPurchaseDataObject;
 import com.baruch.coupons.dto.CouponAmountAndTime;
@@ -40,6 +41,7 @@ public class PurchasesController {
 	/* Adding a new purchase.
 	 * The amount of the purchased coupon will be changed accordingly.
 	 */
+	@Transactional
 	public long addPurchase(PurchaseDto purchaseDto, UserLoginData userDetails) throws ApplicationException{
 		int purchaseAmount = purchaseDto.getAmount();
 		long couponID = purchaseDto.getCouponID();
@@ -50,16 +52,7 @@ public class PurchasesController {
 		Purchase purchase = generateEntity(purchaseDto, userID);
 		try {
 			repository.save(purchase);
-			//This is an internal process that does'nt effect the UX at all.
-			//Therefore, if this process has invoked an exception it should'nt be thrown at all, 
-			// its stackTrace is printed for the development team.
-			try {
-				int amount = purchase.getAmount();
-				couponID = purchaseDto.getCouponID();
-				couponsController.decreseFromCouponAmount(amount, couponID);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			couponsController.decreseFromCouponAmount(purchase.getAmount(), couponID);
 			return purchase.getId();
 		}
 		catch(Exception e) {
@@ -108,7 +101,7 @@ public class PurchasesController {
 			}
 			return repository.getPurchaseForCustomer(purchaseID);
 		} catch (Exception e) {
-			throw new ApplicationException("repository.deleteById() failed for purchaseID = " + purchaseID,
+			throw new ApplicationException("repository.getPurchase() failed for purchaseID = " + purchaseID,
 					ErrorTypes.GENERAL_ERROR, e);
 		}
 	}

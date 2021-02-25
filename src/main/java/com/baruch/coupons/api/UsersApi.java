@@ -56,6 +56,11 @@ public class UsersApi {
 	public List<IUserDataObject> getAllUsers() throws ApplicationException{
 		return controller.getAllUsers();
 	}
+
+	@GetMapping("/account")
+	public IUserDataObject getAccountDetails(@RequestAttribute("UserLoginData") UserLoginData userDetails) throws ApplicationException{
+		return controller.getAccountDetails(userDetails);
+	}
 	
 	@GetMapping("/{userID}")
 	public IUserDataObject getUser(@PathVariable("userID") long userID) throws ApplicationException{
