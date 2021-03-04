@@ -49,7 +49,7 @@ public class UsersController {
 			throw new ApplicationException("createUser failed for " + userDto, ErrorTypes.GENERAL_ERROR, e);
 		}
 	}
-	
+	/*
 	@Transactional
 	public void updateUser(UserDto userDto, UserLoginData userDetails) throws ApplicationException{
 		long userID = userDetails.getId();
@@ -64,6 +64,42 @@ public class UsersController {
 		}
 		catch(Exception e) {
 			throw new ApplicationException("updateUser() failed for " + userDto,ErrorTypes.GENERAL_ERROR,e);
+		}
+	}
+*/
+	@Transactional 
+	public void changePasswoed(String password, UserLoginData userDetails) throws ApplicationException{
+		validatePassword(password);
+		long userID = userDetails.getId();
+		String hashedPassword = getHashedPassword(password);
+		try {
+			repository.changePassword(hashedPassword, userID);
+		} catch (Exception e) {
+			throw new ApplicationException("changePassword() failed for userID: " + userID + " password: " + password, ErrorTypes.GENERAL_ERROR, e);
+		}
+	}
+
+	@Transactional
+	public void updateFirstName(String firstName, UserLoginData userDetails) throws ApplicationException {
+		validateName(firstName);
+		long userID = userDetails.getId();
+		try {
+			repository.updateFirstName(firstName, userID);
+		} catch (Exception e) {
+			throw new ApplicationException("updateFirstName() failed for userID: " + userID + " firstName: " + firstName,
+					ErrorTypes.GENERAL_ERROR, e);
+		}
+	}
+
+	@Transactional
+	public void updateSurName(String surName, UserLoginData userDetails) throws ApplicationException {
+		validateName(surName);
+		long userID = userDetails.getId();
+		try {
+			repository.updateSurName(surName, userID);
+		} catch (Exception e) {
+			throw new ApplicationException("updateSurName() failed for userID: " + userID + " firstName: " + surName,
+					ErrorTypes.GENERAL_ERROR, e);
 		}
 	}
 
@@ -209,10 +245,15 @@ public class UsersController {
 	}
 	
 	private void validateNames(String firstName, String surName) throws ApplicationException{
-		if(firstName == null || surName == null) {
+		validateName(firstName);
+		validateName(surName);
+	}
+
+	private void validateName(String name) throws ApplicationException{
+		if(name == null){
 			throw new ApplicationException(ErrorTypes.EMPTY_NAME_ERROR);
 		}
-		if(firstName.length() < 2 || surName.length() < 2) {
+		if(name.length() < 2){
 			throw new ApplicationException(ErrorTypes.INVALID_NAME_ERROR);
 		}
 	}

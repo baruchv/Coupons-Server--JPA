@@ -47,9 +47,19 @@ public class UsersApi {
 		
 	}
 	
-	@PutMapping
-	public void updateUser(@RequestBody UserDto userDto, @RequestAttribute("UserLoginData") UserLoginData userDetails) throws ApplicationException{
-		controller.updateUser(userDto, userDetails);
+	@PutMapping("/firstName")
+	public void updateFirstName(@RequestBody UserDto userDto, @RequestAttribute("UserLoginData") UserLoginData userDetails) throws ApplicationException{
+		controller.updateFirstName(userDto.getFirstName(), userDetails);
+	}
+
+	@PutMapping("/surName")
+	public void updateSurName(@RequestBody UserDto userDto, @RequestAttribute("UserLoginData") UserLoginData userDetails) throws ApplicationException {
+		controller.updateSurName(userDto.getSurName(), userDetails);
+	}
+
+	@PutMapping("/password")
+	public void changePassword(@RequestBody UserDto userDto, @RequestAttribute("UserLoginData") UserLoginData userDetails) throws ApplicationException {
+		controller.changePasswoed(userDto.getPassword(), userDetails);
 	}
 	
 	@GetMapping

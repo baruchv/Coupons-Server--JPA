@@ -41,6 +41,14 @@ public interface IUserRepository extends CrudRepository<User, Long> {
 	public UserTypes getUserType(long userID);
 
 	@Modifying
-	@Query("update User u set  u.password = ?1, u.firstName = ?2, u.surName = ?3 where u.id = ?4 ")
-	public void updateUser(String password, String firstName, String surName, long userID);
+	@Query("update User u set  u.password = ?1 where u.id = ?2 ")
+	public void changePassword(String password,long userID);
+
+	@Modifying
+	@Query("update User u set u.firstName = ?1 where u.id = ?2 ")
+	public void updateFirstName(String firstName,long userID);
+	
+	@Modifying
+	@Query("update User u set u.surName = ?1 where u.id = ?2 ")
+	public void updateSurName(String surName, long userID);
 }
