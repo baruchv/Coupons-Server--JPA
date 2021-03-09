@@ -56,18 +56,25 @@ public class CompaniesController {
 			throw new ApplicationException("getAllCompanies() failed",ErrorTypes.GENERAL_ERROR,e);
 		}
 	}
-	
-	@Transactional
-	public void updateCompany(CompanyDto companyDto, long companyID) throws ApplicationException{
-		validateUpdateCompany(companyDto, companyID);
-		String phoneNumber = companyDto.getPhoneNumber();
-		String address = companyDto.getAddress();
 
+	@Transactional
+	public void updateCompanyPhoneNumber(String phoneNumber, long companyID) throws ApplicationException{
+		validatePhoneNumber(phoneNumber);
 		try {
-			repository.updateCompany(phoneNumber, address, companyID);
+			repository.updateCompanyPhoneNumber(phoneNumber, companyID);
+		} catch (Exception e) {
+			throw new ApplicationException("updateCompanyPhoneNumber() failed for " + companyID, ErrorTypes.GENERAL_ERROR, e);
 		}
-		catch(Exception e) {
-			throw new ApplicationException("updateCompany() failed for " + companyDto,ErrorTypes.GENERAL_ERROR,e);
+	}
+
+	@Transactional
+	public void updateCompanyAddress(String address, long companyID) throws ApplicationException {
+		validateAddress(address);
+		try {
+			repository.updateCompanyAddress(address, companyID);
+		} catch (Exception e) {
+			throw new ApplicationException("updateCompanyAddress() failed for " + companyID,
+					ErrorTypes.GENERAL_ERROR, e);
 		}
 	}
 	
@@ -84,11 +91,6 @@ public class CompaniesController {
 
 	private void validateCreateCompany(CompanyDto companyDto) throws ApplicationException{
 		validateName(companyDto.getName());
-		validatePhoneNumber(companyDto.getPhoneNumber());
-		validateAddress(companyDto.getAddress());
-	}
-	
-	private void validateUpdateCompany(CompanyDto companyDto, long companyID) throws ApplicationException{
 		validatePhoneNumber(companyDto.getPhoneNumber());
 		validateAddress(companyDto.getAddress());
 	}

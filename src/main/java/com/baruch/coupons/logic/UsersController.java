@@ -49,24 +49,7 @@ public class UsersController {
 			throw new ApplicationException("createUser failed for " + userDto, ErrorTypes.GENERAL_ERROR, e);
 		}
 	}
-	/*
-	@Transactional
-	public void updateUser(UserDto userDto, UserLoginData userDetails) throws ApplicationException{
-		long userID = userDetails.getId();
-		validateUserId(userID);
-		validateNames(userDto.getFirstName(), userDto.getSurName());
-		validatePassword(userDto.getPassword());
-		String hashedPassword = getHashedPassword(userDto.getPassword());
-		String firstName = userDto.getFirstName();
-		String surName = userDto.getSurName();
-		try {
-			repository.updateUser(hashedPassword, firstName, surName, userID);
-		}
-		catch(Exception e) {
-			throw new ApplicationException("updateUser() failed for " + userDto,ErrorTypes.GENERAL_ERROR,e);
-		}
-	}
-*/
+
 	@Transactional 
 	public void changePasswoed(String password, UserLoginData userDetails) throws ApplicationException{
 		validatePassword(password);

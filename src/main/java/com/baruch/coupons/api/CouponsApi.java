@@ -33,9 +33,22 @@ public class CouponsApi {
 		return controller.createCoupon(couponDto, userDetails);
 	}
 	
-	@PutMapping("/{couponID}")
-	public void updateCoupon(@PathVariable("couponID") long couponID, @RequestBody CouponDto couponDto, @RequestAttribute("UserLoginData") UserLoginData userDetails) throws ApplicationException{
-		controller.updateCoupon(couponDto, couponID, userDetails);;
+	@PutMapping("/{couponID}/amount")
+	public void updateCouponAmount(@PathVariable("couponID") long couponID, @RequestBody CouponDto couponDto, @RequestAttribute("UserLoginData") UserLoginData userDetails) throws ApplicationException{
+		controller.updateCouponAmount(couponDto.getAmount(), couponID, userDetails);;
+	}
+
+	@PutMapping("/{couponID}/price")
+	public void updateCouponPrice(@PathVariable("couponID") long couponID, @RequestBody CouponDto couponDto,
+			@RequestAttribute("UserLoginData") UserLoginData userDetails) throws ApplicationException {
+		controller.updateCouponPrice(couponDto.getPrice(), couponID, userDetails);
+	}
+
+	@PutMapping("/{couponID}/image")
+	public void updateCouponImage(@PathVariable("couponID") long couponID, @RequestBody CouponDto couponDto,
+			@RequestAttribute("UserLoginData") UserLoginData userDetails) throws ApplicationException {
+		controller.updateCouponImage(couponDto.getImage(), couponID, userDetails);
+		;
 	}
 	
 	@GetMapping("/{couponID}")

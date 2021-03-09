@@ -31,9 +31,15 @@ public class CompaniesApi {
 		return controller.createCompany(companyDto);
 	}
 	
-	@PutMapping("/{companyID}")
-	public void updateCompany(@PathVariable("companyID") long companyID, @RequestBody CompanyDto companyDto) throws ApplicationException{
-		controller.updateCompany(companyDto, companyID);
+	@PutMapping("/{companyID}/phoneNumber")
+	public void updateCompanyPhoneNumber(@PathVariable("companyID") long companyID, @RequestBody CompanyDto companyDto) throws ApplicationException{
+		controller.updateCompanyPhoneNumber(companyDto.getPhoneNumber(), companyID);
+	}
+
+	@PutMapping("/{companyID}/address")
+	public void updateCompanyAddress(@PathVariable("companyID") long companyID, @RequestBody CompanyDto companyDto)
+			throws ApplicationException {
+		controller.updateCompanyAddress(companyDto.getAddress(), companyID);
 	}
 	
 	@GetMapping("/{companyID}")

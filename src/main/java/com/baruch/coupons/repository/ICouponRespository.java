@@ -18,11 +18,19 @@ import com.baruch.coupons.enums.Categories;
 
 @Repository
 public interface ICouponRespository extends CrudRepository<Coupon, Long> {
+
+	@Modifying
+	@Query("update Coupon c set c.amount = ?1 where c.id = ?2")
+	public void updateCouponAmount(int amount, long id);
 	
 	@Modifying
-	@Query("update Coupon c set c.amount = ?1, c.price = ?2, c.image = ?3 where c.id = ?4")
-	public void updateCoupon(int amount, float price, String image, long id);
-	
+	@Query("update Coupon c set c.price = ?1 where c.id = ?2")
+	public void updateCouponPrice(float price, long id);
+
+	@Modifying
+	@Query("update Coupon c set c.image = ?1 where c.id = ?2")
+	public void updateCouponImage(String image, long id);
+
 	@Modifying
 	@Query("update Coupon c set c.amount = (c.amount - ?1) where c.id = ?2")
 	public void decreaseFromCouponAmount(int amount, long couponID);

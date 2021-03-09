@@ -50,17 +50,40 @@ public class CouponsController {
 			throw new ApplicationException("createCoupon() failed for " + couponDto + " " + userDetails,ErrorTypes.GENERAL_ERROR,e);
 		}
 	}
-	
+
 	@Transactional
-	public void updateCoupon(CouponDto couponDto, long couponID, UserLoginData userDetails) throws ApplicationException{
-		validateUpdateCoupon(couponDto, couponID, userDetails.getCompanyID());
-		int amount = couponDto.getAmount();
-		float price = couponDto.getPrice();
-		String image = couponDto.getImage();
+	public void updateCouponAmount(int amount, long couponID, UserLoginData userDetails) throws ApplicationException{
+		validateCouponID(couponID, userDetails.getId());
+		if (amount < 1) {
+			throw new ApplicationException(ErrorTypes.INVALID_AMOUNT_ERROR);
+		}
 		try {
-			repository.updateCoupon(amount, price, image, couponID);
+			repository.updateCouponAmount(amount,  couponID);
 		} catch (Exception e) {
-			throw new ApplicationException("updateCoupon() failed for " + couponDto,ErrorTypes.GENERAL_ERROR,e);
+			throw new ApplicationException("updateCouponAmount() failed for " + couponID, ErrorTypes.GENERAL_ERROR, e);
+		}
+	}
+
+	@Transactional
+	public void updateCouponPrice(float price, long couponID, UserLoginData userDetails) throws ApplicationException {
+		validateCouponID(couponID, userDetails.getId());
+		if (price < 0) {
+			throw new ApplicationException(ErrorTypes.INVALID_PRICE_ERROR);
+		}
+		try {
+			repository.updateCouponPrice(price, couponID);
+		} catch (Exception e) {
+			throw new ApplicationException("updateCouponPrice() failed for " + couponID, ErrorTypes.GENERAL_ERROR, e);
+		}
+	}
+
+	@Transactional
+	public void updateCouponImage(String image, long couponID, UserLoginData userDetails) throws ApplicationException {
+		validateCouponID(couponID, userDetails.getId());
+		try {
+			repository.updateCouponImage(image, couponID);
+		} catch (Exception e) {
+			throw new ApplicationException("updateCouponImage() failed for " + couponID, ErrorTypes.GENERAL_ERROR, e);
 		}
 	}
 	
@@ -181,17 +204,6 @@ public class CouponsController {
 		validateTitle(couponDto.getTitle(),companyID);
 		validateDescription(couponDto.getDescription());
 		validateDates(couponDto,now);
-		if(couponDto.getAmount() < 1) {
-			throw new ApplicationException(ErrorTypes.INVALID_AMOUNT_ERROR);
-		}
-		if(couponDto.getPrice() < 0) {
-			throw new ApplicationException(ErrorTypes.INVALID_PRICE_ERROR);
-		}
-	}
-	
-	// This validation may indicate a cleint bypass, therefore the user should be tracked.
-	private void validateUpdateCoupon(CouponDto couponDto, long couponID, long userID) throws ApplicationException{
-		validateCouponID(couponID, userID);
 		if(couponDto.getAmount() < 1) {
 			throw new ApplicationException(ErrorTypes.INVALID_AMOUNT_ERROR);
 		}
