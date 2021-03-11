@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.baruch.coupons.datapresentation.dataInterfaces.ICompanyDataObject;
-import com.baruch.coupons.dto.CompanyDto;
+import com.baruch.coupons.dto.dataInterfaces.ICompanyDataObject;
+import com.baruch.coupons.dto.company.CompanyDto;
 import com.baruch.coupons.entities.Company;
 import com.baruch.coupons.enums.ErrorTypes;
 import com.baruch.coupons.exceptions.ApplicationException;

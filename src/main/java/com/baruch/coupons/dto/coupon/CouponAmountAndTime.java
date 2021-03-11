@@ -1,4 +1,4 @@
-package com.baruch.coupons.dto;
+package com.baruch.coupons.dto.coupon;
 
 import java.util.Date;
 

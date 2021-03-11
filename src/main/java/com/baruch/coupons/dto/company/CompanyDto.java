@@ -1,4 +1,4 @@
-package com.baruch.coupons.dto;
+package com.baruch.coupons.dto.company;
 
 
 import lombok.Getter;

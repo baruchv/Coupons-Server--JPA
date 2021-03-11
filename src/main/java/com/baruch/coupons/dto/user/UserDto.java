@@ -1,4 +1,4 @@
-package com.baruch.coupons.dto;
+package com.baruch.coupons.dto.user;
 
 import com.baruch.coupons.enums.UserTypes;
 

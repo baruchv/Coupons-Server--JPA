@@ -10,8 +10,8 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.baruch.coupons.datapresentation.dataInterfaces.ICouponDataObject;
-import com.baruch.coupons.dto.CouponAmountAndTime;
+import com.baruch.coupons.dto.dataInterfaces.ICouponDataObject;
+import com.baruch.coupons.dto.coupon.CouponAmountAndTime;
 import com.baruch.coupons.entities.Company;
 import com.baruch.coupons.entities.Coupon;
 import com.baruch.coupons.enums.Categories;

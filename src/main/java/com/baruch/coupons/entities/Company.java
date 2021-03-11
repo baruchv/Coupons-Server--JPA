@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.baruch.coupons.dto.CompanyDto;
+import com.baruch.coupons.dto.company.CompanyDto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

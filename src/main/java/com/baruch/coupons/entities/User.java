@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.baruch.coupons.dto.UserDto;
+import com.baruch.coupons.dto.user.UserDto;
 import com.baruch.coupons.enums.UserTypes;
 
 import lombok.EqualsAndHashCode;

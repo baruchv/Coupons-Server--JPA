@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.baruch.coupons.datapresentation.dataInterfaces.ICompanyDataObject;
-import com.baruch.coupons.dto.CompanyDto;
+import com.baruch.coupons.dto.dataInterfaces.ICompanyDataObject;
+import com.baruch.coupons.dto.company.CompanyDto;
 import com.baruch.coupons.exceptions.ApplicationException;
 import com.baruch.coupons.logic.CompaniesController;
 

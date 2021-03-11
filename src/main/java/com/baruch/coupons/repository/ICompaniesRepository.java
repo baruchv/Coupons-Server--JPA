@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import com.baruch.coupons.datapresentation.dataInterfaces.ICompanyDataObject;
+import com.baruch.coupons.dto.dataInterfaces.ICompanyDataObject;
 import com.baruch.coupons.entities.Company;
 
 @Repository

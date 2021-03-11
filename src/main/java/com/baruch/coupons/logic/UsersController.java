@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.baruch.coupons.datapresentation.dataInterfaces.IUserDataObject;
+import com.baruch.coupons.dto.dataInterfaces.IUserDataObject;
 import com.baruch.coupons.dto.SuccessfulLoginData;
-import com.baruch.coupons.dto.UserDto;
+import com.baruch.coupons.dto.user.UserDto;
 import com.baruch.coupons.dto.UserLoginData;
 import com.baruch.coupons.entities.Company;
 import com.baruch.coupons.entities.User;

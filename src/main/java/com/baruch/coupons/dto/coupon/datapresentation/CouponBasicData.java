@@ -1,8 +1,8 @@
-package com.baruch.coupons.datapresentation.coupon;
+package com.baruch.coupons.dto.coupon.datapresentation;
 
 import java.util.Date;
 
-import com.baruch.coupons.datapresentation.dataInterfaces.ICouponDataObject;
+import com.baruch.coupons.dto.dataInterfaces.ICouponDataObject;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

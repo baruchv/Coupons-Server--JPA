@@ -12,7 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.baruch.coupons.dto.CouponDto;
+import com.baruch.coupons.dto.coupon.CouponDto;
 import com.baruch.coupons.enums.Categories;
 
 import lombok.EqualsAndHashCode;

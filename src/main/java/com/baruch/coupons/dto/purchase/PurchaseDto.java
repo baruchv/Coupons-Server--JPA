@@ -1,4 +1,4 @@
-package com.baruch.coupons.dto;
+package com.baruch.coupons.dto.purchase;
 
 import java.sql.Date;
 

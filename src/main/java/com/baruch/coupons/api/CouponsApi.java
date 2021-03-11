@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.baruch.coupons.datapresentation.dataInterfaces.ICouponDataObject;
-import com.baruch.coupons.dto.CouponDto;
+import com.baruch.coupons.dto.dataInterfaces.ICouponDataObject;
+import com.baruch.coupons.dto.coupon.CouponDto;
 import com.baruch.coupons.dto.UserLoginData;
 import com.baruch.coupons.enums.Categories;
 import com.baruch.coupons.exceptions.ApplicationException;

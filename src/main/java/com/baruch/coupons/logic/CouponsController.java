@@ -13,9 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.baruch.coupons.entities.Company;
 import com.baruch.coupons.entities.Coupon;
-import com.baruch.coupons.datapresentation.dataInterfaces.ICouponDataObject;
-import com.baruch.coupons.dto.CouponAmountAndTime;
-import com.baruch.coupons.dto.CouponDto;
+import com.baruch.coupons.dto.dataInterfaces.ICouponDataObject;
+import com.baruch.coupons.dto.coupon.CouponAmountAndTime;
+import com.baruch.coupons.dto.coupon.CouponDto;
 import com.baruch.coupons.dto.UserLoginData;
 import com.baruch.coupons.enums.Categories;
 import com.baruch.coupons.enums.ErrorTypes;

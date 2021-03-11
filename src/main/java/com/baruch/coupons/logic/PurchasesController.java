@@ -8,9 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.baruch.coupons.datapresentation.dataInterfaces.IPurchaseDataObject;
-import com.baruch.coupons.dto.CouponAmountAndTime;
-import com.baruch.coupons.dto.PurchaseDto;
+import com.baruch.coupons.dto.dataInterfaces.IPurchaseDataObject;
+import com.baruch.coupons.dto.coupon.CouponAmountAndTime;
+import com.baruch.coupons.dto.purchase.PurchaseDto;
 import com.baruch.coupons.dto.UserLoginData;
 import com.baruch.coupons.entities.Coupon;
 import com.baruch.coupons.entities.Purchase;
