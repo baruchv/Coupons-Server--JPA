@@ -53,7 +53,7 @@ public class CouponsController {
 
 	@Transactional
 	public void updateCouponAmount(int amount, long couponID, UserLoginData userDetails) throws ApplicationException{
-		validateCouponID(couponID, userDetails.getId());
+		validateCouponID(couponID, userDetails.getCompanyID());
 		if (amount < 1) {
 			throw new ApplicationException(ErrorTypes.INVALID_AMOUNT_ERROR);
 		}
@@ -66,7 +66,7 @@ public class CouponsController {
 
 	@Transactional
 	public void updateCouponPrice(float price, long couponID, UserLoginData userDetails) throws ApplicationException {
-		validateCouponID(couponID, userDetails.getId());
+		validateCouponID(couponID, userDetails.getCompanyID());
 		if (price < 0) {
 			throw new ApplicationException(ErrorTypes.INVALID_PRICE_ERROR);
 		}
@@ -79,7 +79,7 @@ public class CouponsController {
 
 	@Transactional
 	public void updateCouponImage(String image, long couponID, UserLoginData userDetails) throws ApplicationException {
-		validateCouponID(couponID, userDetails.getId());
+		validateCouponID(couponID, userDetails.getCompanyID());
 		try {
 			repository.updateCouponImage(image, couponID);
 		} catch (Exception e) {
