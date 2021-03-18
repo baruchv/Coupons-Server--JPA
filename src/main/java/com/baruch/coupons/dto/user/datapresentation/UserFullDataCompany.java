@@ -18,7 +18,7 @@ public class UserFullDataCompany implements IUserDataObject{
 		
 		private long id, companyID;
 
-		private String  userName, copmanyName, firstName, surName;
+		private String  userName, companyName, firstName, surName;
 		
 		private UserTypes  type;
 		
